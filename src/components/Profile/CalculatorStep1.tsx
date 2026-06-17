@@ -1,0 +1,193 @@
+import React from 'react';
+import { Slider } from '../ui/Slider';
+import { Card } from '../ui/Card';
+import type { CalculatorInputs, ElectricitySource } from '../../types';
+import { COUNTRY_GRID_FACTORS } from '../../config';
+
+// ─────────────────────────────────────────────────────────────
+//  FILE 3: src/components/Profile/CalculatorStep1.tsx
+// ─────────────────────────────────────────────────────────────
+
+interface CalculatorStep1Props {
+  inputs: CalculatorInputs;
+  onUpdate: (partial: Partial<CalculatorInputs>) => void;
+}
+
+interface SourceOption {
+  value: ElectricitySource;
+  icon: string;
+  label: string;
+  description: string;
+}
+
+const SOURCE_OPTIONS: SourceOption[] = [
+  {
+    value: 'grid',
+    icon: '🔌',
+    label: 'Grid',
+    description: 'Standard electricity grid',
+  },
+  {
+    value: 'solar',
+    icon: '☀️',
+    label: 'Solar',
+    description: 'Renewable solar panels',
+  },
+  {
+    value: 'mixed',
+    icon: '⚡',
+    label: 'Mixed',
+    description: 'Grid + renewable mix',
+  },
+];
+
+export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
+  return (
+    <Card className="p-6 space-y-8">
+      {/* Section heading */}
+      <div>
+        <h2
+          className="text-xl font-bold text-primary font-display flex items-center gap-2"
+          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+        >
+          <span aria-hidden="true">⚡</span> Energy Usage
+        </h2>
+        <p className="text-sm text-secondary mt-1">
+          Tell us about your home energy consumption.
+        </p>
+      </div>
+
+      {/* Household & Country Setup */}
+      <div className="grid grid-cols-2 gap-4 pb-4 border-b border-card">
+        <div>
+          <label className="block text-sm font-medium text-secondary mb-2">Location (Grid Info)</label>
+          <select 
+            value={inputs.country || 'Global Average'}
+            onChange={(e) => onUpdate({ country: e.target.value })}
+            className="w-full bg-[var(--bg-card)] border border-strong rounded-xl p-3 text-primary focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
+          >
+            {Object.keys(COUNTRY_GRID_FACTORS).map(c => <option key={c} value={c} style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>{c}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-secondary mb-2">Household Size</label>
+          <div className="flex items-center gap-4">
+            <button type="button" onClick={() => onUpdate({ householdSize: Math.max(1, (inputs.householdSize || 1) - 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">-</button>
+            <span className="text-xl font-bold text-primary font-display w-6 text-center">{inputs.householdSize || 1}</span>
+            <button type="button" onClick={() => onUpdate({ householdSize: Math.min(20, (inputs.householdSize || 1) + 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">+</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Monthly electricity slider */}
+      <div className="space-y-4">
+        <Slider
+          label="Monthly Electricity Consumption"
+          value={inputs.electricityKwh}
+          onChange={(v) => onUpdate({ electricityKwh: v })}
+          min={0}
+          max={2000}
+          step={10}
+          unit="kWh"
+          helperText="Average Indian household uses 200–400 kWh/month"
+          color="emerald"
+        />
+      </div>
+
+      {/* AC Usage Slider */}
+      <div className="space-y-4 pt-2">
+        <Slider
+          label="Air Conditioning Usage (per day)"
+          value={inputs.acHours || 0}
+          onChange={(v) => onUpdate({ acHours: v })}
+          min={0}
+          max={24}
+          step={1}
+          unit="hours/day"
+          helperText="AC drastically increases emissions. Be honest!"
+          color="emerald"
+        />
+      </div>
+
+      {/* Electricity source selector */}
+      <fieldset>
+        <legend className="text-sm font-medium text-secondary mb-3">
+          Electricity Source
+        </legend>
+        <div
+          role="radiogroup"
+          aria-label="Electricity source"
+          className="grid grid-cols-3 gap-3"
+        >
+          {SOURCE_OPTIONS.map((opt) => {
+            const isSelected = inputs.electricitySource === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                onClick={() => onUpdate({ electricitySource: opt.value })}
+                className={`
+                  flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200
+                  cursor-pointer text-center
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950
+                  ${
+                    isSelected
+                      ? 'border-emerald-500/60 bg-emerald-500/10 text-emerald-300'
+                      : 'border-card var-bg-card text-secondary hover:border-strong  hover:text-primary'
+                  }
+                `}
+              >
+                <span className="text-2xl" aria-hidden="true">
+                  {opt.icon}
+                </span>
+                <span className="text-sm font-semibold font-display">
+                  {opt.label}
+                </span>
+                <span className="text-xs text-muted leading-tight">
+                  {opt.description}
+                </span>
+                {isSelected && (
+                  <span className="sr-only"> (selected)</span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
+      {/* Monthly gas/heating slider */}
+      <div className="space-y-4">
+        <Slider
+          label="Monthly Gas Heating"
+          value={inputs.heatingTherms}
+          onChange={(v) => onUpdate({ heatingTherms: v })}
+          min={0}
+          max={100}
+          step={1}
+          unit="therms"
+          helperText="1 therm ≈ 29.3 kWh of natural gas"
+          color="amber"
+        />
+      </div>
+
+      {/* Contextual info card */}
+      <div className="flex items-start gap-3 p-4 rounded-xl bg-blue-500/8 border border-blue-500/20">
+        <span className="text-lg" aria-hidden="true">💡</span>
+        <div>
+          <p className="text-xs font-medium text-blue-300 mb-0.5">
+            Pro tip
+          </p>
+          <p className="text-xs text-secondary leading-relaxed">
+            Switching to solar can reduce your energy emissions by up to{' '}
+            <span className="text-emerald-400 font-medium">70%</span>. Check your
+            electricity bill for exact kWh usage.
+          </p>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+

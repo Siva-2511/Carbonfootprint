@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+
+  --color-emerald-50:  hsl(151,81%,96%);
+  --color-emerald-100: hsl(149,80%,90%);
+  --color-emerald-200: hsl(152,76%,80%);
+  --color-emerald-300: hsl(156,72%,67%);
+  --color-emerald-400: hsl(158,64%,52%);
+  --color-emerald-500: hsl(160,84%,39%);
+  --color-emerald-600: hsl(161,94%,30%);
+  --color-emerald-700: hsl(163,94%,24%);
+  --color-emerald-800: hsl(163,88%,20%);
+  --color-emerald-900: hsl(164,86%,16%);
+  --color-emerald-950: hsl(164,90%,9%);
+
+  --animate-fade-in: fadeIn 0.4s ease-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+
+  @keyframes fadeIn  { from { opacity:0; transform:scale(0.98) } to { opacity:1; transform:scale(1) } }
+  @keyframes slideUp { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:translateY(0) } }
+  @keyframes gradientXY {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes shimmer { 0%,100%{opacity:.4} 50%{opacity:1} }
+  @keyframes bounceIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+}
+
+/* ════════════════════════════════════════
+   DARK MODE  (default)
+════════════════════════════════════════ */
+:root {
+  --bg-base:      hsl(222,47%,7%);
+  --bg-surface:   hsl(220,39%,11%);
+  --bg-card:      rgba(255,255,255,0.05);
+  --bg-card-hover:rgba(255,255,255,0.08);
+  --border-card:  rgba(255,255,255,0.10);
+  --border-strong:rgba(255,255,255,0.18);
+  --text-primary: hsl(210,40%,96%);
+  --text-secondary:hsl(215,20%,65%);
+  --text-muted:   hsl(215,15%,45%);
+  --text-inverse: hsl(222,47%,7%);
+  --shadow-glow:  0 0 40px rgba(52,211,153,.12);
+}
+
+/* ════════════════════════════════════════
+   LIGHT MODE
+════════════════════════════════════════ */
+html.light {
+  --bg-base:      hsl(210,40%,97%);
+  --bg-surface:   hsl(0,0%,100%);
+  --bg-card:      rgba(255,255,255,0.85);
+  --bg-card-hover:rgba(255,255,255,0.95);
+  --border-card:  rgba(0,0,0,0.10);
+  --border-strong:rgba(0,0,0,0.20);
+  --text-primary: hsl(222,47%,11%);
+  --text-secondary:hsl(215,20%,35%);
+  --text-muted:   hsl(215,15%,55%);
+  --text-inverse: hsl(210,40%,97%);
+  --shadow-glow:  0 0 40px rgba(22,163,74,.10);
+}
+
+/* ════════════════════════════════════════
+   BASE RESET
+════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark mode body gradient */
+html:not(.light) body {
+  background: linear-gradient(-45deg, hsl(222,47%,5%), hsl(161,80%,8%), hsl(210,50%,6%), hsl(222,47%,7%));
+  background-size: 400% 400%;
+  animation: gradientXY 20s ease infinite;
+}
+
+/* Light mode body gradient */
+html.light body {
+  background: linear-gradient(-45deg, hsl(210,40%,98%), hsl(151,81%,94%), hsl(180,40%,94%), hsl(210,40%,97%));
+  background-size: 400% 400%;
+  animation: gradientXY 20s ease infinite;
+}
+
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-display); color: var(--text-primary); }
+
+/* Tabular metric numbers */
+.metric {
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Focus rings */
+:focus-visible {
+  outline: 2px solid hsl(160,84%,39%);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ════════════════════════════════════════
+   COMPONENT UTILITIES
+════════════════════════════════════════ */
+.glass-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Springy transition */
+}
+
+.glass-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 36px -8px rgba(16, 185, 129, 0.15), var(--shadow-glow);
+  border-color: var(--border-strong);
+  background: var(--bg-card-hover);
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, hsl(161,94%,30%), hsl(160,84%,39%));
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(52,211,153,0.25);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(52,211,153,.35); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Input field */
+.input-field {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: all 0.2s;
+}
+.input-field::placeholder { color: var(--text-muted); }
+.input-field:focus {
+  outline: none;
+  border-color: hsl(160,84%,39%);
+  box-shadow: 0 0 0 3px rgba(52,211,153,0.15);
+}
+
+/* Text color utilities using CSS vars */
+.text-primary   { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-muted     { color: var(--text-muted) !important; }
+
+/* Badge shine animation */
+@keyframes badgePop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.badge-unlocked { animation: badgePop 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(52,211,153,0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(52,211,153,0.5); }
+
+/* Screen-reader only */
+.sr-only {
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border-width:0;
+}
+
+/* ════════════════════════════════════════
+   PRINT
+════════════════════════════════════════ */
+.print-only { display: none; }
+
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: white !important; color: black !important; }
+  .glass-card { background: white !important; border: 1px solid #ddd !important; backdrop-filter: none !important; }
+}
+
+/* ════════════════════════════════════════
+   GOOGLE TRANSLATE HIDE BANNER
+════════════════════════════════════════ */
+.goog-te-banner-frame { display: none !important; }
+body { top: 0 !important; }
+.goog-logo-link, .goog-te-gadget span { display: none !important; }
+.goog-te-gadget { font-size: 0 !important; }
+select.goog-te-combo {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-card);
+  border-radius: 0.5rem;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.var-bg-card { background: var(--bg-card) !important; }
+.border-card { border-color: var(--border-card) !important; }
+.border-strong { border-color: var(--border-strong) !important; }
+
+/* ----------------------------------------
+   FUTURISTIC ANIMATIONS & UTILITIES
+---------------------------------------- */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(52,211,153, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(52,211,153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153, 0); }
+}
+
+@keyframes holographic {
+  0% { opacity: 0.8; filter: hue-rotate(0deg); }
+  50% { opacity: 1; filter: hue-rotate(15deg); }
+  100% { opacity: 0.8; filter: hue-rotate(0deg); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.animate-holographic {
+  animation: holographic 6s infinite alternate;
+}
+
+.icon-glow {
+  text-shadow: 0 0 15px rgba(52,211,153,0.5);
+}
+
+.futuristic-border {
+  border: 1px solid var(--border-card);
+  box-shadow: inset 0 0 20px rgba(52,211,153,0.05), 0 0 15px rgba(52,211,153,0.1);
+  backdrop-filter: blur(12px);
+}
+
+/* ════════════════════════════════════════
+   Google Translate Overrides
+════════════════════════════════════════ */
+/* Hide the top banner completely */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0px !important; }
+#goog-gt-tt { display: none !important; } /* Hide the tooltip popup */
+.goog-te-gadget-icon { display: none !important; } /* Hide the Google icon */
+
+/* Style the translation dropdown */
+.goog-te-combo {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+.goog-te-combo:focus {
+  border-color: #34d399;
+}
+.goog-te-gadget {
+  color: transparent !important; /* Hide the "Powered by Google" text */
+  font-size: 0px;
+}
