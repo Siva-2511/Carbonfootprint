@@ -14,7 +14,7 @@ export function calculateBudget(annualKg: number): BudgetInfo {
   const isOverBudget = monthlyBudgetKg > sustainableMonthlyKg;
 
   let status: BudgetInfo['status'] = 'good';
-  let alertMessage = '';
+  let alertMessage: string;
 
   if (percentOfTarget >= 100) {
     status = 'critical';

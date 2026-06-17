@@ -46,7 +46,7 @@ export function validateInputs(partial: Partial<CalculatorInputs>): CalculatorIn
       INPUT_LIMITS.heatingTherms.min,
       INPUT_LIMITS.heatingTherms.max
     ),
-    vehicleType: ['petrol', 'diesel', 'ev', 'none'].includes(partial.vehicleType ?? '')
+    vehicleType: ['petrol', 'diesel', 'ev', 'none', 'bus', 'metro', 'twoWheeler'].includes(partial.vehicleType ?? '')
       ? (partial.vehicleType as CalculatorInputs['vehicleType'])
       : 'petrol',
     weeklyKm: clamp(

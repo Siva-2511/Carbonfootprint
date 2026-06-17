@@ -31,9 +31,12 @@ app.use(helmet({
 }));
 
 // 2. Strict CORS Policy
-// In production, you would restrict origin to your exact domain.
+const allowedOrigins = process.env.VITE_ALLOWED_ORIGINS 
+  ? process.env.VITE_ALLOWED_ORIGINS.split(',') 
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -52,6 +55,15 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
+// 4.1 Simple In-Memory LRU Cache for identical requests
+const responseCache = new Map();
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+// 4.2 Health Check Route (Exempt from rate limiting AI specifically if needed, but handled globally here)
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', csp: true });
+});
+
 // 5. Secure Proxy Route for AI Integration
 app.post('/api/chat', async (req, res) => {
   try {
@@ -68,6 +80,30 @@ app.post('/api/chat', async (req, res) => {
       return res.status(500).json({ error: 'Server configuration error.' });
     }
 
+    const payload = JSON.stringify({
+      model: model || 'google/gemma-4-31b-it:free',
+      messages,
+      temperature: temperature || 0.6,
+      max_tokens: max_tokens || 1000
+    });
+
+    // Check Cache
+    // Create a simple hash/key from the payload string
+    let cacheKey = 0;
+    for (let i = 0; i < payload.length; i++) {
+      cacheKey = Math.imul(31, cacheKey) + payload.charCodeAt(i) | 0;
+    }
+    const keyStr = cacheKey.toString();
+
+    if (responseCache.has(keyStr)) {
+      const cached = responseCache.get(keyStr);
+      if (Date.now() - cached.timestamp < CACHE_TTL) {
+        return res.json(cached.data);
+      } else {
+        responseCache.delete(keyStr); // expired
+      }
+    }
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -76,12 +112,7 @@ app.post('/api/chat', async (req, res) => {
         'X-Title': 'CarbonSense Secure',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        model: model || 'google/gemma-4-31b-it:free',
-        messages,
-        temperature: temperature || 0.6,
-        max_tokens: max_tokens || 1000
-      })
+      body: payload
     });
 
     if (!response.ok) {
@@ -91,6 +122,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const data = await response.json();
+    responseCache.set(keyStr, { timestamp: Date.now(), data });
     res.json(data);
   } catch (error) {
     console.error('Backend Proxy Error:', error);

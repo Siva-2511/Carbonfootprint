@@ -1,115 +1,117 @@
-# CarbonSense: AI-Powered Sustainability Intelligence
+# Carbonfootprint 🌍
 
-**Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026.**
-**Developed by:** Sivasubramaniyan G
+Welcome to **CarbonSense** (Carbonfootprint)! This is a highly developed, premium SaaS-style sustainability dashboard and carbon footprint calculator designed to help users track, understand, and reduce their environmental impact with the help of AI.
 
-## 🎯 The Challenge: Carbon Footprint Awareness
-This project is a submission for **Challenge 3: Carbon Footprint Awareness Platform**. CarbonSense is an adaptive, offline-first, AI-driven platform that helps individuals understand, track, and reduce their carbon footprint through hyper-personalized insights, AI-generated low-carbon recipes, and dynamic travel routers.
+Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. Developed by Sivasubramaniyan G.
 
----
+## Features ✨
 
-## 🏗️ Architecture & Logic
+- **Premium SaaS UI**: Glassmorphism cards, animated gradients, magnetic buttons, and smooth scroll-triggered micro-interactions (Framer Motion).
+- **AI-Powered Insights**: Get personalized sustainability coaching from an AI advisor powered by Google's Gemini, using OpenRouter securely proxied through the backend.
+- **Strict Security & Hardening**:
+  - **Content Security Policy (CSP)** to prevent XSS and data injections.
+  - **Helmet** integration for HTTP header security.
+  - **Rate Limiting** to prevent DDoS and brute-force attacks on the proxy.
+  - Server-side environment variables (`.env`) for keeping API keys secure—**no keys are exposed to the client or stored in `localStorage`**.
+- **Performance Optimized**: Uses Google AJAX Libraries CDN for high-speed library delivery (jQuery) ensuring reduced latency. Integrated LRU caching in the proxy server to minimize redundant AI API calls.
+- **Highly Accessible (WCAG 2.1 AA Compliant)**: Full ARIA support (`aria-label`, `aria-hidden`, keyboard navigation), high-contrast text, semantic HTML5 tags, and accessible tab interfaces.
+- **Global Translation**: Multi-language support powered by Google Translate widget.
 
-CarbonSense utilizes a highly secure, full-stack architecture separating the client-side UI from the AI communication layer. 
+## Architecture Diagram 🏗️
 
 ```mermaid
 graph TD
     subgraph Frontend [React + Vite Frontend]
-        UI[Premium Framer Motion UI]
-        Store[Zustand State Management]
-        AILayer[Frontend Proxy Service]
+        UI[Glassmorphism UI Components]
+        Store[Zustand State Manager]
+        I18n[Google Translate Widget]
+        Sec[Security Auditor]
+        
         UI --> Store
-        UI --> AILayer
+        Store --> Sec
     end
 
-    subgraph Backend [Node.js / Express Server]
-        Proxy[Secure AI Proxy Endpoint]
-        Security[Helmet + Rate Limiting]
-        Env[.env Secret Storage]
-        Proxy --> Security
-        Security --> Env
+    subgraph CDN [Google AJAX Libraries CDN]
+        JQuery[jQuery]
     end
-
-    subgraph External [External APIs]
-        OpenRouter[OpenRouter / Gemini Models]
-        GoogleCDN[Google AJAX Libraries CDN]
+    
+    subgraph Backend [Express.js Proxy Server]
+        RL[Rate Limiter]
+        H[Helmet Security]
+        Cache[LRU Cache]
+        API[OpenRouter / Gemini API Gateway]
+        
+        RL --> H
+        H --> Cache
+        Cache --> API
     end
-
-    AILayer -->|Secure HTTP POST| Proxy
-    Proxy -->|Authenticated Request| OpenRouter
-    UI -.->|Library Delivery| GoogleCDN
+    
+    Frontend -->|API Requests| Backend
+    Frontend -->|Library Load| CDN
+    Backend -->|Secure Request| ExternalAI[External AI Model]
 ```
 
----
+## Security Posture 🔒
 
-## 🛡️ How We Meet the Evaluation Criteria
+This system has been hardened against common vulnerabilities:
+1. **No Client-Side Secrets**: `OPENROUTER_API_KEY` is safely isolated in the Node.js backend.
+2. **CORS Allowlisting**: The backend proxy strictly enforces `VITE_ALLOWED_ORIGINS` to ensure only the authorized frontend can communicate with it.
+3. **Input Sanitization**: Client inputs are scrubbed and validated (e.g. `DOMPurify` for strings, clamping for numbers) before processing.
+4. **Error Boundary**: Prevents React component crashes from bubbling up and exposing sensitive stack traces.
+5. **Real-time Security Audit**: Built-in runtime diagnostics to verify CSP, Error Boundaries, and State integrity.
 
-### 1. Code Quality 
-- **Modular Design:** The application is split into discrete React components (`Layout.tsx`, `RecipeWizard.tsx`, `AdvisorChat.tsx`).
-- **State Management:** Uses Zustand for clean, globally accessible state without prop-drilling.
-- **Maintainability:** The AI logic is abstracted into a single `aiLayer.ts` service, making it trivial to swap AI providers in the future.
-
-### 2. Security (Strict Implementation)
-- **Secret Management:** The OpenRouter API key is **never** exposed to the browser. It is securely stored in a backend `.env` file.
-- **Helmet Protection:** The backend uses `helmet` to enforce strict HTTP headers (HSTS, NoSniff, CSP).
-- **DDoS Mitigation:** `express-rate-limit` protects the AI proxy endpoint from abuse (max 100 requests / 15 min).
-- **CORS:** Cross-Origin Resource Sharing is strictly configured to only accept requests from the local frontend.
-
-### 3. Efficiency
-- **Google AJAX Libraries CDN:** jQuery is delivered via the high-speed Google CDN to reduce latency.
-- **Framer Motion:** Hardware-accelerated animations ensure 60fps UI performance.
-- **Offline-First:** Core calculations (e.g., the base carbon footprint calculator) run entirely in the browser using pre-loaded IPCC emission factors, reducing unnecessary API calls.
-
-### 4. Testing & Validation
-- **Error Boundaries:** The React tree is wrapped in custom Error Boundaries to prevent total crashes.
-- **Fallback UI:** If the backend proxy fails or times out, the app gracefully degrades to using its "Local Engine" for fallback answers.
-- **Concurrent Dev:** Tested robustly using `concurrently` to ensure frontend and backend synchronize perfectly during development.
-
-### 5. Accessibility (WCAG 2.1 AA)
-- **ARIA Labels:** Every interactive element features `aria-label`, `role`, and `tabIndex` for screen-reader compatibility.
-- **Motion Sensitivity:** The Framer Motion animations are built with `prefers-reduced-motion` in mind, gracefully degrading for users with vestibular disorders.
-- **Keyboard Navigation:** The custom tab system in the layout supports full arrow-key and Home/End keyboard navigation.
-
----
-
-## 🚀 How to Run the Project (For Judges)
+## Getting Started 🚀
 
 ### Prerequisites
 - Node.js (v18+)
-- OpenRouter API Key
+- npm or yarn
+- An OpenRouter API Key (using Google Gemini)
 
-### Setup Instructions
+### Installation
 
 1. **Clone the repository:**
-   \`\`\`bash
-   git clone <your-repo-url>
-   cd carbon-footprint-awareness
-   \`\`\`
+   ```bash
+   git clone https://github.com/Siva-2511/Carbonfootprint.git
+   cd Carbonfootprint
+   ```
 
-2. **Install Dependencies:**
-   \`\`\`bash
+2. **Install dependencies:**
+   ```bash
    npm install
-   \`\`\`
+   cd server && npm install && cd ..
+   ```
 
-3. **Configure Environment Variables (CRITICAL):**
-   For security reasons, the `.env` file is excluded from git. You **must** create one to test the AI functionality.
-   Rename `.env.example` to `.env` and paste your OpenRouter key:
+3. **Configure Environment Variables:**
+   Create a `.env` file in the root directory:
    ```env
-   OPENROUTER_API_KEY=your_api_key_here
+   VITE_API_URL=http://localhost:3001/api/chat
+   OPENROUTER_API_KEY=sk-or-v1-...
+   VITE_ALLOWED_ORIGINS=http://localhost:5173
    PORT=3001
    ```
 
-4. **Start the Application:**
-   \`\`\`bash
+4. **Run the Application:**
+   Start both the Vite frontend and Express proxy server concurrently:
+   ```bash
    npm run dev
-   \`\`\`
-   *Note: This command uses `concurrently` to automatically start both the Node.js backend (Port 3001) and the Vite frontend (Port 5173).*
+   ```
 
-5. **View the App:**
-   Open \`http://localhost:5173\` in your browser.
+5. **Run the Test Suite (Vitest):**
+   ```bash
+   npm run test
+   ```
+
+## Accessibility (a11y) ♿
+
+CarbonSense was built with inclusivity in mind.
+- **ARIA Attributes**: Applied `aria-label` to all icon-only buttons for screen readers.
+- **Keyboard Navigation**: Fully interactive via the `Tab` key with visible focus rings.
+- **Roles**: Semantic `role="tablist"`, `role="tab"`, and `role="tabpanel"` applied to navigation.
+
+## Future Roadmap 🛣️
+- Enhanced gamification with localized leaderboards.
+- Offline PWA support with Service Workers.
+- Direct integration with smart home APIs (e.g. Google Nest) for real-time energy monitoring.
 
 ---
-
-## 🧠 Assumptions Made
-- We assume the user has internet access for the AI features, but we engineered a fallback "Local Engine" that provides basic text interpolation if the network drops.
-- We assume the OpenRouter API key provided has sufficient credits for the `google/gemma-4-31b-it:free` model.
+*Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. Developed by Sivasubramaniyan G.*

@@ -3,7 +3,7 @@
 // ─────────────────────────────────────
 
 export type ElectricitySource = 'grid' | 'solar' | 'mixed';
-export type VehicleType = 'petrol' | 'diesel' | 'ev' | 'none';
+export type VehicleType = 'petrol' | 'diesel' | 'ev' | 'none' | 'bus' | 'metro' | 'twoWheeler';
 export type DietType = 'heavy-meat' | 'low-meat' | 'vegetarian' | 'vegan';
 export type Priority = 'P0' | 'P1' | 'P2';
 export type Difficulty = 'easy' | 'moderate' | 'hard';

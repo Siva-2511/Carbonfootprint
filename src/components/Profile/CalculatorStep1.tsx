@@ -72,9 +72,9 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
         <div>
           <label className="block text-sm font-medium text-secondary mb-2">Household Size</label>
           <div className="flex items-center gap-4">
-            <button type="button" onClick={() => onUpdate({ householdSize: Math.max(1, (inputs.householdSize || 1) - 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">-</button>
+            <button aria-label="Decrease household size" type="button" onClick={() => onUpdate({ householdSize: Math.max(1, (inputs.householdSize || 1) - 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">-</button>
             <span className="text-xl font-bold text-primary font-display w-6 text-center">{inputs.householdSize || 1}</span>
-            <button type="button" onClick={() => onUpdate({ householdSize: Math.min(20, (inputs.householdSize || 1) + 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">+</button>
+            <button aria-label="Increase household size" type="button" onClick={() => onUpdate({ householdSize: Math.min(20, (inputs.householdSize || 1) + 1) })} className="w-10 h-10 rounded-full border border-strong text-primary flex items-center justify-center hover:bg-white/5 active:scale-95 transition-all">+</button>
           </div>
         </div>
       </div>

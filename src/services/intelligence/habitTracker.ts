@@ -47,6 +47,6 @@ export function evaluateSession(state: HabitState): HabitState {
   };
 }
 /** Points-based system has no recovery mode */
-export function isInRecoveryMode(_state: HabitState): boolean {
+export function isInRecoveryMode(): boolean {
   return false;
 }

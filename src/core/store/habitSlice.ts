@@ -1,6 +1,6 @@
 import type { StateCreator } from 'zustand';
 import type { AppState, HabitSliceActions, HabitSliceState, HabitState } from '../../types';
-import { evaluateSession as evaluateHabitSession, BADGE_THRESHOLDS } from '../../services/intelligence/habitTracker';
+import { evaluateSession as evaluateHabitSession } from '../../services/intelligence/habitTracker';
 
 const DEFAULT_HABIT_STATE: HabitState = {
   completedTaskIds: [],

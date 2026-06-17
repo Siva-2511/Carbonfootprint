@@ -4,9 +4,6 @@ import type {
   CalculatorInputs,
   CalculatorSliceActions,
   CalculatorSliceState,
-  CarbonResult,
-  CarbonDNA,
-  Recommendation,
 } from '../../types';
 import { INPUT_LIMITS } from '../../config';
 

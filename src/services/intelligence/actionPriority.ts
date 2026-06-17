@@ -46,7 +46,7 @@ const RECOMMENDATION_POOL: Recommendation[] = [
 const PRIORITY_ORDER: Record<Recommendation['priority'], number> = { P0: 0, P1: 1, P2: 2 };
 
 /** Returns ranked recommendations based on user's carbon profile. */
-export function rank(result: CarbonResult, _dna: CarbonDNA): Recommendation[] {
+export function rank(result: CarbonResult, dna: CarbonDNA): Recommendation[] {
   const { primaryDriver } = result;
   const categories: Category[] = [
     primaryDriver,
@@ -63,7 +63,18 @@ export function rank(result: CarbonResult, _dna: CarbonDNA): Recommendation[] {
     return b.impactKg - a.impactKg;
   });
 
-  return sorted;
+  // Personalize reasons based on DNA persona
+  return sorted.map(rec => {
+    let personalizedReason = rec.reason;
+    if (dna.persona === 'Eco-Leader' && rec.priority === 'P0') {
+      personalizedReason = `As an Eco-Leader, you can set the standard: ${rec.reason}`;
+    } else if (dna.persona === 'Urban Commuter' && rec.category === 'transport') {
+      personalizedReason = `Key for Urban Commuters: ${rec.reason}`;
+    } else if (dna.persona === 'Energy-Intensive Resident' && rec.category === 'energy') {
+      personalizedReason = `High impact for your energy profile: ${rec.reason}`;
+    }
+    return { ...rec, reason: personalizedReason };
+  });
 }
 
 /** Promotes top P1 to P0 in categories where all P0 are completed. */

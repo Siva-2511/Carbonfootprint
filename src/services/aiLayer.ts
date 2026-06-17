@@ -1,14 +1,13 @@
 import type { AIResponse } from '../types';
 import { APP_CONFIG } from '../config';
 
-const BACKEND_URL = 'http://localhost:3001/api/chat';
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/chat';
 
 /**
  * Enhanced Local Proxy for Text Enhancement.
  */
 export async function enhanceText(
-  localText: string,
-  apiKey: string | null
+  localText: string
 ): Promise<AIResponse> {
   try {
     const controller = new AbortController();
@@ -48,8 +47,7 @@ export async function enhanceText(
  */
 export async function analyzeImageWithAI(
   base64Image: string,
-  prompt: string,
-  apiKey: string | null
+  prompt: string
 ): Promise<string | null> {
   try {
     const res = await fetch(BACKEND_URL, {
@@ -87,8 +85,7 @@ export async function analyzeImageWithAI(
  */
 export async function chatWithAI(
   userMessage: string,
-  systemContext: string,
-  apiKey: string | null
+  systemContext: string
 ): Promise<AIResponse> {
   try {
     const controller = new AbortController();
@@ -132,8 +129,7 @@ export async function chatWithAI(
  */
 export async function getActionBreakdown(
   actionName: string,
-  userPersona: string,
-  apiKey: string | null
+  userPersona: string
 ): Promise<string | null> {
   try {
     const res = await fetch(BACKEND_URL, {

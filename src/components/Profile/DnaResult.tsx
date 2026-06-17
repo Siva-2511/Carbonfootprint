@@ -1,7 +1,6 @@
 import React from 'react';
 import { useStore } from '../../core/store';
 import { Badge } from '../ui/Badge';
-import { ProgressBar } from '../ui/ProgressBar';
 import { simplify } from '../../services/core/textSimplifier';
 
 const PERSONA_ICONS: Record<string, string> = {
@@ -16,13 +15,6 @@ const TREND_CONFIG = {
   increasing: { label: 'Increasing', color: 'danger' as const, icon: '📈' },
   stable: { label: 'Stable', color: 'warning' as const, icon: '➡️' },
   decreasing: { label: 'Decreasing', color: 'success' as const, icon: '📉' },
-};
-
-const CATEGORY_COLORS: Record<string, string> = {
-  energy: 'bg-amber-500',
-  transport: 'bg-blue-500',
-  diet: 'bg-green-500',
-  consumption: 'bg-purple-400',
 };
 
 export function DnaResult() {

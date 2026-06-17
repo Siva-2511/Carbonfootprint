@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
-import { APP_CONFIG } from '../../config';
 
 interface ChallengeState {
   question: string;

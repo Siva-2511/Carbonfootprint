@@ -7,12 +7,14 @@ const cache: Partial<Record<string, Translations>> = {};
 /** i18n hook. Reads language from settings store, loads JSON, returns t() lookup. */
 export function useTranslation() {
   const language = useStore((s) => s.settings.language);
-  const [translations, setTranslations] = useState<Translations>({});
+  const [translations, setTranslations] = useState<Translations>(() => {
+    const lang = language || 'en';
+    return cache[lang] || {};
+  });
 
   useEffect(() => {
     const lang = language || 'en';
-    if (cache[lang]) {
-      setTranslations(cache[lang]!);
+    if (cache[lang] && Object.keys(translations).length > 0) {
       return;
     }
     fetch(`/translations/${lang}.json`)
@@ -22,7 +24,7 @@ export function useTranslation() {
         setTranslations(data);
       })
       .catch(() => setTranslations({}));
-  }, [language]);
+  }, [language, translations]);
 
   const t = useCallback(
     (key: string, fallback?: string): string => {

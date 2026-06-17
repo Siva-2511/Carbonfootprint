@@ -19,6 +19,10 @@ class ErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false, error: null };
   }
 
+  componentDidMount() {
+    (window as unknown as { __ERROR_BOUNDARY_MOUNTED__: boolean }).__ERROR_BOUNDARY_MOUNTED__ = true;
+  }
+
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }

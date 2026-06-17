@@ -23,7 +23,7 @@ function buildResponse(
   const persona_ = dna?.persona ?? 'your profile';
   const reductPct = dna?.reductionPotential ?? 25;
 
-  let answer = '';
+  let answer: string;
 
   // ── Keyword routing ──
   if (/transport|car|driv|commut|flight|bus|metro/.test(q)) {
@@ -117,8 +117,9 @@ export function AdvisorChat() {
 
   const handleSend = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || Date.now() - lastSent < 1500) return;
-    setLastSent(Date.now());
+    const now = new Date().getTime();
+    if (!trimmed || now - lastSent < 1500) return;
+    setLastSent(now);
     setInputText('');
     addMessage({ role: 'user', text: trimmed, source: 'local' });
     setLoading(true);

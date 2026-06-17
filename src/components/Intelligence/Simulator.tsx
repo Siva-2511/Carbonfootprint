@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Slider } from '../ui/Slider';
 import { useStore } from '../../core/store';
@@ -10,21 +10,14 @@ export function Simulator() {
   const [flightReduction, setFlightReduction] = useState(0);
   const [meatReduction, setMeatReduction] = useState(0);
   
-  const [simulatedKg, setSimulatedKg] = useState(result?.totalAnnualKg || 0);
-
-  useEffect(() => {
-    if (!result) return;
-    
-    // Original emission breakdown
+  const simulatedKg = React.useMemo(() => {
+    if (!result) return 0;
     const baseTransport = result.breakdown.transport.kg;
     const baseDiet = result.breakdown.diet.kg;
-    
-    // Simulate savings
     const transportSavings = baseTransport * ((driveReduction * 0.4 + flightReduction * 0.6) / 100);
     const dietSavings = baseDiet * (meatReduction / 100);
-    
     const newTotal = result.totalAnnualKg - transportSavings - dietSavings;
-    setSimulatedKg(Math.max(0, Math.round(newTotal)));
+    return Math.max(0, Math.round(newTotal));
   }, [driveReduction, flightReduction, meatReduction, result]);
 
   if (!result || result.totalAnnualKg === 0) {

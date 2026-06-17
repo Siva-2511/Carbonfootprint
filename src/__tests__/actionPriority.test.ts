@@ -30,6 +30,23 @@ describe('actionPriority', () => {
     expect(recs.length).toBeGreaterThan(0);
   });
 
+  it('personalizes reasons based on DNA persona', () => {
+    // Urban Commuter testing
+    const recsUrban = rank(MOCK_RESULT, MOCK_DNA);
+    const transportRec = recsUrban.find(r => r.category === 'transport');
+    if (transportRec) {
+      expect(transportRec.reason).toContain('Key for Urban Commuters:');
+    }
+
+    // Eco-Leader testing
+    const leaderDna: CarbonDNA = { ...MOCK_DNA, persona: 'Eco-Leader' };
+    const recsLeader = rank(MOCK_RESULT, leaderDna);
+    const p0Rec = recsLeader.find(r => r.priority === 'P0');
+    if (p0Rec) {
+      expect(p0Rec.reason).toContain('As an Eco-Leader, you can set the standard:');
+    }
+  });
+
   it('sorts P0 before P1 before P2', () => {
     const recs = rank(MOCK_RESULT, MOCK_DNA);
     const priorities = recs.map((r) => r.priority);

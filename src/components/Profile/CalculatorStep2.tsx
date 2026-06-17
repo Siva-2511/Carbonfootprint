@@ -52,7 +52,31 @@ const VEHICLE_OPTIONS: VehicleOption[] = [
     label: 'None',
     factorLabel: '0 g CO₂/km',
     factorColor: 'text-green-400',
-    description: 'Walk / cycle / transit',
+    description: 'Walk / cycle',
+  },
+  {
+    value: 'bus',
+    icon: '🚌',
+    label: 'Bus',
+    factorLabel: '105 g CO₂/km',
+    factorColor: 'text-emerald-300',
+    description: 'Public bus transit',
+  },
+  {
+    value: 'metro',
+    icon: '🚇',
+    label: 'Metro',
+    factorLabel: '41 g CO₂/km',
+    factorColor: 'text-teal-400',
+    description: 'Train or subway',
+  },
+  {
+    value: 'twoWheeler',
+    icon: '🛵',
+    label: 'Two-Wheeler',
+    factorLabel: '84 g CO₂/km',
+    factorColor: 'text-yellow-400',
+    description: 'Scooter or motorcycle',
   },
 ];
 
@@ -80,7 +104,7 @@ export function CalculatorStep2({ inputs, onUpdate }: CalculatorStep2Props) {
         <div
           role="radiogroup"
           aria-label="Vehicle type"
-          className="grid grid-cols-2 gap-3"
+          className="grid grid-cols-2 md:grid-cols-3 gap-3"
         >
           {VEHICLE_OPTIONS.map((opt) => {
             const isSelected = inputs.vehicleType === opt.value;

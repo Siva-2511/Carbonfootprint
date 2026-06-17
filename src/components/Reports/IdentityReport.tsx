@@ -15,7 +15,6 @@ const BADGE_DEFS = [
 export function GamificationBadges() {
   const habits   = useStore((s) => s.habits);
   const result   = useStore((s) => s.result);
-  const completed = useStore((s) => s.habits.completedTaskIds.length);
 
   const unlockedIds = new Set(habits.badges);
   if (result) unlockedIds.add('first_step');
