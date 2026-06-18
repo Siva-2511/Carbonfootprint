@@ -36,17 +36,9 @@ export function ReceiptScanner() {
         Upload a photo of your shopping receipt or a meal. Our Vision AI will extract the items, calculate the calories, and estimate the carbon footprint instantly!
       </p>
 
-      {!apiKey && (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-sm text-amber-300">
-          ⚠️ You need to add your OpenRouter API key in Settings to use the AI Scanner.
-        </div>
-      )}
-
       <div 
-        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
-          apiKey ? 'border-emerald-500/30 hover:border-emerald-500/60 cursor-pointer bg-emerald-500/5' : 'border-gray-700 opacity-50 cursor-not-allowed'
-        }`}
-        onClick={() => apiKey && fileInputRef.current?.click()}
+        className="border-2 border-dashed rounded-xl p-8 text-center transition-all border-emerald-500/30 hover:border-emerald-500/60 cursor-pointer bg-emerald-500/5"
+        onClick={() => fileInputRef.current?.click()}
       >
         <input 
           type="file" 
@@ -54,7 +46,7 @@ export function ReceiptScanner() {
           className="hidden" 
           ref={fileInputRef} 
           onChange={handleFileChange} 
-          disabled={!apiKey || loading}
+          disabled={loading}
         />
         <div className="text-4xl mb-2">📥</div>
         <p className="text-primary font-semibold">Click to upload an image</p>

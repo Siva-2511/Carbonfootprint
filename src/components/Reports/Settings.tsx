@@ -130,7 +130,6 @@ export function Settings() {
                 { key: 'inputValidationActive', label: 'Input Sanitization', desc: 'React auto-escapes all rendered text to prevent injection' },
                 { key: 'storageSanitized',       label: 'State Integrity',   desc: 'Zustand store schema passes structural validation' },
                 { key: 'errorBoundaryActive',    label: 'Crash Protection',  desc: 'Top-level ErrorBoundary is active and catching exceptions' },
-                { key: 'apiKeySecured',          label: 'Local API Key',     desc: 'Key is isolated in browser memory, no backend transmission' },
                 { key: 'cspEnabled',             label: 'CSP Header',        desc: 'Content Security Policy (meta tag/helmet) is present and active' },
               ] as const).map(({ key, label, desc }) => {
                 const isPassed = audit ? audit[key as keyof typeof audit] : false;

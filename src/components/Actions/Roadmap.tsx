@@ -138,7 +138,7 @@ export function Roadmap() {
                     <Badge variant="neutral" size="sm">{rec.timeframe}</Badge>
                   </div>
                   
-                  {apiKey && !breakdowns[rec.id] && (
+                  {!breakdowns[rec.id] && (
                     <button 
                       onClick={() => handleGetBreakdown(rec.id, rec.action)}
                       disabled={loadingBreakdown === rec.id}

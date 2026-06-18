@@ -6,18 +6,22 @@ Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. 
 
 ## Features ✨
 
-- **Premium SaaS UI**: Glassmorphism cards, animated gradients, magnetic buttons, and smooth scroll-triggered micro-interactions using Framer Motion.
-- **IPCC-Based Carbon Calculator**: A detailed 4-category calculator using standard emission factors before AI enhancement.
-- **Carbon DNA & Personas**: Classifies users into Carbon DNA archetypes and provides AI coaching from distinct personas.
-- **AI-Powered Insights**: Securely proxied Google Gemini/OpenRouter AI generates daily sustainability challenges, analyzes receipt/meal images for carbon impact, and provides a conversational advisor.
-- **Strict Security & Hardening**:
-  - **Content Security Policy (CSP)** to prevent XSS.
-  - **Helmet** integration for HTTP header security.
-  - **Rate Limiting** to prevent DDoS on the proxy.
-  - Server-side environment variables (`.env`) for keeping API keys secure—**no keys are exposed to the client**.
-- **Performance Optimized**: Built with React and Vite. The Express backend uses a bounded LRU cache to minimize redundant AI API calls.
-- **Built for Accessibility**: Full ARIA support (`aria-label`, `aria-hidden`, keyboard navigation), high-contrast text, semantic HTML5 tags, and accessible tab interfaces.
-- **Global Translation**: Multi-language support powered by Google Translate.
+**My Profile tab**: 4-step guided calculator (Energy, Transport, Diet, Lifestyle/consumption) using IPCC-based emission factors, with country-aware electricity grid intensity, household size scaling, and real-time input validation. Produces a "Carbon DNA" result: a persona classification (e.g. Eco-Leader, Balanced Emitter, Urban Commuter) with a category breakdown (energy/transport/diet/consumption percentages), a trend indicator, and a "Carbon Evolution" panel showing a 5-year projected trajectory comparing business-as-usual emissions against an achievable sustainable-action trajectory.
+
+**Intelligence tab**: A Sustainability Scorecard (0-100 score with category-level breakdown and a "biggest opportunity" callout), a What-If Simulator with live sliders (Drive Less / Fly Less / Reduce Meat & Dairy) that recompute projected footprint and savings in real time, a benchmark comparison chart against India average, global average, top-10%-of-emitters, and the Paris Agreement 2030 per-capita target, and a Progress Tracker showing monthly carbon budget vs. actual emissions.
+
+**Actions tab**: A phase-based Action Roadmap (Quick Wins / Habit Formation / Optimization / Carbon Neutral) with priority-ranked, persona-personalized recommendations, checkable progress tracking with eco-points and levels, an AI-generated step-by-step guide per action, and an AI Advisor chat with three selectable coaching personas (Friendly Guide, Strict Coach, Eco Scientist).
+
+**Reports & Settings tab**: An Identity Report summary, a Carbon Offsetting calculator (tree-equivalent estimate), theme toggle, ELI10 mode (simplifies technical language app-wide), AI coach persona selection, and a System Health panel showing live security audit results.
+
+**Eco Lab tab**: An AI Receipt & Meal Scanner (upload a photo, get itemized carbon footprint estimates via Vision AI) and a Daily Eco-Challenge (AI-generated sustainability trivia).
+
+**Lifestyle tab**: An AI Recipe Wizard (turns listed ingredients into a low-carbon recipe suggestion) and an Eco-Travel Router (suggests the lowest-carbon route between two locations).
+
+**Cross-cutting**: Offline-first local fallback for every AI feature (the app remains fully functional with static/local logic if the AI backend is unreachable or times out), Google Translate-powered multi-language support, full keyboard navigation and ARIA labeling across all six tabs, and a backend security posture (Helmet, CSP, rate limiting, CORS allowlisting, response caching) that keeps the AI provider key server-side only.
+
+### Known Limitations
+If the AI backend proxy is unreachable or times out, the AI-dependent features gracefully degrade to local logic and static fallbacks, ensuring the application remains functional without disrupting the core user experience.
 
 ## Architecture Diagram 🏗️
 

@@ -48,9 +48,7 @@ Return ONLY valid JSON in this exact format, with no markdown formatting or extr
         </div>
       </div>
       
-      {!apiKey ? (
-        <p className="text-sm text-muted">Please configure your API key in Settings to play.</p>
-      ) : !challenge && !loading ? (
+      {!challenge && !loading ? (
         <button 
           onClick={generateChallenge}
           className="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl transition-all font-medium"
