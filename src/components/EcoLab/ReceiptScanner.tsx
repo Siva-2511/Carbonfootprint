@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { useStore } from '../../core/store';
 import { analyzeImageWithAI } from '../../services/aiLayer';
 
 export function ReceiptScanner() {
-  const apiKey = useStore((s) => s.settings.geminiApiKey);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -12,11 +10,6 @@ export function ReceiptScanner() {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    if (!apiKey) {
-      alert('Please configure your OpenRouter API Key in Settings first.');
-      return;
-    }
 
     const reader = new FileReader();
     reader.onload = async (event) => {
@@ -27,7 +20,7 @@ export function ReceiptScanner() {
 
       const prompt = `Analyze this shopping receipt or food image. Extract the purchased items or food components. Then, estimate the associated carbon footprint (in kg CO2e) for each item, and provide a total estimated footprint. Format your response clearly.`;
       
-      const analysis = await analyzeImageWithAI(base64, prompt, apiKey);
+      const analysis = await analyzeImageWithAI(base64, prompt);
       setResult(analysis || 'Failed to analyze the image. Please try again.');
       setLoading(false);
     };

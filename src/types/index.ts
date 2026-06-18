@@ -98,7 +98,6 @@ export interface AppSettings {
   eli10Mode: boolean;
   language: Language;
   coachPersona: CoachPersona;
-  geminiApiKey: string | null;
 }
 
 export interface AIResponse {
@@ -137,7 +136,6 @@ export interface SecurityAuditResult {
   inputValidationActive: boolean;
   storageSanitized: boolean;
   errorBoundaryActive: boolean;
-  apiKeySecured: boolean;
   cspEnabled: boolean;
   overallStatus: 'secure' | 'warning';
 }
@@ -191,8 +189,6 @@ export interface SettingsSliceActions {
   toggleEli10: () => void;
   setLanguage: (lang: Language) => void;
   setCoachPersona: (persona: CoachPersona) => void;
-  setGeminiApiKey: (key: string) => void;
-  clearGeminiApiKey: () => void;
 }
 
 export type AppState = CalculatorSliceState &

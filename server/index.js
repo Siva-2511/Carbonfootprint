@@ -55,13 +55,14 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-// 4.1 Simple In-Memory LRU Cache for identical requests
+// 4.1 Bounded LRU Cache for identical requests
 const responseCache = new Map();
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+const MAX_CACHE_ENTRIES = 200;
 
 // 4.2 Health Check Route (Exempt from rate limiting AI specifically if needed, but handled globally here)
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', csp: true });
+  res.json({ status: 'ok' });
 });
 
 // 5. Secure Proxy Route for AI Integration
@@ -123,6 +124,13 @@ app.post('/api/chat', async (req, res) => {
 
     const data = await response.json();
     responseCache.set(keyStr, { timestamp: Date.now(), data });
+    
+    // Evict oldest if cache exceeds MAX_CACHE_ENTRIES
+    if (responseCache.size > MAX_CACHE_ENTRIES) {
+      const oldestKey = responseCache.keys().next().value;
+      responseCache.delete(oldestKey);
+    }
+    
     res.json(data);
   } catch (error) {
     console.error('Backend Proxy Error:', error);
@@ -131,7 +139,11 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`🔒 Secure Backend API listening on port ${PORT}`);
-  console.log(`Security measures active: Helmet HSTS/CSP, Rate Limiting, Strict CORS.`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`🔒 Secure Backend API listening on port ${PORT}`);
+    console.log(`Security measures active: Helmet HSTS/CSP, Rate Limiting, Strict CORS.`);
+  });
+}
+
+export default app;

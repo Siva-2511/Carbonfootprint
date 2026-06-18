@@ -1,21 +1,23 @@
-# Carbonfootprint 🌍
+# CarbonSense 🌍
 
-Welcome to **CarbonSense** (Carbonfootprint)! This is a highly developed, premium SaaS-style sustainability dashboard and carbon footprint calculator designed to help users track, understand, and reduce their environmental impact with the help of AI.
+Welcome to **CarbonSense**! This is a highly developed, premium SaaS-style sustainability dashboard and carbon footprint calculator designed to help users track, understand, and reduce their environmental impact with the help of AI.
 
 Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. Developed by Sivasubramaniyan G.
 
 ## Features ✨
 
-- **Premium SaaS UI**: Glassmorphism cards, animated gradients, magnetic buttons, and smooth scroll-triggered micro-interactions (Framer Motion).
-- **AI-Powered Insights**: Get personalized sustainability coaching from an AI advisor powered by Google's Gemini, using OpenRouter securely proxied through the backend.
+- **Premium SaaS UI**: Glassmorphism cards, animated gradients, magnetic buttons, and smooth scroll-triggered micro-interactions using Framer Motion.
+- **IPCC-Based Carbon Calculator**: A detailed 4-category calculator using standard emission factors before AI enhancement.
+- **Carbon DNA & Personas**: Classifies users into Carbon DNA archetypes and provides AI coaching from distinct personas.
+- **AI-Powered Insights**: Securely proxied Google Gemini/OpenRouter AI generates daily sustainability challenges, analyzes receipt/meal images for carbon impact, and provides a conversational advisor.
 - **Strict Security & Hardening**:
-  - **Content Security Policy (CSP)** to prevent XSS and data injections.
+  - **Content Security Policy (CSP)** to prevent XSS.
   - **Helmet** integration for HTTP header security.
-  - **Rate Limiting** to prevent DDoS and brute-force attacks on the proxy.
-  - Server-side environment variables (`.env`) for keeping API keys secure—**no keys are exposed to the client or stored in `localStorage`**.
-- **Performance Optimized**: Uses Google AJAX Libraries CDN for high-speed library delivery (jQuery) ensuring reduced latency. Integrated LRU caching in the proxy server to minimize redundant AI API calls.
-- **Highly Accessible (WCAG 2.1 AA Compliant)**: Full ARIA support (`aria-label`, `aria-hidden`, keyboard navigation), high-contrast text, semantic HTML5 tags, and accessible tab interfaces.
-- **Global Translation**: Multi-language support powered by Google Translate widget.
+  - **Rate Limiting** to prevent DDoS on the proxy.
+  - Server-side environment variables (`.env`) for keeping API keys secure—**no keys are exposed to the client**.
+- **Performance Optimized**: Built with React and Vite. The Express backend uses a bounded LRU cache to minimize redundant AI API calls.
+- **Built for Accessibility**: Full ARIA support (`aria-label`, `aria-hidden`, keyboard navigation), high-contrast text, semantic HTML5 tags, and accessible tab interfaces.
+- **Global Translation**: Multi-language support powered by Google Translate.
 
 ## Architecture Diagram 🏗️
 
@@ -28,90 +30,75 @@ graph TD
         Sec[Security Auditor]
         
         UI --> Store
-        Store --> Sec
-    end
-
-    subgraph CDN [Google AJAX Libraries CDN]
-        JQuery[jQuery]
+        Store --> UI
     end
     
-    subgraph Backend [Express.js Proxy Server]
-        RL[Rate Limiter]
-        H[Helmet Security]
-        Cache[LRU Cache]
-        API[OpenRouter / Gemini API Gateway]
+    subgraph Backend [Express/Node.js Proxy]
+        API[Rate Limited API]
+        Cache[LRU Memory Cache]
+        Headers[Helmet Security Headers]
         
-        RL --> H
-        H --> Cache
-        Cache --> API
+        API --> Cache
     end
     
-    Frontend -->|API Requests| Backend
-    Frontend -->|Library Load| CDN
-    Backend -->|Secure Request| ExternalAI[External AI Model]
+    subgraph External [External APIs]
+        OR[OpenRouter / Gemini AI]
+    end
+    
+    Frontend <-->|Secure Fetch over HTTP/HTTPS| Backend
+    Backend <-->|Server-to-Server| External
 ```
-
-## Security Posture 🔒
-
-This system has been hardened against common vulnerabilities:
-1. **No Client-Side Secrets**: `OPENROUTER_API_KEY` is safely isolated in the Node.js backend.
-2. **CORS Allowlisting**: The backend proxy strictly enforces `VITE_ALLOWED_ORIGINS` to ensure only the authorized frontend can communicate with it.
-3. **Input Sanitization**: Client inputs are scrubbed and validated (e.g. `DOMPurify` for strings, clamping for numbers) before processing.
-4. **Error Boundary**: Prevents React component crashes from bubbling up and exposing sensitive stack traces.
-5. **Real-time Security Audit**: Built-in runtime diagnostics to verify CSP, Error Boundaries, and State integrity.
 
 ## Getting Started 🚀
 
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-- An OpenRouter API Key (using Google Gemini)
+To run this application locally, you will need two terminal windows (one for the frontend, one for the backend proxy).
 
-### Installation
+### 1. Environment Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Siva-2511/Carbonfootprint.git
-   cd Carbonfootprint
-   ```
+In the `server` directory, create a `.env` file:
+```env
+OPENROUTER_API_KEY=your_api_key_here
+PORT=3001
+VITE_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   cd server && npm install && cd ..
-   ```
+In the root directory, create a `.env` file:
+```env
+VITE_API_URL=http://localhost:3001/api/chat
+```
 
-3. **Configure Environment Variables:**
-   Create a `.env` file in the root directory:
-   ```env
-   VITE_API_URL=http://localhost:3001/api/chat
-   OPENROUTER_API_KEY=sk-or-v1-...
-   VITE_ALLOWED_ORIGINS=http://localhost:5173
-   PORT=3001
-   ```
+### 2. Install Dependencies
 
-4. **Run the Application:**
-   Start both the Vite frontend and Express proxy server concurrently:
-   ```bash
-   npm run dev
-   ```
+Install dependencies for both the frontend and the backend:
 
-5. **Run the Test Suite (Vitest):**
-   ```bash
-   npm run test
-   ```
+```bash
+# In the root directory
+npm install
 
-## Accessibility (a11y) ♿
+# In the server directory
+cd server
+npm install
+```
 
-CarbonSense was built with inclusivity in mind.
-- **ARIA Attributes**: Applied `aria-label` to all icon-only buttons for screen readers.
-- **Keyboard Navigation**: Fully interactive via the `Tab` key with visible focus rings.
-- **Roles**: Semantic `role="tablist"`, `role="tab"`, and `role="tabpanel"` applied to navigation.
+### 3. Run the Application
 
-## Future Roadmap 🛣️
-- Enhanced gamification with localized leaderboards.
-- Offline PWA support with Service Workers.
-- Direct integration with smart home APIs (e.g. Google Nest) for real-time energy monitoring.
+Start both the backend proxy and the frontend Vite server. You can use the root-level script to run both concurrently if your environment supports it, or run them in separate terminals:
 
----
-*Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. Developed by Sivasubramaniyan G.*
+**Terminal 1 (Backend):**
+```bash
+cd server
+npm start
+```
+
+**Terminal 2 (Frontend):**
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`.
+
+## Methodology & Data
+
+CarbonSense calculates your baseline emissions using general IPCC-style emission factors (e.g., specific CO2e/km for different vehicle types, CO2e/kWh for grid electricity, and dietary averages). 
+
+The AI layer is then used to *enhance* these calculations—for example, by looking at an image of a receipt and using Vision AI to identify specific products to calculate their individual carbon footprint, or by acting as a conversational coach to provide highly personalized advice based on your baseline "Carbon DNA".

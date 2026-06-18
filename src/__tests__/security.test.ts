@@ -27,7 +27,6 @@ describe('Security Audit', () => {
     expect(result.inputValidationActive).toBe(true);
     expect(result.storageSanitized).toBe(true);
     expect(result.errorBoundaryActive).toBe(true);
-    expect(result.apiKeySecured).toBe(true);
     expect(result.cspEnabled).toBe(true);
     expect(result.overallStatus).toBe('secure');
   });
@@ -52,14 +51,4 @@ describe('Security Audit', () => {
     expect(result.overallStatus).toBe('warning');
   });
 
-  test('returns warning when geminiApiKey is exposed in root localstorage', async () => {
-    (window as unknown as { __ERROR_BOUNDARY_MOUNTED__: boolean }).__ERROR_BOUNDARY_MOUNTED__ = true;
-    document.head.innerHTML = '<meta http-equiv="Content-Security-Policy" content="default-src \'self\'">';
-    localStorage.setItem('geminiApiKey', 'sk-or-v1-...');
-
-    const result = await runSecurityAudit();
-    
-    expect(result.apiKeySecured).toBe(false);
-    expect(result.overallStatus).toBe('warning');
-  });
 });

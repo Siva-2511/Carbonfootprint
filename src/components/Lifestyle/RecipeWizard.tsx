@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore } from '../../core/store';
+import { rawAIFetch } from '../../services/aiLayer';
 
 interface RecipeResult {
   title: string;
@@ -10,37 +10,27 @@ interface RecipeResult {
 }
 
 export function RecipeWizard() {
-  const apiKey = useStore(s => s.settings.geminiApiKey);
   const [ingredients, setIngredients] = useState('');
   const [loading, setLoading] = useState(false);
   const [recipe, setRecipe] = useState<RecipeResult | null>(null);
 
   const generateRecipe = async () => {
-    if (!apiKey || !ingredients.trim()) return;
+    if (!ingredients.trim()) return;
     setLoading(true);
     
     try {
-      const res = await fetch('http://localhost:3001/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'google/gemma-4-31b-it:free',
-          messages: [{
-            role: 'user',
-            content: `I have the following ingredients: ${ingredients}. Generate a creative, ultra-low-carbon recipe using some or all of these. 
+      const contentStr = await rawAIFetch([{
+        role: 'user',
+        content: `I have the following ingredients: ${ingredients}. Generate a creative, ultra-low-carbon recipe using some or all of these. 
 Return ONLY valid JSON with exactly this structure, no markdown formatting or extra text:
 {"title": "Recipe Name", "ingredients": ["item 1", "item 2"], "instructions": ["step 1", "step 2"], "carbonFootprint": "e.g., 0.5 kg CO2e", "sustainabilityFact": "Why this meal is good for the planet"}`
-          }],
-          temperature: 0.7
-        })
-      });
+      }], 0.7);
       
-      const data = await res.json();
-      let content = data?.choices?.[0]?.message?.content || '';
-      content = content.replace(/```json/g, '').replace(/```/g, '').trim();
-      setRecipe(JSON.parse(content));
+      if (contentStr) {
+        let content = contentStr;
+        content = content.replace(/```json/g, '').replace(/```/g, '').trim();
+        setRecipe(JSON.parse(content));
+      }
     } catch (e) {
       console.error('Recipe generation failed', e);
     }

@@ -6,7 +6,6 @@ const DEFAULT_SETTINGS: AppSettings = {
   eli10Mode: false,
   language: 'en',
   coachPersona: 'friendly',
-  geminiApiKey: null,
 };
 
 export const createSettingsSlice: StateCreator<
@@ -28,10 +27,4 @@ export const createSettingsSlice: StateCreator<
 
   setCoachPersona: (coachPersona: CoachPersona) =>
     set((state) => ({ settings: { ...state.settings, coachPersona } })),
-
-  setGeminiApiKey: (key: string) =>
-    set((state) => ({ settings: { ...state.settings, geminiApiKey: key.trim() || null } })),
-
-  clearGeminiApiKey: () =>
-    set((state) => ({ settings: { ...state.settings, geminiApiKey: null } })),
 });

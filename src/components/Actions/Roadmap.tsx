@@ -19,16 +19,15 @@ export function Roadmap() {
   const eli10 = useStore((s) => s.settings.eli10Mode);
   const completeTask = useStore((s) => s.completeTask);
   const uncompleteTask = useStore((s) => s.uncompleteTask);
-  const apiKey = useStore((s) => s.settings.geminiApiKey);
-  
+  const dna = useStore((s) => s.dna);
   const [activePhase, setActivePhase] = useState(0);
   const [breakdowns, setBreakdowns] = useState<Record<string, string>>({});
   const [loadingBreakdown, setLoadingBreakdown] = useState<string | null>(null);
 
   const handleGetBreakdown = async (actionId: string, actionName: string) => {
-    if (breakdowns[actionId] || !apiKey) return;
+    if (breakdowns[actionId]) return;
     setLoadingBreakdown(actionId);
-    const text = await getActionBreakdown(actionName, apiKey);
+    const text = await getActionBreakdown(actionName, dna?.persona || 'User');
     if (text) {
       setBreakdowns(prev => ({ ...prev, [actionId]: text }));
     }

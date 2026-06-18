@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore } from '../../core/store';
+import { rawAIFetch } from '../../services/aiLayer';
 
 interface TravelPlan {
   destination: string;
@@ -15,38 +15,28 @@ interface TravelPlan {
 }
 
 export function TravelRouter() {
-  const apiKey = useStore(s => s.settings.geminiApiKey);
   const [startCity, setStartCity] = useState('');
   const [endCity, setEndCity] = useState('');
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<TravelPlan | null>(null);
 
   const generatePlan = async () => {
-    if (!apiKey || !startCity.trim() || !endCity.trim()) return;
+    if (!startCity.trim() || !endCity.trim()) return;
     setLoading(true);
     
     try {
-      const res = await fetch('http://localhost:3001/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'google/gemma-4-31b-it:free',
-          messages: [{
-            role: 'user',
-            content: `Generate a low-carbon travel itinerary from ${startCity} to ${endCity}. Prioritize trains, buses, or carpooling over flights where feasible. 
+      const contentStr = await rawAIFetch([{
+        role: 'user',
+        content: `Generate a low-carbon travel itinerary from ${startCity} to ${endCity}. Prioritize trains, buses, or carpooling over flights where feasible. 
 Return ONLY valid JSON with exactly this structure, no markdown formatting or extra text:
 {"destination": "City Name", "totalDistance": "e.g., 500 km", "recommendedMode": "e.g., High-speed Rail", "estimatedEmissions": "e.g., 15 kg CO2e", "itinerary": [{"step": "1", "description": "Take bus to central station", "mode": "Bus"}, {"step": "2", "description": "Take train to destination", "mode": "Train"}], "ecoTip": "Why this route is greener"}`
-          }],
-          temperature: 0.7
-        })
-      });
+      }], 0.7);
       
-      const data = await res.json();
-      let content = data?.choices?.[0]?.message?.content || '';
-      content = content.replace(/```json/g, '').replace(/```/g, '').trim();
-      setPlan(JSON.parse(content));
+      if (contentStr) {
+        let content = contentStr;
+        content = content.replace(/```json/g, '').replace(/```/g, '').trim();
+        setPlan(JSON.parse(content));
+      }
     } catch (e) {
       console.error('Travel plan generation failed', e);
     }

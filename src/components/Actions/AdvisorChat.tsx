@@ -127,20 +127,15 @@ export function AdvisorChat() {
     // Small artificial delay for UX
     await new Promise((r) => setTimeout(r, 400));
 
-    if (settings.geminiApiKey) {
-      const systemContext = `You are a CarbonSense AI sustainability advisor with a '${settings.coachPersona}' persona. 
+    const systemContext = `You are a CarbonSense AI sustainability advisor with a '${settings.coachPersona}' persona. 
 The user's current carbon footprint is ${result?.totalAnnualTons.toFixed(1) || 'unknown'} tons CO2e/year. 
 Their top recommended action is "${recommendations[0]?.action || 'none'}".
 Please answer their question directly, accurately, and keeping your persona in mind. Keep answers concise (under 4 sentences if possible) and focus on practical sustainability.`;
-      
-      const { text: finalText, source } = await chatWithAI(trimmed, systemContext, settings.geminiApiKey);
-      
-      if (finalText) {
-        addMessage({ role: 'assistant', text: finalText, source });
-      } else {
-        const localText = buildResponse(trimmed, dna, recommendations, result, settings.coachPersona);
-        addMessage({ role: 'assistant', text: localText, source: 'local' });
-      }
+    
+    const { text: finalText, source } = await chatWithAI(trimmed, systemContext);
+    
+    if (finalText) {
+      addMessage({ role: 'assistant', text: finalText, source });
     } else {
       const localText = buildResponse(trimmed, dna, recommendations, result, settings.coachPersona);
       addMessage({ role: 'assistant', text: localText, source: 'local' });
@@ -165,7 +160,7 @@ Please answer their question directly, accurately, and keeping your persona in m
           🤖 AI Sustainability Advisor
         </h2>
         <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '2px' }}>
-          Powered by local intelligence engine{settings.geminiApiKey ? ' + Gemini' : ''}
+          Powered by local intelligence engine + Gemini
         </p>
       </div>
 

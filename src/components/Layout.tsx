@@ -169,7 +169,7 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
         </p>
         <p className="mt-1">Developed by <strong className="text-primary font-semibold">Sivasubramaniyan G</strong></p>
         <div className="my-2 h-[1px] bg-muted/30 w-10 inline-block"></div>
-        <p className="text-[11px] opacity-80">Secure Backend Mode Active · WCAG 2.1 AA Compliant</p>
+        <p className="text-[11px] opacity-80">Secure Backend Mode Active · Built for Accessibility</p>
       </footer>
     </>
   );

@@ -6,6 +6,31 @@ const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/c
 /**
  * Enhanced Local Proxy for Text Enhancement.
  */
+export async function rawAIFetch(messages: { role: string; content: string }[], temperature = 0.7): Promise<string | null> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), APP_CONFIG.aiTimeoutMs * 2);
+
+    const res = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages, temperature }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    return data?.choices?.[0]?.message?.content || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Enhanced Local Proxy for Text Enhancement.
+ */
 export async function enhanceText(
   localText: string
 ): Promise<AIResponse> {

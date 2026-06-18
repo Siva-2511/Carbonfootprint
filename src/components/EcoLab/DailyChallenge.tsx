@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useStore } from '../../core/store';
+import { rawAIFetch } from '../../services/aiLayer';
 
 interface ChallengeState {
   question: string;
@@ -9,40 +9,23 @@ interface ChallengeState {
 }
 
 export function DailyChallenge() {
-  const apiKey = useStore(s => s.settings.geminiApiKey);
   const [challenge, setChallenge] = useState<ChallengeState | null>(null);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   
   const generateChallenge = async () => {
-    if (!apiKey) return;
     setLoading(true);
     try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'HTTP-Referer': window.location.href,
-          'X-Title': 'CarbonSense',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'openrouter/free',
-          messages: [{
-            role: 'user',
-            content: `Generate a fun, intermediate-level multiple choice sustainability trivia question. 
+      const contentStr = await rawAIFetch([{
+        role: 'user',
+        content: `Generate a fun, intermediate-level multiple choice sustainability trivia question. 
 Return ONLY valid JSON in this exact format, with no markdown formatting or extra text:
 {"question": "The question text", "options": ["Option A", "Option B", "Option C", "Option D"], "correctIndex": 0, "explanation": "Why this is correct"}`
-          }],
-          temperature: 0.7
-        })
-      });
+      }], 0.7);
       
-      const data = await res.json();
-      const content = data.choices?.[0]?.message?.content;
-      if (content) {
+      if (contentStr) {
         // Strip markdown backticks if the AI accidentally adds them
-        const cleaned = content.replace(/```json/g, '').replace(/```/g, '').trim();
+        const cleaned = contentStr.replace(/```json/g, '').replace(/```/g, '').trim();
         const parsed = JSON.parse(cleaned) as ChallengeState;
         setChallenge(parsed);
         setSelected(null);
