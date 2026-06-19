@@ -111,7 +111,7 @@ export function Roadmap() {
             <div
               key={rec.id}
               role="listitem"
-              className={`var-bg-card border rounded-xl p-4 transition-all ${done ? 'border-emerald-500/30 opacity-70' : 'border-card'}`}
+              className={`card-3d glass-panel rounded-xl p-4 transition-all ${done ? 'border-emerald-500/30 opacity-70' : 'border-card'}`}
             >
               <div className="flex items-start gap-3">
                 <input

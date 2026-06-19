@@ -47,6 +47,14 @@ const VEHICLE_OPTIONS: VehicleOption[] = [
     description: 'Electric vehicle (grid avg.)',
   },
   {
+    value: 'twoWheeler',
+    icon: '🛵',
+    label: 'Two-Wheeler',
+    factorLabel: '84 g CO₂/km',
+    factorColor: 'text-yellow-400',
+    description: 'Scooter or motorcycle',
+  },
+  {
     value: 'none',
     icon: '🚶',
     label: 'None',
@@ -54,13 +62,15 @@ const VEHICLE_OPTIONS: VehicleOption[] = [
     factorColor: 'text-green-400',
     description: 'Walk / cycle',
   },
+];
+
+const PUBLIC_TRANSIT_OPTIONS: { value: 'bus' | 'metro', icon: string, label: string, factorLabel: string, factorColor: string }[] = [
   {
     value: 'bus',
     icon: '🚌',
     label: 'Bus',
     factorLabel: '105 g CO₂/km',
     factorColor: 'text-emerald-300',
-    description: 'Public bus transit',
   },
   {
     value: 'metro',
@@ -68,15 +78,6 @@ const VEHICLE_OPTIONS: VehicleOption[] = [
     label: 'Metro',
     factorLabel: '41 g CO₂/km',
     factorColor: 'text-teal-400',
-    description: 'Train or subway',
-  },
-  {
-    value: 'twoWheeler',
-    icon: '🛵',
-    label: 'Two-Wheeler',
-    factorLabel: '84 g CO₂/km',
-    factorColor: 'text-yellow-400',
-    description: 'Scooter or motorcycle',
   },
 ];
 
@@ -165,9 +166,70 @@ export function CalculatorStep2({ inputs, onUpdate }: CalculatorStep2Props) {
         disabled={inputs.vehicleType === 'none'}
       />
 
+      <div className="py-4">
+        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center">
+          <p className="text-sm text-emerald-300">
+            Most people use multiple modes — add both. Your personal vehicle and public transit emissions are calculated separately and summed.
+          </p>
+        </div>
+      </div>
+
       {/* Public Transport */}
+      <fieldset>
+        <legend className="text-sm font-medium text-secondary mb-3">
+          Primary Public Transit Mode
+        </legend>
+        <div
+          role="radiogroup"
+          aria-label="Public transit mode"
+          className="grid grid-cols-2 gap-3 mb-6"
+        >
+          {PUBLIC_TRANSIT_OPTIONS.map((opt) => {
+            const isSelected = inputs.publicTransitMode === opt.value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                onClick={() => onUpdate({ publicTransitMode: opt.value as 'bus' | 'metro' })}
+                className={`
+                  flex flex-col gap-2 p-4 rounded-xl border-2 transition-all duration-200 text-left
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950
+                  ${
+                    isSelected
+                      ? 'border-emerald-500/60 bg-emerald-500/10'
+                      : 'border-card var-bg-card hover:border-strong '
+                  }
+                `}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl" aria-hidden="true">{opt.icon}</span>
+                  {isSelected && (
+                    <span className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0" aria-hidden="true">
+                      <svg className="w-3 h-3 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <p className={`text-sm font-semibold font-display ${isSelected ? 'text-emerald-300' : 'text-primary'}`}>
+                    {opt.label}
+                  </p>
+                  <p className={`text-xs font-mono font-medium tabular-nums ${opt.factorColor}`}>
+                    {opt.factorLabel}
+                  </p>
+                </div>
+                {isSelected && <span className="sr-only"> (selected)</span>}
+              </button>
+            );
+          })}
+        </div>
+      </fieldset>
+
       <Slider
-        label="Weekly Public Transport"
+        label="Weekly Public Transport Distance"
         value={inputs.publicTransportKm || 0}
         onChange={(v) => onUpdate({ publicTransportKm: v })}
         min={0}

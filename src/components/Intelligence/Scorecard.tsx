@@ -1,8 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../core/store';
 import { ArcElement, Chart, DoughnutController, Legend, Tooltip } from 'chart.js';
+import { useSpring, motion } from 'framer-motion';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
+
+function AnimatedNumber({ value, decimals = 0 }: { value: number; decimals?: number }) {
+  const spring = useSpring(0, { stiffness: 60, damping: 20 });
+  const [display, setDisplay] = useState('0');
+  
+  useEffect(() => { spring.set(value); }, [value, spring]);
+  useEffect(() => spring.on('change', v => setDisplay(v.toFixed(decimals))), [spring, decimals]);
+  
+  return <motion.span>{display}</motion.span>;
+}
 
 const SCORE_META: Record<string, { label: string; color: string; bg: string }> = {
   excellent:   { label: 'Excellent',    color: '#34d399', bg: 'rgba(52,211,153,0.15)' },
@@ -85,7 +96,9 @@ export function Scorecard() {
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
             boxShadow: `0 0 20px ${sm.color}40`,
           }}>
-            <span className="metric" style={{ fontSize: '2rem', color: sm.color }}>{score}</span>
+            <span className="metric" style={{ fontSize: '2rem', color: sm.color }}>
+              <AnimatedNumber value={score} />
+            </span>
             <span style={{ fontSize: '10px', color: sm.color, fontWeight: 600 }}>/ 100</span>
           </div>
           <span style={{ fontSize: '12px', color: sm.color, fontWeight: 600, marginTop: '8px' }}>{sm.label}</span>
@@ -93,7 +106,7 @@ export function Scorecard() {
 
         {/* Category bars */}
         <div style={{ flex: 1, minWidth: '200px' }}>
-          {CATS.map((cat) => (
+          {CATS.map((cat, idx) => (
             <div key={cat} style={{ marginBottom: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                 <span style={{ color: 'var(--text-secondary)', fontSize: '13px', textTransform: 'capitalize' }}>{cat}</span>
@@ -102,13 +115,18 @@ export function Scorecard() {
                 </span>
               </div>
               <div style={{ height: '8px', background: 'rgba(255,255,255,0.08)', borderRadius: '99px', overflow: 'hidden' }}>
-                <div style={{
-                  height: '100%',
-                  width: `${result.breakdown[cat].percentage}%`,
-                  background: CAT_COLORS[cat],
-                  borderRadius: '99px',
-                  transition: 'width 0.8s ease',
-                }} />
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: idx * 0.1, duration: 0.8, ease: "easeOut" }}
+                  style={{
+                    height: '100%',
+                    width: `${result.breakdown[cat].percentage}%`,
+                    background: CAT_COLORS[cat],
+                    borderRadius: '99px',
+                    transformOrigin: 'left',
+                  }}
+                />
               </div>
             </div>
           ))}

@@ -46,9 +46,12 @@ export function validateInputs(partial: Partial<CalculatorInputs>): CalculatorIn
       INPUT_LIMITS.heatingTherms.min,
       INPUT_LIMITS.heatingTherms.max
     ),
-    vehicleType: ['petrol', 'diesel', 'ev', 'none', 'bus', 'metro', 'twoWheeler'].includes(partial.vehicleType ?? '')
+    vehicleType: ['petrol', 'diesel', 'ev', 'none', 'twoWheeler'].includes(partial.vehicleType ?? '')
       ? (partial.vehicleType as CalculatorInputs['vehicleType'])
       : 'petrol',
+    publicTransitMode: ['bus', 'metro'].includes(partial.publicTransitMode ?? '')
+      ? (partial.publicTransitMode as CalculatorInputs['publicTransitMode'])
+      : 'bus',
     weeklyKm: clamp(
       partial.weeklyKm ?? INPUT_LIMITS.weeklyKm.default,
       INPUT_LIMITS.weeklyKm.min,

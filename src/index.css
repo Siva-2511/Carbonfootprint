@@ -48,6 +48,18 @@
   --text-muted:   hsl(215,15%,45%);
   --text-inverse: hsl(222,47%,7%);
   --shadow-glow:  0 0 40px rgba(52,211,153,.12);
+  
+  /* 3D & depth */
+  --perspective: 1200px;
+  --card-depth: translateZ(0px);
+
+  /* Enhanced glow palette */
+  --glow-green: 0 0 20px rgba(34, 197, 94, 0.4), 0 0 60px rgba(34, 197, 94, 0.1);
+  --glow-blue: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 60px rgba(59, 130, 246, 0.1);
+  --glow-amber: 0 0 20px rgba(245, 158, 11, 0.35), 0 0 60px rgba(245, 158, 11, 0.1);
+
+  /* Animated gradient mesh background */
+  --mesh-speed: 12s;
 }
 
 /* ════════════════════════════════════════
@@ -228,6 +240,41 @@ select.goog-te-combo {
   padding: 4px 8px;
   font-size: 12px;
   cursor: pointer;
+}
+
+/* Glass panel utility */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+}
+
+.mesh-bg {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+  animation: meshShift var(--mesh-speed) ease-in-out infinite alternate;
+}
+
+@keyframes meshShift {
+  0%   { background-position: 0% 50%, 100% 0%, 50% 100%; }
+  100% { background-position: 30% 60%, 70% 30%, 60% 80%; }
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+}
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-1deg);
+  box-shadow: var(--glow-green), 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.number-glow {
+  text-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+  filter: drop-shadow(0 0 8px currentColor);
 }
 
 .var-bg-card { background: var(--bg-card) !important; }

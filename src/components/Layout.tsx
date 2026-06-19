@@ -68,7 +68,11 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
       </a>
 
       {/* ── Header ─────────────────────────────────────── */}
-      <header className="sticky top-0 z-40 bg-card/80 border-b border-card backdrop-blur-xl">
+      <motion.header 
+        animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }} 
+        transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} 
+        className="sticky top-0 z-40 bg-card/80 border-b border-card backdrop-blur-xl"
+      >
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Top bar */}
           <div className="flex justify-between items-center py-4">
@@ -134,17 +138,26 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
                     onClick={() => onTabChange(i)}
                     onKeyDown={(e) => handleKeyDown(e, i)}
                     tabIndex={active ? 0 : -1}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-t-lg text-[13px] whitespace-nowrap transition-all border-b-2 font-display ${active ? 'font-semibold bg-emerald-500/10 border-emerald-400 text-emerald-400' : 'font-medium bg-transparent border-transparent text-secondary hover:text-primary hover:bg-card/50'}`}
+                    className={`relative flex items-center gap-1.5 px-4 py-2 rounded-t-lg text-[13px] whitespace-nowrap transition-all font-display border-b-2 border-transparent ${active ? 'font-semibold text-emerald-400' : 'font-medium bg-transparent text-secondary hover:text-primary hover:bg-card/50'}`}
                   >
-                    <span aria-hidden="true">{tab.icon}</span>
-                    {tab.label}
+                    {active && (
+                      <motion.div
+                        layoutId="tab-indicator"
+                        className="absolute inset-0 rounded-t-lg bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 
+                                   border-b-2 border-emerald-500"
+                        style={{ boxShadow: 'var(--glow-green)' }}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span aria-hidden="true" className="relative z-10">{tab.icon}</span>
+                    <span className="relative z-10">{tab.label}</span>
                   </button>
                 );
               })}
             </div>
           </nav>
         </div>
-      </header>
+      </motion.header>
 
       {/* ── Main content ──────────────────────────────── */}
       <AnimatePresence mode="wait">

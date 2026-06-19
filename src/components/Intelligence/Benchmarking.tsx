@@ -3,6 +3,7 @@ import { useStore } from '../../core/store';
 import { compareToBenchmarks } from '../../services/core/benchmarks';
 import { Badge } from '../ui/Badge';
 import { BENCHMARK_DATA } from '../../config';
+import { motion } from 'framer-motion';
 
 export function Benchmarking() {
   const result = useStore((s) => s.result);
@@ -54,13 +55,15 @@ export function Benchmarking() {
 
       {/* Horizontal bar chart */}
       <div className="space-y-3">
-        {bars.map(({ label, tons, color }) => (
+        {bars.map(({ label, tons, color }, idx) => (
           <div key={label} className="flex items-center gap-3">
             <span className="text-xs text-secondary w-20">{label}</span>
             <div className="flex-1 h-3 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={`h-3 ${color} rounded-full transition-all duration-700`}
-                style={{ width: `${(tons / maxVal) * 100}%` }}
+              <motion.div
+                className={`h-3 ${color} rounded-full`}
+                initial={{ width: 0 }}
+                animate={{ width: `${(tons / maxVal) * 100}%` }}
+                transition={{ delay: idx * 0.1, duration: 0.8, ease: "easeOut" }}
               />
             </div>
             <span className="metric text-xs text-secondary w-10">{tons}t</span>

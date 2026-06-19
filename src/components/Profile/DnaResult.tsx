@@ -2,6 +2,7 @@ import React from 'react';
 import { useStore } from '../../core/store';
 import { Badge } from '../ui/Badge';
 import { simplify } from '../../services/core/textSimplifier';
+import { motion } from 'framer-motion';
 
 const PERSONA_ICONS: Record<string, string> = {
   'Eco-Leader': '🌟',
@@ -42,10 +43,16 @@ export function DnaResult() {
       className="space-y-5 animate-slide-up"
     >
       {/* Persona card */}
-      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)', borderRadius: '1.25rem', padding: '1.5rem' }}>
+      <div className="card-3d glass-panel" style={{ borderRadius: '1.25rem', padding: '1.5rem' }}>
         <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Your Carbon DNA</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1rem' }}>
-          <span style={{ fontSize: '2.5rem' }}>{PERSONA_ICONS[dna.persona] ?? '🌍'}</span>
+          <motion.span 
+            animate={{ rotate: 360 }} 
+            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            style={{ fontSize: '2.5rem', display: 'inline-block' }}
+          >
+            {PERSONA_ICONS[dna.persona] ?? '🌍'}
+          </motion.span>
           <h2 className="font-display" style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)' }}>{dna.persona}</h2>
         </div>
 

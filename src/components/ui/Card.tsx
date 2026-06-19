@@ -17,7 +17,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ children, className = '', elevation = 'md', as: Tag = 'div', ...props }, ref) => (
     <Tag
       ref={ref}
-      className={`var-bg-card backdrop-blur-md border border-card rounded-2xl ${elevations[elevation]} ${className}`}
+      className={`card-3d glass-panel rounded-2xl ${elevations[elevation]} ${className}`}
       {...props}
     >
       {children}

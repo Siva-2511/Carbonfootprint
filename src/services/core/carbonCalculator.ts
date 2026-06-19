@@ -40,9 +40,13 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
   const energyKg = householdEnergyKg / hsSize;
 
   const vehicleFactor = EMISSION_FACTORS.transport[inputs.vehicleType] ?? 0;
+  const publicFactor = inputs.publicTransitMode === 'metro' 
+    ? EMISSION_FACTORS.transport.metro 
+    : EMISSION_FACTORS.transport.bus;
+
   const transportKg =
     weeklyKm * 52 * vehicleFactor +
-    publicKm * 52 * EMISSION_FACTORS.transport.bus +
+    publicKm * 52 * publicFactor +
     shortFlights * EMISSION_FACTORS.flights.shortHaul +
     longFlights * EMISSION_FACTORS.flights.longHaul;
 

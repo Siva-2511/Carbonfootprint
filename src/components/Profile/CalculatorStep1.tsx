@@ -42,6 +42,21 @@ const SOURCE_OPTIONS: SourceOption[] = [
 ];
 
 export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
+  const [locationOpen, setLocationOpen] = React.useState(false);
+  const locationRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setLocationOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const COUNTRY_LIST = Object.keys(COUNTRY_GRID_FACTORS);
+
   return (
     <Card className="p-6 space-y-8">
       {/* Section heading */}
@@ -59,15 +74,44 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
 
       {/* Household & Country Setup */}
       <div className="grid grid-cols-2 gap-4 pb-4 border-b border-card">
-        <div>
+        <div ref={locationRef}>
           <label className="block text-sm font-medium text-secondary mb-2">Location (Grid Info)</label>
-          <select 
-            value={inputs.country || 'Global Average'}
-            onChange={(e) => onUpdate({ country: e.target.value })}
-            className="w-full bg-[var(--bg-card)] border border-strong rounded-xl p-3 text-primary focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
-          >
-            {Object.keys(COUNTRY_GRID_FACTORS).map(c => <option key={c} value={c} style={{ background: 'var(--bg-card)', color: 'var(--text-primary)' }}>{c}</option>)}
-          </select>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setLocationOpen(o => !o)}
+              className="w-full px-4 py-3 rounded-xl glass-card border border-[var(--border-card)] 
+                         text-[var(--text-primary)] text-left flex items-center justify-between
+                         hover:border-emerald-500/50 transition-colors"
+              aria-haspopup="listbox"
+              aria-expanded={locationOpen}
+            >
+              <span>{inputs.country || 'Global Average'}</span>
+              <span className={`transition-transform ${locationOpen ? 'rotate-180' : ''}`}>▾</span>
+            </button>
+
+            {locationOpen && (
+              <ul
+                role="listbox"
+                className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-xl 
+                           glass-card border border-[var(--border-card)] shadow-lg shadow-black/30 bg-[var(--bg-card)]"
+              >
+                {COUNTRY_LIST.map(country => (
+                  <li
+                    key={country}
+                    role="option"
+                    aria-selected={inputs.country === country}
+                    onClick={() => { onUpdate({ country }); setLocationOpen(false); }}
+                    className="px-4 py-2 cursor-pointer text-[var(--text-primary)]
+                               hover:bg-emerald-500/10 transition-colors
+                               aria-selected:bg-emerald-500/20 aria-selected:font-medium"
+                  >
+                    {country}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-secondary mb-2">Household Size</label>
