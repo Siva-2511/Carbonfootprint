@@ -1,91 +1,292 @@
-# CarbonSense 🌍
+<div align="center">
 
-![CarbonSense Logo](https://img.shields.io/badge/CarbonSense-Sustainability_Intelligence-059669?style=for-the-badge&logo=leaf&logoColor=white)
-![Build Status](https://img.shields.io/badge/build-passing-success?style=flat-square)
-![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+<img src="https://img.shields.io/badge/CarbonSense-Sustainability%20Intelligence-22c55e?style=for-the-badge&logo=leaf&logoColor=white" alt="CarbonSense"/>
 
-Welcome to **CarbonSense**! This is a highly developed, premium SaaS-style sustainability dashboard and carbon footprint calculator designed to help users track, understand, and reduce their environmental impact with the help of AI.
+# 🌿 CarbonSense
 
-Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026. Developed by **Sivasubramaniyan G**.
+### AI-Powered Personal Carbon Footprint Intelligence Platform
+
+[![Hack2Skill](https://img.shields.io/badge/Hack2Skill-Google%20AI%20Challenge%202026-4285F4?style=flat-square&logo=google&logoColor=white)](https://hack2skill.com)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-54%20Passing-brightgreen?style=flat-square&logo=vitest)](src/__tests__)
+
+> **CarbonSense** is a full-stack AI sustainability platform that calculates your personal carbon footprint, classifies your unique "Carbon DNA" persona, and delivers hyper-personalized recommendations — all powered by a secure backend AI proxy and built for offline-first resilience.
+
+[**Live Demo**](#) · [**Architecture**](#architecture) · [**Getting Started**](#getting-started) · [**Features**](#features)
+
+</div>
+
+---
 
 ## ✨ Features
 
-- **My Profile tab**: 4-step guided calculator (Energy, Transport, Diet, Lifestyle/consumption) using IPCC-based emission factors, with country-aware electricity grid intensity, household size scaling, and real-time input validation. Produces a "Carbon DNA" result: a persona classification (e.g. Eco-Leader, Balanced Emitter, Urban Commuter) with a category breakdown (energy/transport/diet/consumption percentages), a trend indicator, and a "Carbon Evolution" panel showing a 5-year projected trajectory comparing business-as-usual emissions against an achievable sustainable-action trajectory.
-- **Intelligence tab**: A Sustainability Scorecard (0-100 score with category-level breakdown and a "biggest opportunity" callout), a What-If Simulator with live sliders (Drive Less / Fly Less / Reduce Meat & Dairy) that recompute projected footprint and savings in real time, a benchmark comparison chart against India average, global average, top-10%-of-emitters, and the Paris Agreement 2030 per-capita target, and a Progress Tracker showing monthly carbon budget vs. actual emissions.
-- **Actions tab**: A phase-based Action Roadmap (Quick Wins / Habit Formation / Optimization / Carbon Neutral) with priority-ranked, persona-personalized recommendations, checkable progress tracking with eco-points and levels, an AI-generated step-by-step guide per action, and an AI Advisor chat with three selectable coaching personas (Friendly Guide, Strict Coach, Eco Scientist).
-- **Reports & Settings tab**: An Identity Report summary, a Carbon Offsetting calculator (tree-equivalent estimate), theme toggle, ELI10 mode (simplifies technical language app-wide), AI coach persona selection, and a System Health panel showing live security audit results.
-- **Eco Lab tab**: An AI Receipt & Meal Scanner (upload a photo, get itemized carbon footprint estimates via Vision AI) and a Daily Eco-Challenge (AI-generated sustainability trivia).
-- **Lifestyle tab**: An AI Recipe Wizard (turns listed ingredients into a low-carbon recipe suggestion) and an Eco-Travel Router (suggests the lowest-carbon route between two locations).
-- **Cross-cutting**: Offline-first local fallback for every AI feature (the app remains fully functional with static/local logic if the AI backend is unreachable or times out), Google Translate-powered multi-language support, full keyboard navigation and ARIA labeling across all six tabs, and a backend security posture (Helmet, CSP, rate limiting, CORS allowlisting, response caching) that keeps the AI provider key server-side only.
+### 👤 My Profile — Your Carbon Identity
 
-## 🏗️ Architecture Diagram
+**4-Step Guided Calculator** using IPCC-based emission factors:
+
+| Step | What It Measures |
+|------|-----------------|
+| ⚡ Energy | Monthly kWh, AC usage, gas heating, electricity source (grid/solar/mixed), country-specific grid intensity |
+| 🚗 Transport | Primary vehicle (petrol/diesel/EV/walk/bus/metro/two-wheeler), weekly km, public-transit km — calculated as two additive inputs, not a single choice |
+| 🥗 Diet | Dietary pattern, meat frequency, dairy consumption |
+| 🛍️ Lifestyle | Shopping habits, consumption patterns, waste behaviour |
+
+**Carbon DNA Persona Classification** — after calculation, you're classified into one of five scientifically-grounded personas:
+
+- 🌟 **Eco-Leader** — well below average across all categories
+- ⚖️ **Balanced Emitter** — moderate footprint, spread across categories
+- 🏙️ **Urban Commuter** — transport-dominant footprint
+- ⚡ **Energy-Intensive Resident** — energy usage is the primary driver
+- 🏭 **Industrial Consumer** — high consumption/shopping-driven footprint
+
+Each persona gets a **category breakdown** (energy/transport/diet/consumption percentages), a **trend indicator**, a **top priority action**, and a **Carbon Evolution panel** showing a 5-year projection comparing your business-as-usual trajectory against an achievable sustainable-action path.
+
+**ELI10 Mode** — one toggle simplifies all technical language and jargon app-wide to plain, accessible explanations suitable for anyone.
+
+---
+
+### 🧠 Intelligence — Understand Your Impact
+
+**Sustainability Scorecard** — a 0–100 composite score with category-level breakdowns, "Top Strength" and "Biggest Opportunity" callouts, and a full emissions table.
+
+**What-If Simulator** — three live sliders (Drive Less / Fly Less / Reduce Meat & Dairy) that recompute your projected annual footprint and potential savings *as you drag*, with no page reload required.
+
+**Benchmark Comparison** — visual chart comparing your footprint against:
+- 🇮🇳 India national average (2t CO₂e)
+- 🌍 Global average (4.7t CO₂e)
+- 🏆 Top 10% of lowest emitters (1.3t CO₂e)
+- 🎯 Paris Agreement 2030 per-capita target (2t CO₂e)
+
+**Progress Tracker** — shows your monthly carbon budget vs. actual emissions against a sustainable 167 kg/month target, with an actionable gap message.
+
+---
+
+### ✅ Actions — Personalised Roadmap
+
+**Phase-Based Action Roadmap** across four stages:
+- **Phase 1: Quick Wins** — easy, immediate, high-impact actions
+- **Phase 2: Habit Formation** — weekly behaviour changes
+- **Phase 3: Optimisation** — systemic home/transport upgrades
+- **Phase 4: Carbon Neutral** — deep decarbonisation moves
+
+Each action is **persona-personalised** — the `reason` text and ranking are dynamically adjusted based on your Carbon DNA, so an Energy-Intensive Resident sees energy actions promoted to P0 while an Urban Commuter sees transit actions surfaced first. Completed-category actions automatically promote remaining actions in that category tier.
+
+Track progress with **eco-points and levels** (Beginner → Expert), and click **✨ AI Guide** on any action to get an AI-generated step-by-step implementation plan.
+
+**AI Sustainability Advisor Chat** — a conversational AI coach with three selectable personas:
+| Persona | Style |
+|---------|-------|
+| 💚 Friendly Guide | Supportive, encouraging, motivational |
+| 💪 Strict Coach | Direct, results-focused, no excuses |
+| 🔬 Eco Scientist | Data-driven, citations, precise numbers |
+
+Pre-loaded with contextual quick-questions based on your actual footprint data. Falls back gracefully to a local intelligence engine if the AI backend is unreachable.
+
+---
+
+### 📊 Reports & Settings
+
+**Carbon Identity Report** — a downloadable PDF of your full profile: DNA persona, annual footprint, category breakdown, P0 priority actions, achievement badges, and a comparison against the India average.
+
+**Achievement Badges** — 7 unlockable milestones from First Step to Net Zero Path, tracked via persistent local habit state.
+
+**Carbon Offsetting Calculator** — calculates how many mature trees per year are needed to offset your unavoidable emissions, plus an estimated cost via certified offset programs. Includes a clear disclaimer that offsets are a last resort, not a substitute for reducing direct emissions.
+
+**Settings Panel:**
+- 🌙/☀️ Dark/Light theme toggle
+- 🧒 ELI10 mode toggle
+- 🌐 Google Translate widget (100+ languages)
+- 🤖 AI Coach Persona selection
+- 🔒 System Health audit (live backend ping, CSP check, input validation status, error boundary status)
+- 🗑️ Clear All Data
+
+---
+
+### 🧪 Eco Lab — Explore & Discover
+
+**AI Receipt & Meal Scanner** — upload a photo of a shopping receipt or a meal; Vision AI extracts line items and returns per-item carbon footprint estimates.
+
+**Daily Eco-Challenge** — AI-generated sustainability trivia, refreshed daily to build engagement and eco-awareness habits.
+
+**Impact Comparison Tool** — compare the cradle-to-gate carbon footprint of common products (beef vs. chicken vs. lentils, laptop vs. smartphone, cotton jeans vs. t-shirt) to inform purchasing decisions.
+
+**Digital Footprint Calculator** — estimate the CO₂e impact of your digital habits: video streaming hours, daily AI query volume, cloud storage usage.
+
+---
+
+### 🌍 Lifestyle — AI-Powered Sustainability Coaching
+
+**AI Recipe Wizard** — list your fridge leftovers; the AI returns a low-carbon recipe using those exact ingredients, with per-serving emission estimates.
+
+**Eco-Travel Router** — enter origin and destination; the AI suggests the lowest-carbon route and compares transport mode emissions side by side.
+
+---
+
+## 🏗️ Architecture
 
 ```mermaid
-graph TD
-    subgraph Frontend [React + Vite Frontend]
-        UI[Glassmorphism UI Components]
-        Store[Zustand State Manager]
-        I18n[Google Translate Widget]
-        Sec[Security Auditor]
-        
-        UI --> Store
-        Store --> UI
+graph TB
+    subgraph "Frontend (React + Vite + TypeScript)"
+        A[Calculator Steps] --> B[Carbon Calculator Engine]
+        B --> C[DNA Classifier]
+        C --> D[Action Priority Ranker]
+        D --> E[Zustand Store]
+        E --> F[All UI Tabs]
+        F --> G[aiLayer.ts]
     end
-    
-    subgraph Backend [Express/Node.js Proxy]
-        API[Rate Limited API]
-        Cache[LRU Memory Cache]
-        Headers[Helmet Security Headers]
-        
-        API --> Cache
+
+    subgraph "Security Layer"
+        G -->|VITE_API_URL| H[Express Proxy :3001]
+        H -->|Helmet + CSP| I[Rate Limiter]
+        I -->|TTL Cache| J[OpenRouter API]
+        J -->|Gemma / Gemini| K[AI Response]
     end
-    
-    subgraph External [External APIs]
-        OR[Google Gemini AI]
+
+    subgraph "Offline Fallback"
+        G -.->|fetch fails| L[Local Intelligence Engine]
+        L --> M[Static Recommendation DB]
     end
-    
-    Frontend <-->|Secure Fetch over HTTP/HTTPS| Backend
-    Backend <-->|Server-to-Server| External
+
+    subgraph "Data Sources"
+        B --- N[IPCC Emission Factors]
+        B --- O[Country Grid Intensity Map]
+        B --- P[DEFRA Consumer Factors]
+    end
 ```
+
+**Stack at a glance:**
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Framer Motion |
+| State | Zustand with persist middleware |
+| Backend proxy | Express.js, Helmet, express-rate-limit |
+| AI provider | OpenRouter (Gemma 3 / Gemini) |
+| Testing | Vitest, React Testing Library |
+| Emission data | IPCC AR6, DEFRA 2023, IEA Grid Intensity |
+
+---
+
+## 🔒 Security Posture
+
+- **API key never touches the client** — all AI calls are proxied through the Express backend; the `OPENROUTER_API_KEY` lives only in a server-side `.env` file
+- **Helmet** sets secure HTTP headers on every response (X-Frame-Options, X-Content-Type-Options, HSTS, Referrer-Policy)
+- **Content Security Policy** — strict allowlist restricting script/style/image/connect sources
+- **Rate limiting** — 100 requests per 15 minutes per IP on the `/api/chat` endpoint
+- **CORS** — origin allowlist driven by `ALLOWED_ORIGINS` environment variable; defaults to localhost in dev
+- **TTL response cache** — identical prompts served from memory for 1 hour, reducing API cost and latency
+- **Input validation & sanitisation** — `sanitizeText()` strips HTML/script tags from all user inputs; `validateInputs()` enforces type and range constraints before any calculation
+- **No SQL** — no database, no SQL injection surface; all state is in-memory or client-side
+- **XSS** — React's default JSX escaping + `sanitizeText()` for externally-supplied strings; no `dangerouslySetInnerHTML` anywhere in application code
+
+---
+
+## 📊 Data & Methodology
+
+CarbonSense uses the following emission factor sources:
+
+| Category | Source |
+|----------|--------|
+| Electricity (grid) | IEA 2023 country-level grid intensity (kg CO₂e/kWh) |
+| Transport | IPCC AR6 WGIII — vehicle lifecycle emission factors |
+| Food/Diet | DEFRA 2023 GHG conversion factors for food categories |
+| Consumer goods | DEFRA 2023 spend-based emission factors |
+| AC & gas | IPCC-aligned appliance energy intensity estimates |
+
+The calculator runs **entirely client-side / offline-first** for the base footprint number — no data is sent anywhere until a user explicitly triggers an AI feature. All AI features fall back gracefully to a local static-logic engine if the backend is unreachable or times out.
+
+---
 
 ## 🚀 Getting Started
 
-To run this application locally, you will need two terminal windows (one for the frontend, one for the backend proxy).
+### Prerequisites
+- Node.js ≥ 18
+- An [OpenRouter](https://openrouter.ai) API key
 
-### 1. Environment Setup
-
-1. Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Open `.env` and add your Google Gemini AI API key:
-   ```
-   GEMINI_API_KEY=your_actual_key_here
-   ```
-   *(Note: The `VITE_API_URL` should remain empty for local development, as the app will automatically default to `http://localhost:3001/api/chat`)*
-
-### 2. Install Dependencies
+### 1. Clone & install
 
 ```bash
+git clone https://github.com/Siva-2511/Carbonfootprint.git
+cd Carbonfootprint
 npm install
 ```
 
-### 3. Start the Backend Proxy
-
-In your first terminal window:
+### 2. Configure environment
 
 ```bash
-npm run api
+# Root .env
+cp .env.example .env
+# Set VITE_API_URL=http://localhost:3001/api/chat
+
+# Server .env
+cp server/.env.example server/.env
+# Set OPENROUTER_API_KEY=your_key_here
+# Set ALLOWED_ORIGINS=http://localhost:5173
 ```
 
-You should see: `Secure AI Proxy listening on port 3001`
-
-### 4. Start the Frontend App
-
-In your second terminal window:
+### 3. Run (two terminals required)
 
 ```bash
+# Terminal 1 — Frontend
 npm run dev
+
+# Terminal 2 — Backend proxy
+cd server && npm start
 ```
 
-You should see the Vite local server URL (typically `http://localhost:5173/`). Open this in your browser to start using CarbonSense!
+Open [http://localhost:5173](http://localhost:5173)
+
+### 4. Run tests
+
+```bash
+npx vitest run        # 54 unit + component tests
+npx tsc --noEmit      # TypeScript type check
+npx eslint .          # Lint (0 errors)
+```
+
+---
+
+## ⚠️ Known Limitations
+
+- **AI features require the backend proxy running** — if `cd server && npm start` isn't running, all AI-powered features (chat advisor, recipe wizard, travel router, receipt scanner, daily challenge, action AI guides) automatically fall back to the local static intelligence engine. The core carbon calculator and all analytics work fully offline.
+- **Receipt Scanner accuracy** — Vision AI extraction quality depends on image clarity and lighting; handwritten receipts may produce lower accuracy.
+- **Emission factors are estimates** — individual lifestyle variation means actual emissions may differ from calculated values. The tool is best used for *relative comparison* and *identifying the highest-leverage changes*, not as a precise audit.
+- **Grid intensity defaults to "Global Average"** if no country is selected — users in India should select "India" for more accurate electricity emission calculations.
+
+---
+
+## 🧪 Testing
+
+```
+src/__tests__/
+├── calculator.test.ts       # Core emission calculation logic
+├── dnaClassifier.test.ts    # Persona classification
+├── actionPriority.test.ts   # Recommendation ranking + DNA personalisation
+├── projectionEngine.test.ts # 5-year BAU vs sustainable projections
+├── validation.test.ts       # Input sanitisation, clamp, boundary cases
+└── security.test.ts         # XSS simulation, audit function behaviour
+```
+
+54 tests passing · 0 failures · Clean TypeScript build · 0 ESLint errors
+
+---
+
+## 🤝 Contributing
+
+This project was built for the **Hack2Skill & Google for Developers AI Challenge 2026**. Pull requests are welcome for bug fixes and improvements.
+
+---
+
+<div align="center">
+
+Built with ❤️ for the **Hack2Skill & Google for Developers AI Challenge 2026**
+
+Developed by **Sivasubramaniyan G**
+
+*CarbonSense — because the planet needs intelligence, not just intention.*
+
+</div>
