@@ -66,17 +66,17 @@
    LIGHT MODE
 ════════════════════════════════════════ */
 html.light {
-  --bg-base:      hsl(210,40%,97%);
+  --bg-base:      hsl(210,20%,94%);
   --bg-surface:   hsl(0,0%,100%);
-  --bg-card:      rgba(255,255,255,0.85);
-  --bg-card-hover:rgba(255,255,255,0.95);
-  --border-card:  rgba(0,0,0,0.10);
-  --border-strong:rgba(0,0,0,0.20);
+  --bg-card:      rgba(255,255,255,0.95);
+  --bg-card-hover:rgba(255,255,255,1);
+  --border-card:  rgba(0,0,0,0.12);
+  --border-strong:rgba(0,0,0,0.25);
   --text-primary: hsl(222,47%,11%);
   --text-secondary:hsl(215,20%,35%);
   --text-muted:   hsl(215,15%,55%);
   --text-inverse: hsl(210,40%,97%);
-  --shadow-glow:  0 0 40px rgba(22,163,74,.10);
+  --shadow-glow:  0 0 40px rgba(22,163,74,.15);
 }
 
 /* ════════════════════════════════════════
@@ -103,7 +103,7 @@ html:not(.light) body {
 
 /* Light mode body gradient */
 html.light body {
-  background: linear-gradient(-45deg, hsl(210,40%,98%), hsl(151,81%,94%), hsl(180,40%,94%), hsl(210,40%,97%));
+  background: linear-gradient(-45deg, hsl(210,20%,94%), hsl(151,40%,92%), hsl(180,30%,92%), hsl(210,20%,94%));
   background-size: 400% 400%;
   animation: gradientXY 20s ease infinite;
 }

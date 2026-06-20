@@ -100,15 +100,15 @@ export function CarbonEvolution() {
       <div className="grid grid-cols-2 gap-4">
         <div style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.25)', borderRadius: '1rem', padding: '1rem' }}>
           <p style={{ color: '#f87171', fontSize: '11px', fontWeight: 600, marginBottom: '4px' }}>CURRENT YOU</p>
-          <p className="metric" style={{ fontSize: '2rem', color: '#f87171' }}>{currentTons.toFixed(1)}</p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '12px' }}>tons CO₂e/year</p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '11px', marginTop: '6px' }}>{dna.persona}</p>
+          <p className="metric" style={{ fontSize: '3.5rem', lineHeight: '1', letterSpacing: '-0.02em', color: '#f87171' }}>{currentTons.toFixed(1)}</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '4px' }}>tons CO₂e/year</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '6px' }}>{dna.persona}</p>
         </div>
         <div style={{ background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.25)', borderRadius: '1rem', padding: '1rem' }}>
           <p style={{ color: '#34d399', fontSize: '11px', fontWeight: 600, marginBottom: '4px' }}>GREEN YOU</p>
-          <p className="metric" style={{ fontSize: '2rem', color: '#34d399' }}>{greenTons.toFixed(1)}</p>
-          <p style={{ color: 'var(--text-muted)', fontSize: '12px' }}>tons CO₂e/year</p>
-          <p style={{ color: '#34d399', fontSize: '11px', marginTop: '6px' }}>
+          <p className="metric" style={{ fontSize: '3.5rem', lineHeight: '1', letterSpacing: '-0.02em', color: '#34d399' }}>{greenTons.toFixed(1)}</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '4px' }}>tons CO₂e/year</p>
+          <p style={{ color: '#34d399', fontSize: '12px', fontWeight: 500, marginTop: '6px' }}>
             {savingPct > 0 ? `↓ ${savingPct}% reduction` : 'Eco-Leader 🌟'}
           </p>
         </div>

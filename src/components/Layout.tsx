@@ -71,7 +71,7 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
       <motion.header 
         animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }} 
         transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} 
-        className="sticky top-0 z-40 bg-card/80 border-b border-card backdrop-blur-xl"
+        className="sticky top-0 z-40 bg-card/80 border-b border-card backdrop-blur-xl overflow-hidden"
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {/* Top bar */}

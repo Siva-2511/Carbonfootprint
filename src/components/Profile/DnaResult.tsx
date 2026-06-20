@@ -57,8 +57,8 @@ export function DnaResult() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '1.25rem' }}>
-          <span className="metric" style={{ fontSize: '3.5rem', color: '#34d399' }}>{result.totalAnnualTons.toFixed(1)}</span>
-          <span style={{ color: 'var(--text-muted)', fontSize: '1rem' }}>tons CO₂e / year</span>
+          <span className="metric" style={{ fontSize: '5rem', lineHeight: '1', letterSpacing: '-0.02em', color: '#34d399' }}>{result.totalAnnualTons.toFixed(1)}</span>
+          <span style={{ color: 'var(--text-muted)', fontSize: '1.25rem', fontWeight: 500 }}>tons CO₂e / year</span>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
