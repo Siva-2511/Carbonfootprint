@@ -12,11 +12,11 @@
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-54%20Passing-brightgreen?style=flat-square&logo=vitest)](src/__tests__)
+[![Tests](https://img.shields.io/badge/Tests-55%20Passing-brightgreen?style=flat-square&logo=vitest)](src/__tests__)
 
 > **CarbonSense** is a full-stack AI sustainability platform that calculates your personal carbon footprint, classifies your unique "Carbon DNA" persona, and delivers hyper-personalized recommendations — all powered by a secure backend AI proxy and built for offline-first resilience.
 
-[**Live Demo**](#) · [**Architecture**](#architecture) · [**Getting Started**](#getting-started) · [**Features**](#features)
+[**Architecture**](#architecture) · [**Getting Started**](#getting-started) · [**Features**](#features)
 
 </div>
 
@@ -197,6 +197,10 @@ CarbonSense follows a clean, domain-driven architecture separating the intellige
 - **CORS** — origin allowlist driven by `ALLOWED_ORIGINS` environment variable; defaults to localhost in dev
 - **TTL response cache** — identical prompts served from memory for 1 hour, reducing API cost and latency
 - **Input validation & sanitisation** — `sanitizeText()` strips HTML/script tags from all user inputs; `validateInputs()` enforces type and range constraints before any calculation
+- **Request payload limits** — strict 500kb JSON body limits and prompt length validations instantly reject oversized queries with `413 Payload Too Large`.
+- **Server-side request timeouts** — `AbortController` prevents hanging downstream connections by enforcing a 15-second proxy timeout returning a `504 Gateway Timeout`.
+- **SHA-256 hashed cache keys** — prevents weird-unicode keys and memory exhaustion by cryptographically hashing the prompt payloads rather than storing raw text as map keys.
+- **Scrubbed error traces** — upstream OpenRouter AI provider errors are securely logged server-side but never leaked to the client response.
 - **No SQL** — no database, no SQL injection surface; all state is in-memory or client-side
 - **XSS** — React's default JSX escaping + `sanitizeText()` for externally-supplied strings; no `dangerouslySetInnerHTML` anywhere in application code
 
@@ -257,7 +261,7 @@ Open [http://localhost:5173](http://localhost:5173)
 ### 4. Run tests
 
 ```bash
-npx vitest run        # 54 unit + component tests
+npx vitest run        # 55 unit + component tests
 npx tsc --noEmit      # TypeScript type check
 npx eslint .          # Lint (0 errors)
 ```
@@ -277,15 +281,17 @@ npx eslint .          # Lint (0 errors)
 
 ```
 src/__tests__/
-├── calculator.test.ts       # Core emission calculation logic
+├── carbonCalculator.test.ts # Core emission calculation logic
 ├── dnaClassifier.test.ts    # Persona classification
 ├── actionPriority.test.ts   # Recommendation ranking + DNA personalisation
 ├── projectionEngine.test.ts # 5-year BAU vs sustainable projections
 ├── validation.test.ts       # Input sanitisation, clamp, boundary cases
-└── security.test.ts         # XSS simulation, audit function behaviour
+├── security.test.ts         # XSS simulation, audit function behaviour
+├── storage.test.ts          # Zustand state persistence and migrations
+└── Simulator.test.tsx       # React component rendering and memoization
 ```
 
-54 tests passing · 0 failures · Clean TypeScript build · 0 ESLint errors
+55 tests passing · 0 failures · Clean TypeScript build · 0 ESLint errors
 
 ---
 
