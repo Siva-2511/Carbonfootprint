@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../core/store';
+import { BENCHMARK_DATA } from '../../config';
 import { ArcElement, Chart, DoughnutController, Legend, Tooltip } from 'chart.js';
 import { useSpring, motion } from 'framer-motion';
 
@@ -76,7 +77,7 @@ export function Scorecard() {
     );
   }
 
-  const score = Math.max(0, Math.min(100, Math.round(100 - (result.totalAnnualTons / 6) * 100)));
+  const score = Math.max(0, Math.min(100, Math.round(100 - (result.totalAnnualTons / (BENCHMARK_DATA.urbanIndiaAvg * 3)) * 100)));
   const sm    = getScoreLevel(score);
   const lowest = CATS.reduce((a, b) => result.breakdown[a].kg < result.breakdown[b].kg ? a : b);
 

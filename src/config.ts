@@ -65,10 +65,11 @@ export const COUNTRY_GRID_FACTORS: Record<string, number> = {
 };
 
 export const BENCHMARK_DATA = Object.freeze({
-  indiaAvg: 2.0,    // metric tons CO₂e/year
-  globalAvg: 4.7,   // metric tons CO₂e/year
-  top10Pct: 1.3,    // metric tons CO₂e/year
-  parisTarget: 2.0, // metric tons CO₂e/year per capita by 2030
+  indiaAvg: 2.0,       // metric tons CO₂e/year
+  urbanIndiaAvg: 3.0,  // metric tons CO₂e/year (realistic baseline for web app users)
+  globalAvg: 4.7,      // metric tons CO₂e/year
+  top10Pct: 1.3,       // metric tons CO₂e/year
+  parisTarget: 2.0,    // metric tons CO₂e/year per capita by 2030
   netZeroTarget: 0.5,
 });
 

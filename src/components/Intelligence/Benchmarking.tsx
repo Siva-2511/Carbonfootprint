@@ -22,11 +22,12 @@ export function Benchmarking() {
   const maxVal = Math.max(userTons, 6);
 
   const bars = [
-    { label: 'You', tons: userTons, color: userTons <= BENCHMARK_DATA.globalAvg ? 'bg-emerald-500' : 'bg-rose-500' },
-    { label: 'India Avg', tons: 2.0, color: 'bg-amber-500' },
-    { label: 'Global Avg', tons: 4.7, color: 'bg-blue-500' },
-    { label: 'Top 10%', tons: 1.3, color: 'bg-emerald-600' },
-    { label: 'Paris 2030', tons: 2.0, color: 'bg-teal-500' },
+    { label: 'You', tons: userTons, color: userTons <= BENCHMARK_DATA.urbanIndiaAvg ? 'bg-emerald-500' : 'bg-rose-500' },
+    { label: 'India Nat. Avg', tons: BENCHMARK_DATA.indiaAvg, color: 'bg-amber-500' },
+    { label: 'Urban India Avg', tons: BENCHMARK_DATA.urbanIndiaAvg, color: 'bg-orange-500' },
+    { label: 'Global Avg', tons: BENCHMARK_DATA.globalAvg, color: 'bg-blue-500' },
+    { label: 'Top 10%', tons: BENCHMARK_DATA.top10Pct, color: 'bg-emerald-600' },
+    { label: 'Paris 2030', tons: BENCHMARK_DATA.parisTarget, color: 'bg-teal-500' },
   ];
 
   return (
