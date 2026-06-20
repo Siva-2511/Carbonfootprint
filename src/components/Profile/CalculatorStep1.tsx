@@ -2,7 +2,7 @@ import React from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
 import type { CalculatorInputs, ElectricitySource } from '../../types';
-import { COUNTRY_GRID_FACTORS } from '../../config';
+import { COUNTRY_GRID_FACTORS, GAS_HEATING_COUNTRIES } from '../../config';
 
 // ─────────────────────────────────────────────────────────────
 //  FILE 3: src/components/Profile/CalculatorStep1.tsx
@@ -201,20 +201,22 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
         </div>
       </fieldset>
 
-      {/* Monthly gas/heating slider */}
-      <div className="space-y-4">
-        <Slider
-          label="Monthly Gas Heating"
-          value={inputs.heatingTherms}
-          onChange={(v) => onUpdate({ heatingTherms: v })}
-          min={0}
-          max={100}
-          step={1}
-          unit="therms"
-          helperText="1 therm ≈ 29.3 kWh of natural gas"
-          color="amber"
-        />
-      </div>
+      {/* Monthly gas/heating slider - conditionally rendered based on country */}
+      {inputs.country && GAS_HEATING_COUNTRIES.includes(inputs.country) && (
+        <div className="space-y-4">
+          <Slider
+            label="Monthly Gas Heating"
+            value={inputs.heatingTherms}
+            onChange={(v) => onUpdate({ heatingTherms: v })}
+            min={0}
+            max={100}
+            step={1}
+            unit="therms"
+            helperText="1 therm ≈ 29.3 kWh of natural gas"
+            color="amber"
+          />
+        </div>
+      )}
 
       {/* Contextual info card */}
       <div className="flex items-start gap-3 p-4 rounded-xl bg-blue-500/8 border border-blue-500/20">

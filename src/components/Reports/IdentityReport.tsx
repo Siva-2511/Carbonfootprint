@@ -130,11 +130,11 @@ export function GamificationBadges() {
 }
 
 function getGrade(tons: number): { grade: string; color: string; label: string } {
-  if (tons < 1.5) return { grade: 'A+', color: '#34d399', label: 'Exceptional' };
-  if (tons < 2.0) return { grade: 'A',  color: '#34d399', label: 'Excellent' };
-  if (tons < 3.0) return { grade: 'B',  color: '#60a5fa', label: 'Good' };
-  if (tons < 4.5) return { grade: 'C',  color: '#fbbf24', label: 'Average' };
-  if (tons < 6.0) return { grade: 'D',  color: '#f97316', label: 'Needs Work' };
+  if (tons < 2.0) return { grade: 'A+', color: '#34d399', label: 'Exceptional' };
+  if (tons < 3.0) return { grade: 'A',  color: '#34d399', label: 'Excellent' };
+  if (tons < 4.5) return { grade: 'B',  color: '#60a5fa', label: 'Good' };
+  if (tons < 6.5) return { grade: 'C',  color: '#fbbf24', label: 'Average' };
+  if (tons < 9.0) return { grade: 'D',  color: '#f97316', label: 'Needs Work' };
   return { grade: 'F', color: '#f87171', label: 'Critical' };
 }
 

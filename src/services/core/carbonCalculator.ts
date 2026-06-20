@@ -1,4 +1,4 @@
-import { EMISSION_FACTORS, INPUT_LIMITS, COUNTRY_GRID_FACTORS } from '../../config';
+import { EMISSION_FACTORS, INPUT_LIMITS, COUNTRY_GRID_FACTORS, GAS_HEATING_COUNTRIES } from '../../config';
 import type { CalculatorInputs, CarbonResult, Category } from '../../types';
 import { clamp } from '../../core/validation';
 
@@ -21,7 +21,8 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
   const hsSize = clamp(inputs.householdSize || 1, 1, INPUT_LIMITS.householdSize.max);
   const elecKwh = clamp(inputs.electricityKwh, 0, INPUT_LIMITS.electricityKwh.max);
   const acHours = clamp(inputs.acHours || 0, 0, INPUT_LIMITS.acHours.max);
-  const heatingTherms = clamp(inputs.heatingTherms, 0, INPUT_LIMITS.heatingTherms.max);
+  const hasGasHeating = inputs.country ? GAS_HEATING_COUNTRIES.includes(inputs.country) : false;
+  const heatingTherms = hasGasHeating ? clamp(inputs.heatingTherms, 0, INPUT_LIMITS.heatingTherms.max) : 0;
   const weeklyKm = clamp(inputs.weeklyKm, 0, INPUT_LIMITS.weeklyKm.max);
   const publicKm = clamp(inputs.publicTransportKm || 0, 0, INPUT_LIMITS.publicTransportKm.max);
   const shortFlights = clamp(inputs.shortFlights, 0, INPUT_LIMITS.shortFlights.max);

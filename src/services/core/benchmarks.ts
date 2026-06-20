@@ -6,6 +6,7 @@ export function compareToBenchmarks(totalTons: number): BenchmarkResult {
   const safe = Number.isFinite(totalTons) && totalTons >= 0 ? totalTons : 0;
 
   const vsIndia = Math.round(((safe - BENCHMARK_DATA.indiaAvg) / BENCHMARK_DATA.indiaAvg) * 100);
+  const vsUrbanIndia = Math.round(((safe - BENCHMARK_DATA.urbanIndiaAvg) / BENCHMARK_DATA.urbanIndiaAvg) * 100);
   const vsGlobal = Math.round(((safe - BENCHMARK_DATA.globalAvg) / BENCHMARK_DATA.globalAvg) * 100);
   const vsTop10 = Math.round(((safe - BENCHMARK_DATA.top10Pct) / BENCHMARK_DATA.top10Pct) * 100);
 
@@ -25,6 +26,6 @@ export function compareToBenchmarks(totalTons: number): BenchmarkResult {
     vsIndia,
     vsGlobal,
     vsTop10,
-    narrative: buildNarrative(vsGlobal, 'global average'),
+    narrative: buildNarrative(vsUrbanIndia, 'typical urban India households'),
   };
 }

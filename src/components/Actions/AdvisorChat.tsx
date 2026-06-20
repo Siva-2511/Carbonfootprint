@@ -59,7 +59,7 @@ function buildResponse(
       `Phase 4 (3–5 years): Systemic changes — home insulation, renewable energy certificates. ` +
       `Based on your ${persona_} profile, you have a ${reductPct}% reduction potential achievable in 6 months.`;
   } else if (/score|footprint|result|profile/.test(q)) {
-    const score = Math.max(0, Math.round(100 - (parseFloat(tons) / (BENCHMARK_DATA.urbanIndiaAvg * 3)) * 100));
+    const score = Math.max(0, Math.round(100 - (parseFloat(tons) / 12.0) * 100));
     answer = `Your footprint is ${tons} tons CO₂e/year, giving you a sustainability score of ${score}/100. ` +
       `Your biggest emission source is ${result?.breakdown ? Object.entries(result.breakdown).sort((a,b)=>b[1].kg-a[1].kg)[0][0] : 'energy'}. ` +
       `Completing your Phase 1 actions can improve your score by 15–20 points.`;

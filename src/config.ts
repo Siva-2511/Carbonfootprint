@@ -53,25 +53,62 @@ export const INPUT_LIMITS = Object.freeze({
 export const COUNTRY_GRID_FACTORS: Record<string, number> = {
   'Global Average': 0.47,
   'India': 0.71,
-  'United States': 0.38,
-  'United Kingdom': 0.21,
-  'Germany': 0.35,
-  'France': 0.06,
-  'Australia': 0.65,
+  'Japan': 0.48,
+  'China': 0.53,
+  'South Korea': 0.42,
+  'North Korea': 0.73,
+  'Russia': 0.35,
+  'Spain': 0.14,
+  'Australia': 0.58,
   'Canada': 0.12,
-  'Norway': 0.01,
-  'South Africa': 0.90,
-  'Brazil': 0.08,
+  'United States': 0.37,
+  'United Kingdom': 0.21,
+  'Germany': 0.39,
+  'France': 0.06,
+  'Norway': 0.03,
+  'South Africa': 0.84,
+  'Brazil': 0.09,
 };
 
 export const BENCHMARK_DATA = Object.freeze({
-  indiaAvg: 2.0,       // metric tons CO₂e/year
-  urbanIndiaAvg: 3.0,  // metric tons CO₂e/year (realistic baseline for web app users)
-  globalAvg: 4.7,      // metric tons CO₂e/year
-  top10Pct: 1.3,       // metric tons CO₂e/year
-  parisTarget: 2.0,    // metric tons CO₂e/year per capita by 2030
+  indiaAvg: 2.0,       // metric tons CO₂/year
+  urbanIndiaAvg: 3.0,  // metric tons CO₂/year (realistic baseline for web app users)
+  globalAvg: 4.7,      // metric tons CO₂/year
+  top10Pct: 1.3,       // metric tons CO₂/year
+  parisTarget: 2.0,    // metric tons CO₂/year per capita by 2030
   netZeroTarget: 0.5,
+
+  // Per-capita CO2 emissions from fossil fuels (tons/year) - Source: OWID 2022
+  perCapita: {
+    'Global Average': 4.7,
+    India: 2.0,
+    Japan: 8.2,
+    China: 8.2,
+    'South Korea': 11.7,
+    'North Korea': 2.1,
+    Russia: 11.5,
+    Spain: 4.9,
+    Australia: 14.7,
+    Canada: 14.1,
+    'United States': 14.8,
+    'United Kingdom': 4.6,
+    Germany: 7.9,
+    France: 4.5,
+    Norway: 7.5,
+    'South Africa': 6.9,
+    Brazil: 2.3,
+  } as Record<string, number>,
 });
+
+export const GAS_HEATING_COUNTRIES = [
+  'United States',
+  'United Kingdom',
+  'Germany',
+  'France',
+  'Canada',
+  'Norway',
+  'South Korea'
+];
 
 export const APP_CONFIG = Object.freeze({
   maxHistoryEntries: 30,
