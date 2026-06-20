@@ -94,7 +94,7 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
               <ul
                 role="listbox"
                 className="absolute z-50 mt-1 w-full max-h-60 overflow-y-auto rounded-xl 
-                           glass-card border border-[var(--border-card)] shadow-lg shadow-black/30 bg-[var(--bg-card)]"
+                           border border-[var(--border-card)] shadow-lg shadow-black/30 bg-[var(--bg-dropdown)]"
               >
                 {COUNTRY_LIST.map(country => (
                   <li
