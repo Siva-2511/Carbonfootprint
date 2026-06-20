@@ -51,10 +51,10 @@ describe('Validation', () => {
       expect(result.shortFlights).toBe(0);
     });
 
-    test('validates newly added vehicle types', () => {
-      expect(validateInputs({ vehicleType: 'bus' }).vehicleType).toBe('bus');
-      expect(validateInputs({ vehicleType: 'metro' }).vehicleType).toBe('metro');
+    test('validates updated vehicle and transit types', () => {
       expect(validateInputs({ vehicleType: 'twoWheeler' }).vehicleType).toBe('twoWheeler');
+      expect(validateInputs({ publicTransitMode: 'bus' }).publicTransitMode).toBe('bus');
+      expect(validateInputs({ publicTransitMode: 'metro' }).publicTransitMode).toBe('metro');
     });
 
     test('resets invalid enums to default', () => {

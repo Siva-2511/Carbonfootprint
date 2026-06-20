@@ -7,7 +7,7 @@
 ### AI-Powered Personal Carbon Footprint Intelligence Platform
 
 [![Hack2Skill](https://img.shields.io/badge/Hack2Skill-Google%20AI%20Challenge%202026-4285F4?style=flat-square&logo=google&logoColor=white)](https://hack2skill.com)
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
@@ -126,6 +126,15 @@ Pre-loaded with contextual quick-questions based on your actual footprint data. 
 
 ---
 
+## ♿ Accessibility (a11y)
+
+CarbonSense is built to be inclusive and navigable for all users:
+- **Keyboard Navigation**: Full focus management and focus-visible styling across all tabs, sliders, and buttons.
+- **ARIA Labeling**: Appropriate `aria-live`, `aria-hidden`, and `role` attributes to support screen readers, especially on dynamic content like the What-If Simulator and Scorecard.
+- **ELI10 Mode**: A dedicated accessibility toggle that converts complex scientific jargon into simple, universal language ("Explain Like I'm 10").
+
+---
+
 ## 🏗️ Architecture
 
 ```mermaid
@@ -162,12 +171,20 @@ graph TB
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | React 18, TypeScript, Vite, Tailwind CSS, Framer Motion |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS, Framer Motion |
 | State | Zustand with persist middleware |
 | Backend proxy | Express.js, Helmet, express-rate-limit |
 | AI provider | OpenRouter (Gemma 3 / Gemini) |
 | Testing | Vitest, React Testing Library |
 | Emission data | IPCC AR6, DEFRA 2023, IEA Grid Intensity |
+
+### Project Structure
+
+CarbonSense follows a clean, domain-driven architecture separating the intelligence engine from the presentation layer:
+1. **Core Domain** (`src/core/`): Data validation and global Zustand state management.
+2. **Services** (`src/services/`): Pure logic modules for Carbon Calculation (`carbonCalculator.ts`), DNA Classification (`dnaClassifier.ts`), and Action Priority Ranking (`actionPriority.ts`).
+3. **AI Layer** (`src/services/aiLayer.ts`): Orchestrates all backend AI calls with graceful offline fallback logic.
+4. **UI Components** (`src/components/`): Glassmorphism React components organized by feature tab.
 
 ---
 
