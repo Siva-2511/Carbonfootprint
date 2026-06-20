@@ -56,7 +56,7 @@ const apiLimiter = rateLimit({
 });
 app.use('/api/', apiLimiter);
 
-// 4.1 Bounded LRU Cache for identical requests
+// 4.1 Bounded FIFO Cache for identical requests
 const responseCache = new Map();
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 const MAX_CACHE_ENTRIES = 200;

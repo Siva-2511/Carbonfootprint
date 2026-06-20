@@ -4,7 +4,7 @@ import { APP_CONFIG } from '../config';
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api/chat';
 
 /**
- * Enhanced Local Proxy for Text Enhancement.
+ * Raw proxy call for generic AI tasks.
  */
 export async function rawAIFetch(messages: { role: string; content: string }[], temperature = 0.7): Promise<string | null> {
   try {
@@ -75,6 +75,9 @@ export async function analyzeImageWithAI(
   prompt: string
 ): Promise<string | null> {
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), APP_CONFIG.aiTimeoutMs * 2);
+
     const res = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -89,8 +92,11 @@ export async function analyzeImageWithAI(
         }],
         max_tokens: 500,
         temperature: 0.3
-      })
+      }),
+      signal: controller.signal
     });
+
+    clearTimeout(timeout);
 
     if (!res.ok) {
       console.error('Vision API Error:', res.status, await res.text());

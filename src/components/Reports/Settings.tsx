@@ -54,8 +54,8 @@ export function Settings() {
       <S>
         <p className="text-secondary text-sm font-medium mb-3">Appearance</p>
         <div className="flex gap-3">
-          <button onClick={() => setTheme('dark')}  className={`px-4 py-2 rounded-xl text-sm transition-all ${isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold' : 'bg-card border border-card text-secondary hover:border-emerald-500/30'}`}  aria-pressed={isDark}>🌙 Dark Mode</button>
-          <button onClick={() => setTheme('light')} className={`px-4 py-2 rounded-xl text-sm transition-all ${!isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold' : 'bg-card border border-card text-secondary hover:border-emerald-500/30'}`} aria-pressed={!isDark}>☀️ Light Mode</button>
+          <button onClick={() => setTheme('dark')} aria-label="Toggle Dark Theme" className={`px-4 py-2 rounded-xl text-sm transition-all ${isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold' : 'bg-card border border-card text-secondary hover:border-emerald-500/30'}`}  aria-pressed={isDark}>🌙 Dark Mode</button>
+          <button onClick={() => setTheme('light')} aria-label="Toggle Light Theme" className={`px-4 py-2 rounded-xl text-sm transition-all ${!isDark ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold' : 'bg-card border border-card text-secondary hover:border-emerald-500/30'}`} aria-pressed={!isDark}>☀️ Light Mode</button>
         </div>
       </S>
 

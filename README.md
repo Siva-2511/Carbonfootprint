@@ -245,14 +245,11 @@ cp server/.env.example server/.env
 # Set ALLOWED_ORIGINS=http://localhost:5173
 ```
 
-### 3. Run (two terminals required)
+### 3. Run the application
 
 ```bash
-# Terminal 1 — Frontend
+# Starts both the Vite frontend and Express backend concurrently
 npm run dev
-
-# Terminal 2 — Backend proxy
-cd server && npm start
 ```
 
 Open [http://localhost:5173](http://localhost:5173)
@@ -269,7 +266,7 @@ npx eslint .          # Lint (0 errors)
 
 ## ⚠️ Known Limitations
 
-- **AI features require the backend proxy running** — if `cd server && npm start` isn't running, all AI-powered features (chat advisor, recipe wizard, travel router, receipt scanner, daily challenge, action AI guides) automatically fall back to the local static intelligence engine. The core carbon calculator and all analytics work fully offline.
+- **AI features require the backend proxy running** — if the Node server isn't running, all AI-powered features (chat advisor, recipe wizard, travel router, receipt scanner, daily challenge, action AI guides) automatically fall back to the local static intelligence engine. The core carbon calculator and all analytics work fully offline.
 - **Receipt Scanner accuracy** — Vision AI extraction quality depends on image clarity and lighting; handwritten receipts may produce lower accuracy.
 - **Emission factors are estimates** — individual lifestyle variation means actual emissions may differ from calculated values. The tool is best used for *relative comparison* and *identifying the highest-leverage changes*, not as a precise audit.
 - **Grid intensity defaults to "Global Average"** if no country is selected — users in India should select "India" for more accurate electricity emission calculations.

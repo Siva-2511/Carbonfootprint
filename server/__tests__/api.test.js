@@ -26,6 +26,16 @@ describe('API Proxy Endpoints', () => {
     expect(res.body.error).toBe('Invalid message payload structure.');
   });
 
+  it('POST /api/chat returns 413 Payload Too Large on oversized prompts', async () => {
+    const hugeMessage = 'a'.repeat(30001);
+    const res = await request(app)
+      .post('/api/chat')
+      .send({ messages: [{ role: 'user', content: hugeMessage }] });
+    
+    expect(res.status).toBe(413);
+    expect(res.body.error).toBe('Message payload too large.');
+  });
+
   it('POST /api/chat handles mock OpenRouter response and serves from cache', async () => {
     // Mock the global fetch
     const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValue({
