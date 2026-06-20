@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 dotenv.config();
 
@@ -43,7 +44,7 @@ app.use(cors({
 }));
 
 // 3. Body Parsing
-app.use(express.json({ limit: '10mb' })); // Limit payload size to prevent payload bombing
+app.use(express.json({ limit: '500kb' })); // Limit payload size to prevent payload bombing
 
 // 4. Rate Limiting (DDoS Protection)
 const apiLimiter = rateLimit({
@@ -74,6 +75,12 @@ app.post('/api/chat', async (req, res) => {
     if (!messages || !Array.isArray(messages)) {
       return res.status(400).json({ error: 'Invalid message payload structure.' });
     }
+    
+    // Prompt Length Check
+    const totalLength = JSON.stringify(messages).length;
+    if (totalLength > 30000) {
+      return res.status(413).json({ error: 'Message payload too large.' });
+    }
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
@@ -89,12 +96,8 @@ app.post('/api/chat', async (req, res) => {
     });
 
     // Check Cache
-    // Create a simple hash/key from the payload string
-    let cacheKey = 0;
-    for (let i = 0; i < payload.length; i++) {
-      cacheKey = Math.imul(31, cacheKey) + payload.charCodeAt(i) | 0;
-    }
-    const keyStr = cacheKey.toString();
+    // Create a SHA256 hash from the payload string
+    const keyStr = crypto.createHash('sha256').update(payload).digest('hex');
 
     if (responseCache.has(keyStr)) {
       const cached = responseCache.get(keyStr);
@@ -105,6 +108,9 @@ app.post('/api/chat', async (req, res) => {
       }
     }
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -113,13 +119,16 @@ app.post('/api/chat', async (req, res) => {
         'X-Title': 'CarbonSense Secure',
         'Content-Type': 'application/json'
       },
-      body: payload
+      body: payload,
+      signal: controller.signal
     });
+    
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errText = await response.text();
       console.error('Upstream API Error:', response.status, errText);
-      return res.status(response.status).json({ error: 'AI provider error', details: errText });
+      return res.status(response.status).json({ error: 'AI provider error' }); // Details hidden to prevent info leak
     }
 
     const data = await response.json();
@@ -134,7 +143,10 @@ app.post('/api/chat', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Backend Proxy Error:', error);
-    res.status(500).json({ error: 'Internal server error while communicating with AI.' });
+    if (error.name === 'AbortError') {
+      return res.status(504).json({ error: 'Gateway timeout' });
+    }
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
