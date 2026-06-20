@@ -133,7 +133,7 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
           max={2000}
           step={10}
           unit="kWh"
-          helperText="Average Indian household uses 200–400 kWh/month"
+          helperText={(!inputs.country || inputs.country === 'India') ? "Average Indian household uses 200–400 kWh/month" : "Check your utility bill for your typical monthly usage"}
           color="emerald"
         />
       </div>

@@ -107,11 +107,12 @@ export interface AIResponse {
 }
 
 export interface BenchmarkResult {
-  indiaAvg: number;
+  countryName: string;
+  countryAvg: number;
   globalAvg: number;
   top10Pct: number;
   userTons: number;
-  vsIndia: number;
+  vsCountry: number;
   vsGlobal: number;
   vsTop10: number;
   narrative: string;

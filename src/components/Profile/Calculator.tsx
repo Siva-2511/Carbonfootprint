@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CalculatorStep1 } from './CalculatorStep1';
 import { CalculatorStep2 } from './CalculatorStep2';
 import { CalculatorStep3 } from './CalculatorStep3';
@@ -27,6 +27,16 @@ export function Calculator() {
   const [localInputs, setLocalInputs] = useState<CalculatorInputs>(() => storeInputs);
   const { runPipeline } = useCarbonPipeline();
   const isCalculated = useIsCalculated();
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  // Automatically scroll down if the user already calculated and comes back to this tab
+  useEffect(() => {
+    if (isCalculated && currentStep === 3) {
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  }, [isCalculated, currentStep]);
 
   const handleUpdate = (partial: Partial<CalculatorInputs>) => {
     setLocalInputs((prev) => ({ ...prev, ...partial }));
@@ -38,6 +48,10 @@ export function Calculator() {
     } else {
       // Final step — run pipeline
       runPipeline(localInputs);
+      // Let React render the results, then scroll
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   };
 
@@ -181,16 +195,18 @@ export function Calculator() {
       </div>
 
       {/* ── Results (shown after calculation) ─────────────── */}
-      {isCalculated && (
-        <div
-          className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
-          aria-live="polite"
-          aria-atomic="false"
-        >
-          <DnaResult />
-          <CarbonEvolution />
-        </div>
-      )}
+      <div ref={resultsRef} className="scroll-mt-6">
+        {isCalculated && (
+          <div
+            className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500"
+            aria-live="polite"
+            aria-atomic="false"
+          >
+            <DnaResult />
+            <CarbonEvolution />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

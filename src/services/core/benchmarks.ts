@@ -2,11 +2,11 @@ import { BENCHMARK_DATA } from '../../config';
 import type { BenchmarkResult } from '../../types';
 
 /** Compares user's annual tons to global benchmarks. */
-export function compareToBenchmarks(totalTons: number): BenchmarkResult {
+export function compareToBenchmarks(totalTons: number, country: string = 'India'): BenchmarkResult {
   const safe = Number.isFinite(totalTons) && totalTons >= 0 ? totalTons : 0;
+  const countryAvg = BENCHMARK_DATA.perCapita[country] || BENCHMARK_DATA.globalAvg;
 
-  const vsIndia = Math.round(((safe - BENCHMARK_DATA.indiaAvg) / BENCHMARK_DATA.indiaAvg) * 100);
-  const vsUrbanIndia = Math.round(((safe - BENCHMARK_DATA.urbanIndiaAvg) / BENCHMARK_DATA.urbanIndiaAvg) * 100);
+  const vsCountry = Math.round(((safe - countryAvg) / countryAvg) * 100);
   const vsGlobal = Math.round(((safe - BENCHMARK_DATA.globalAvg) / BENCHMARK_DATA.globalAvg) * 100);
   const vsTop10 = Math.round(((safe - BENCHMARK_DATA.top10Pct) / BENCHMARK_DATA.top10Pct) * 100);
 
@@ -18,14 +18,23 @@ export function compareToBenchmarks(totalTons: number): BenchmarkResult {
       : `You emit ${abs}% more than the ${label}.`;
   };
 
+  let narrative = '';
+  if (country === 'India') {
+    const vsUrbanIndia = Math.round(((safe - BENCHMARK_DATA.urbanIndiaAvg) / BENCHMARK_DATA.urbanIndiaAvg) * 100);
+    narrative = buildNarrative(vsUrbanIndia, 'typical urban India households');
+  } else {
+    narrative = buildNarrative(vsCountry, `the average person in ${country}`);
+  }
+
   return {
-    indiaAvg: BENCHMARK_DATA.indiaAvg,
+    countryName: country,
+    countryAvg,
     globalAvg: BENCHMARK_DATA.globalAvg,
     top10Pct: BENCHMARK_DATA.top10Pct,
     userTons: safe,
-    vsIndia,
+    vsCountry,
     vsGlobal,
     vsTop10,
-    narrative: buildNarrative(vsUrbanIndia, 'typical urban India households'),
+    narrative,
   };
 }
