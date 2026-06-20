@@ -22,6 +22,22 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="screenshots/carbon_dna_result.png" alt="Carbon DNA Persona Result" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
+  
+  <br />
+
+  <img src="screenshots/what_if_simulator.png" alt="What-If Simulator" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
+  
+  <br />
+
+  <img src="screenshots/actions_roadmap.png" alt="Actions Roadmap" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
+</div>
+
+---
+
 ## ✨ Features
 
 ### 👤 My Profile — Your Carbon Identity
@@ -287,7 +303,7 @@ src/__tests__/
 ├── projectionEngine.test.ts # 5-year BAU vs sustainable projections
 ├── validation.test.ts       # Input sanitisation, clamp, boundary cases
 ├── security.test.ts         # XSS simulation, audit function behaviour
-├── storage.test.ts          # Zustand state persistence and migrations
+├── storage.test.ts          # Local storage validation and quota handling
 └── Simulator.test.tsx       # React component rendering and memoization
 ```
 
