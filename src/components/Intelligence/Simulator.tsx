@@ -36,7 +36,9 @@ export function Simulator() {
   return (
     <Card className="p-6 flex flex-col h-full relative overflow-hidden">
       {/* Decorative spinning background */}
-      <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-spin-slow pointer-events-none"></div>
+      <div className="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none -z-10">
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-spin-slow"></div>
+      </div>
 
       <div className="flex items-center gap-2 mb-6">
         <span className="text-xl" aria-hidden="true">🎛️</span>

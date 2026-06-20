@@ -30,13 +30,32 @@ function Spinner() {
 }
 
 function IntelligenceTab() {
-  return <div className="space-y-6"><Scorecard /><Simulator /><Benchmarking /><ProgressTracker /></div>;
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="lg:col-span-2">
+        <Scorecard />
+      </div>
+      <Simulator />
+      <Benchmarking />
+      <div className="lg:col-span-2">
+        <ProgressTracker />
+      </div>
+    </div>
+  );
 }
 function ActionsTab() {
   return <div className="space-y-6"><Roadmap /><AdvisorChat /></div>;
 }
 function ReportsTab() {
-  return <div className="space-y-6"><IdentityReport /><OffsetEstimation /><Settings /></div>;
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="lg:col-span-2">
+        <IdentityReport />
+      </div>
+      <OffsetEstimation />
+      <Settings />
+    </div>
+  );
 }
 function EcoLabTab() {
   return <div className="space-y-6"><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
