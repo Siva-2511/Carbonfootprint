@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../../core/store';
-import { promoteRecommendations } from '../../services/intelligence/actionPriority';
+import { promoteRecommendations, rank } from '../../services/intelligence/actionPriority';
 import { getActionBreakdown } from '../../services/aiLayer';
 import { simplify } from '../../services/core/textSimplifier';
 import { Badge } from '../ui/Badge';
@@ -20,9 +20,21 @@ export function Roadmap() {
   const completeTask = useStore((s) => s.completeTask);
   const uncompleteTask = useStore((s) => s.uncompleteTask);
   const dna = useStore((s) => s.dna);
+  const result = useStore((s) => s.result);
+  const history = useStore((s) => s.history);
+  const setPipelineResult = useStore((s) => s.setPipelineResult);
+
   const [activePhase, setActivePhase] = useState(0);
   const [breakdowns, setBreakdowns] = useState<Record<string, string>>({});
   const [loadingBreakdown, setLoadingBreakdown] = useState<string | null>(null);
+
+  // Auto-recovery for stale cache (e.g. if the app added new actions but localStorage is old)
+  useEffect(() => {
+    if (result && dna && recommendations.length < 21) {
+      const updatedRecs = rank(result, dna);
+      setPipelineResult({ result, dna, recommendations: updatedRecs, history });
+    }
+  }, [result, dna, recommendations.length, history, setPipelineResult]);
 
   const handleGetBreakdown = async (actionId: string, actionName: string) => {
     if (breakdowns[actionId]) return;
