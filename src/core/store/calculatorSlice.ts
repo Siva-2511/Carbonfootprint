@@ -15,6 +15,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   electricityKwh: INPUT_LIMITS.electricityKwh.default,
   electricitySource: 'grid',
   heatingTherms: INPUT_LIMITS.heatingTherms.default,
+  lpgCylinders: 0,
   vehicleType: 'petrol',
   weeklyKm: INPUT_LIMITS.weeklyKm.default,
   shortFlights: INPUT_LIMITS.shortFlights.default,

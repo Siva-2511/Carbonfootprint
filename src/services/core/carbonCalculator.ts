@@ -1,4 +1,4 @@
-import { EMISSION_FACTORS, INPUT_LIMITS, COUNTRY_GRID_FACTORS, GAS_HEATING_COUNTRIES } from '../../config';
+import { EMISSION_FACTORS, INPUT_LIMITS, COUNTRY_GRID_FACTORS, GAS_HEATING_COUNTRIES, CURRENCY_MAP } from '../../config';
 import type { CalculatorInputs, CarbonResult, Category } from '../../types';
 import { clamp } from '../../core/validation';
 
@@ -22,7 +22,8 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
   const elecKwh = clamp(inputs.electricityKwh, 0, INPUT_LIMITS.electricityKwh.max);
   const acHours = clamp(inputs.acHours || 0, 0, INPUT_LIMITS.acHours.max);
   const hasGasHeating = inputs.country ? GAS_HEATING_COUNTRIES.includes(inputs.country) : false;
-  const heatingTherms = hasGasHeating ? clamp(inputs.heatingTherms, 0, INPUT_LIMITS.heatingTherms.max) : 0;
+  const heatingTherms = hasGasHeating ? clamp(inputs.heatingTherms || 0, 0, INPUT_LIMITS.heatingTherms.max) : 0;
+  const lpgCylinders = !hasGasHeating ? clamp(inputs.lpgCylinders || 0, 0, INPUT_LIMITS.lpgCylinders.max) : 0;
   const weeklyKm = clamp(inputs.weeklyKm, 0, INPUT_LIMITS.weeklyKm.max);
   const publicKm = clamp(inputs.publicTransportKm || 0, 0, INPUT_LIMITS.publicTransportKm.max);
   const shortFlights = clamp(inputs.shortFlights, 0, INPUT_LIMITS.shortFlights.max);
@@ -37,7 +38,9 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
   const acKwhMonthly = acHours * 1.5 * 30;
   const totalElecMonthly = elecKwh + acKwhMonthly;
   
-  const householdEnergyKg = totalElecMonthly * 12 * elecFactor + heatingTherms * 12 * EMISSION_FACTORS.heating.naturalGas;
+  const householdEnergyKg = totalElecMonthly * 12 * elecFactor 
+    + heatingTherms * 12 * EMISSION_FACTORS.heating.naturalGas
+    + lpgCylinders * 12 * EMISSION_FACTORS.heating.lpgCylinder;
   const energyKg = householdEnergyKg / hsSize;
 
   const vehicleFactor = EMISSION_FACTORS.transport[inputs.vehicleType] ?? 0;
@@ -53,8 +56,12 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
 
   const dietKg = EMISSION_FACTORS.diet[inputs.dietType] ?? EMISSION_FACTORS.diet['low-meat'];
 
-  const spendingLevel = monthlySpend > 20000 ? 'high' : monthlySpend > 5000 ? 'medium' : 'low';
-  const rawConsumptionKg = monthlySpend * 12 * EMISSION_FACTORS.shopping[spendingLevel];
+  const currencyInfo = inputs.country && CURRENCY_MAP[inputs.country] ? CURRENCY_MAP[inputs.country] : CURRENCY_MAP['Global Average'];
+  const spendingLevel = monthlySpend > currencyInfo.tier2 ? 'high' : monthlySpend > currencyInfo.tier1 ? 'medium' : 'low';
+  
+  // Normalize spend to INR equivalent for the emission factor calculation
+  const inrEquivalentSpend = monthlySpend / currencyInfo.multiplier;
+  const rawConsumptionKg = inrEquivalentSpend * 12 * EMISSION_FACTORS.shopping[spendingLevel];
   const householdConsumptionKg = inputs.recycling
     ? rawConsumptionKg * (1 - EMISSION_FACTORS.recyclingDiscount)
     : rawConsumptionKg;

@@ -3,13 +3,15 @@ import { calculate } from '../services/core/carbonCalculator';
 import type { CalculatorInputs } from '../types';
 
 const BASE_INPUTS: CalculatorInputs = {
-  country: 'Global Average',
+  country: 'India',
   householdSize: 1,
   acHours: 0,
   publicTransportKm: 0,
+  publicTransitMode: 'bus',
   electricityKwh: 300,
   electricitySource: 'grid',
   heatingTherms: 20,
+  lpgCylinders: 0,
   vehicleType: 'petrol',
   weeklyKm: 100,
   shortFlights: 2,

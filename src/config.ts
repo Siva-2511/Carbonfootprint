@@ -10,6 +10,7 @@ export const EMISSION_FACTORS = Object.freeze({
   },
   heating: {
     naturalGas: 5.3, // kg CO₂e/therm
+    lpgCylinder: 42.4, // kg CO₂e/cylinder — Source: GHG Protocol Emission Factors Tool
   },
   transport: {
     petrol: 0.21,    // kg CO₂e/km
@@ -43,6 +44,7 @@ export const INPUT_LIMITS = Object.freeze({
   electricityKwh: { min: 0, max: 10000, default: 300 },
   acHours: { min: 0, max: 24, default: 0 },
   heatingTherms: { min: 0, max: 500, default: 20 },
+  lpgCylinders: { min: 0, max: 4, default: 0 },
   weeklyKm: { min: 0, max: 5000, default: 100 },
   publicTransportKm: { min: 0, max: 5000, default: 0 },
   shortFlights: { min: 0, max: 50, default: 2 },
@@ -101,14 +103,28 @@ export const BENCHMARK_DATA = Object.freeze({
 });
 
 export const GAS_HEATING_COUNTRIES = [
-  'United States',
-  'United Kingdom',
-  'Germany',
-  'France',
-  'Canada',
-  'Norway',
-  'South Korea'
+  'United States', 'United Kingdom', 'Germany', 'France', 'Canada', 'Norway', 'Russia', 'Spain',
 ];
+
+export const CURRENCY_MAP: Record<string, { currency: string; symbol: string; max: number; tier1: number; tier2: number; multiplier: number }> = {
+  'India': { currency: 'INR', symbol: '₹', max: 50000, tier1: 5000, tier2: 20000, multiplier: 1 },
+  'United States': { currency: 'USD', symbol: '$', max: 1000, tier1: 100, tier2: 400, multiplier: 0.012 },
+  'United Kingdom': { currency: 'GBP', symbol: '£', max: 800, tier1: 80, tier2: 320, multiplier: 0.009 },
+  'Germany': { currency: 'EUR', symbol: '€', max: 1000, tier1: 100, tier2: 400, multiplier: 0.011 },
+  'France': { currency: 'EUR', symbol: '€', max: 1000, tier1: 100, tier2: 400, multiplier: 0.011 },
+  'Spain': { currency: 'EUR', symbol: '€', max: 1000, tier1: 100, tier2: 400, multiplier: 0.011 },
+  'Japan': { currency: 'JPY', symbol: '¥', max: 100000, tier1: 10000, tier2: 40000, multiplier: 1.8 },
+  'China': { currency: 'CNY', symbol: '¥', max: 5000, tier1: 500, tier2: 2000, multiplier: 0.086 },
+  'South Korea': { currency: 'KRW', symbol: '₩', max: 1000000, tier1: 100000, tier2: 400000, multiplier: 16.3 },
+  'North Korea': { currency: 'KPW', symbol: '₩', max: 1000000, tier1: 100000, tier2: 400000, multiplier: 10.8 },
+  'Russia': { currency: 'RUB', symbol: '₽', max: 50000, tier1: 5000, tier2: 20000, multiplier: 1.1 },
+  'Australia': { currency: 'AUD', symbol: '$', max: 1500, tier1: 150, tier2: 600, multiplier: 0.018 },
+  'Canada': { currency: 'CAD', symbol: '$', max: 1500, tier1: 150, tier2: 600, multiplier: 0.016 },
+  'Norway': { currency: 'NOK', symbol: 'kr', max: 10000, tier1: 1000, tier2: 4000, multiplier: 0.13 },
+  'South Africa': { currency: 'ZAR', symbol: 'R', max: 20000, tier1: 2000, tier2: 8000, multiplier: 0.22 },
+  'Brazil': { currency: 'BRL', symbol: 'R$', max: 5000, tier1: 500, tier2: 2000, multiplier: 0.06 },
+  'Global Average': { currency: 'USD', symbol: '$', max: 1000, tier1: 100, tier2: 400, multiplier: 0.012 },
+};
 
 export const APP_CONFIG = Object.freeze({
   maxHistoryEntries: 30,

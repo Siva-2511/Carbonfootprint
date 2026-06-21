@@ -28,6 +28,7 @@ export interface CalculatorInputs {
   electricitySource: ElectricitySource;
   acHours: number;
   heatingTherms: number;
+  lpgCylinders: number;
   vehicleType: VehicleType;
   weeklyKm: number;
   publicTransportKm: number;

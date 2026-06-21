@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
 import type { CalculatorInputs } from '../../types';
+import { CURRENCY_MAP } from '../../config';
 
 // ─────────────────────────────────────────────────────────────
 //  FILE 6: src/components/Profile/CalculatorStep4.tsx
@@ -14,6 +15,18 @@ interface CalculatorStep4Props {
 
 export function CalculatorStep4({ inputs, onUpdate }: CalculatorStep4Props) {
   const recyclingId = useId();
+  
+  const currencyInfo = inputs.country && CURRENCY_MAP[inputs.country] ? CURRENCY_MAP[inputs.country] : CURRENCY_MAP['Global Average'];
+
+  const formatCurrency = (v: number) => {
+    const locale = currencyInfo.currency === 'INR' ? 'en-IN' : 'en-US';
+    return `${currencyInfo.symbol}${v.toLocaleString(locale)}`;
+  };
+
+  const formatK = (v: number) => {
+    if (v >= 1000) return `${currencyInfo.symbol}${v / 1000}K`;
+    return `${currencyInfo.symbol}${v}`;
+  };
 
   return (
     <Card className="p-6 space-y-8">
@@ -36,9 +49,9 @@ export function CalculatorStep4({ inputs, onUpdate }: CalculatorStep4Props) {
         value={inputs.monthlySpend}
         onChange={(v) => onUpdate({ monthlySpend: v })}
         min={0}
-        max={50000}
-        step={500}
-        formatValue={(v) => `₹${v.toLocaleString('en-IN')}`}
+        max={currencyInfo.max}
+        step={Math.max(1, currencyInfo.max / 100)}
+        formatValue={formatCurrency}
         helperText="Include clothing, electronics, household goods — not groceries"
         color="emerald"
       />
@@ -46,9 +59,9 @@ export function CalculatorStep4({ inputs, onUpdate }: CalculatorStep4Props) {
       {/* Shopping impact guide */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { range: '₹0 – 5K', label: 'Minimal', color: 'text-emerald-400', bg: 'bg-emerald-500/8 border-emerald-500/20' },
-          { range: '₹5K – 20K', label: 'Moderate', color: 'text-amber-400', bg: 'bg-amber-500/8 border-amber-500/20' },
-          { range: '₹20K+', label: 'High impact', color: 'text-rose-400', bg: 'bg-rose-500/8 border-rose-500/20' },
+          { range: `${formatK(0)} – ${formatK(currencyInfo.tier1)}`, label: 'Minimal', color: 'text-emerald-400', bg: 'bg-emerald-500/8 border-emerald-500/20' },
+          { range: `${formatK(currencyInfo.tier1)} – ${formatK(currencyInfo.tier2)}`, label: 'Moderate', color: 'text-amber-400', bg: 'bg-amber-500/8 border-amber-500/20' },
+          { range: `${formatK(currencyInfo.tier2)}+`, label: 'High impact', color: 'text-rose-400', bg: 'bg-rose-500/8 border-rose-500/20' },
         ].map((tier) => (
           <div key={tier.range} className={`flex flex-col gap-1 p-3 rounded-xl border ${tier.bg}`}>
             <span className={`text-xs font-bold font-mono tabular-nums ${tier.color}`}>{tier.range}</span>

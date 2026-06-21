@@ -201,8 +201,8 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
         </div>
       </fieldset>
 
-      {/* Monthly gas/heating slider - conditionally rendered based on country */}
-      {inputs.country && GAS_HEATING_COUNTRIES.includes(inputs.country) && (
+      {/* Heating / LPG slider - conditionally rendered based on country */}
+      {inputs.country && GAS_HEATING_COUNTRIES.includes(inputs.country) ? (
         <div className="space-y-4">
           <Slider
             label="Monthly Gas Heating"
@@ -213,6 +213,20 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
             step={1}
             unit="therms"
             helperText="1 therm ≈ 29.3 kWh of natural gas"
+            color="amber"
+          />
+        </div>
+      ) : (
+        <div className="space-y-4">
+          <Slider
+            label="LPG Cylinders per Month"
+            value={inputs.lpgCylinders || 0}
+            onChange={(v) => onUpdate({ lpgCylinders: v })}
+            min={0}
+            max={4}
+            step={1}
+            unit="cylinders"
+            helperText="1 standard 14.2kg LPG cylinder ≈ 42.4 kg CO₂e"
             color="amber"
           />
         </div>
