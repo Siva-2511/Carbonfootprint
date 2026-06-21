@@ -18,7 +18,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
-import xss from 'xss-clean';
 
 dotenv.config();
 
@@ -46,8 +45,7 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
 }));
 
-// XSS Protection
-app.use(xss());
+
 
 // 2. Strict CORS Policy
 const allowedOrigins = process.env.VITE_ALLOWED_ORIGINS 
@@ -63,6 +61,19 @@ app.use(cors({
 
 // 3. Body Parsing
 app.use(express.json({ limit: '500kb' })); // Limit payload size to prevent payload bombing
+
+// XSS Protection Custom Middleware
+const xssClean = (req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    for (const key in req.body) {
+      if (typeof req.body[key] === 'string') {
+        req.body[key] = req.body[key].replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+    }
+  }
+  next();
+};
+app.use(xssClean);
 
 // 4. Rate Limiting (DDoS Protection)
 const apiLimiter = rateLimit({
