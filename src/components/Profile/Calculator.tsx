@@ -41,7 +41,9 @@ export function Calculator() {
     if (currentStep < 3) {
       setCurrentStep((s) => s + 1);
       requestAnimationFrame(() => {
-        formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
       });
     } else {
       // Final step — run pipeline
@@ -49,7 +51,9 @@ export function Calculator() {
       // Let React render the results, wait for paint, then scroll
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => {
+            resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 0);
         });
       });
     }
@@ -58,7 +62,9 @@ export function Calculator() {
   const handleBack = () => {
     setCurrentStep((s) => Math.max(0, s - 1));
     requestAnimationFrame(() => {
-      formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 0);
     });
   };
 
