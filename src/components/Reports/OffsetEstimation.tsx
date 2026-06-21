@@ -1,18 +1,36 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 import { useStore } from '../../core/store';
-import { getCurrencyInfo } from '../../config';
+import { getCurrencyInfo, CURRENCY_MAP } from '../../config';
 
 export function OffsetEstimation() {
   const result = useStore((s) => s.result);
   const storeInputs = useStore((s) => s.inputs);
 
+  const settings = useStore((s) => s.settings);
+
   if (!result || result.totalAnnualKg === 0) {
     return (
       <Card className="p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-xl" aria-hidden="true">🌳</span>
-          <h2 className="text-xl font-bold font-display text-primary">Carbon Offsetting</h2>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xl" aria-hidden="true">🌳</span>
+            <h2 className="text-xl font-bold font-display text-primary">Carbon Offsetting</h2>
+          </div>
+          
+          <select
+            value={settings.currencyOverride || ''}
+            onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
+            className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+            aria-label="Select Currency"
+          >
+            <option value="">(Match Country)</option>
+            {Object.entries(CURRENCY_MAP).filter(([k]) => k !== 'Global Average').map(([countryName, info]) => (
+              <option key={countryName} value={info.currency}>
+                {info.currency} ({info.symbol}) — {countryName}
+              </option>
+            ))}
+          </select>
         </div>
         <p className="text-sm text-secondary mb-4">
           Calculate your footprint to see how many trees are needed to offset your emissions.
@@ -22,7 +40,6 @@ export function OffsetEstimation() {
   }
 
   const country = storeInputs.country || 'Global Average';
-  const settings = useStore((s) => s.settings);
   const currencyInfo = getCurrencyInfo(country, settings.currencyOverride);
 
   // 1 mature tree absorbs ~22kg of CO2 per year
@@ -39,9 +56,26 @@ export function OffsetEstimation() {
 
   return (
     <Card className="p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-xl" aria-hidden="true">🌳</span>
-        <h2 className="text-xl font-bold font-display text-primary">Carbon Offsetting</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xl" aria-hidden="true">🌳</span>
+          <h2 className="text-xl font-bold font-display text-primary">Carbon Offsetting</h2>
+        </div>
+        
+        {/* Inline Currency Override */}
+        <select
+          value={settings.currencyOverride || ''}
+          onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
+          className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+          aria-label="Select Currency"
+        >
+          <option value="">(Match Country)</option>
+          {Object.entries(CURRENCY_MAP).filter(([k]) => k !== 'Global Average').map(([countryName, info]) => (
+            <option key={countryName} value={info.currency}>
+              {info.currency} ({info.symbol}) — {countryName}
+            </option>
+          ))}
+        </select>
       </div>
       
       <p className="text-sm text-secondary mb-6">

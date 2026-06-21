@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EMISSION_FACTORS, getCurrencyInfo } from '../../config';
+import { EMISSION_FACTORS, getCurrencyInfo, CURRENCY_MAP } from '../../config';
 import { useStore } from '../../core/store';
 
 const MODES = [
@@ -39,9 +39,26 @@ export function CommuteROICalculator() {
 
   return (
     <div className="glass-card p-6 space-y-6">
-      <h2 className="font-display font-bold text-xl text-primary flex items-center gap-2">
-        🛣️ Commute ROI Calculator
-      </h2>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h2 className="font-display font-bold text-xl text-primary flex items-center gap-2">
+          🛣️ Commute ROI Calculator
+        </h2>
+        
+        {/* Inline Currency Override */}
+        <select
+          value={settings.currencyOverride || ''}
+          onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
+          className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+          aria-label="Select Currency"
+        >
+          <option value="">(Match Country)</option>
+          {Object.entries(CURRENCY_MAP).filter(([k]) => k !== 'Global Average').map(([countryName, info]) => (
+            <option key={countryName} value={info.currency}>
+              {info.currency} ({info.symbol}) — {countryName}
+            </option>
+          ))}
+        </select>
+      </div>
       <p className="text-secondary text-sm leading-relaxed">
         Compare the annual carbon and monetary impact of different commuting modes.
         <span className="block mt-1 text-xs text-muted">* Monetary savings use global average estimates and may vary by region.</span>
