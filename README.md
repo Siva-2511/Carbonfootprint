@@ -20,23 +20,7 @@
 
 </div>
 
----
 
-## 📸 Screenshots
-
-<div align="center">
-  <img src="screenshots/carbon_dna_result.png" alt="Carbon DNA Persona Result" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
-  
-  <br />
-
-  <img src="screenshots/what_if_simulator.png" alt="What-If Simulator" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
-  
-  <br />
-
-  <img src="screenshots/actions_roadmap.png" alt="Actions Roadmap" width="800" style="border-radius: 12px; margin-bottom: 20px;" />
-</div>
-
----
 
 ## ✨ Features
 
@@ -211,7 +195,7 @@ CarbonSense follows a clean, domain-driven architecture separating the intellige
 1. **Core Domain** (`src/core/`): Data validation and global Zustand state management.
 2. **Services** (`src/services/`): Pure logic modules for Carbon Calculation (`carbonCalculator.ts`), DNA Classification (`dnaClassifier.ts`), and Action Priority Ranking (`actionPriority.ts`).
 3. **AI Layer** (`src/services/aiLayer.ts`): Orchestrates all backend AI calls with graceful offline fallback logic.
-4. **UI Components** (`src/components/`): Glassmorphism React components organized by feature tab.
+4. **UI Components** (`src/components/`): Glassmorphism React components organized into 6 tab-based subfolders (`Profile`, `Intelligence`, `Actions`, `Reports`, `EcoLab`, `Lifestyle`) to provide a clear mental map of the app's structure.
 
 ---
 
@@ -297,7 +281,7 @@ npx eslint .          # Lint (0 errors)
 
 ## ⚠️ Known Limitations
 
-- **AI features require the backend proxy running** — if the Node server isn't running, all AI-powered features (chat advisor, recipe wizard, travel router, receipt scanner, daily challenge, action AI guides) automatically fall back to the local static intelligence engine. The core carbon calculator and all analytics work fully offline.
+- **AI features require the backend proxy running** — if the Node server isn't running, all AI-powered features (chat advisor, recipe wizard, travel router, receipt scanner, daily challenge, action AI guides, phantom power analyzer, supply chain analyzer, fast fashion analyzer, smart diet planner, time-travel projection) automatically fall back to the local static intelligence engine. The core carbon calculator and all analytics work fully offline.
 - **Receipt Scanner accuracy** — Vision AI extraction quality depends on image clarity and lighting; handwritten receipts may produce lower accuracy.
 - **Emission factors are estimates** — individual lifestyle variation means actual emissions may differ from calculated values. The tool is best used for *relative comparison* and *identifying the highest-leverage changes*, not as a precise audit.
 - **Grid intensity defaults to "Global Average"** if no country is selected — users in India should select "India" for more accurate electricity emission calculations.
