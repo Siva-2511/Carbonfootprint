@@ -21,11 +21,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", "https://openrouter.ai"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://ajax.googleapis.com", "https://translate.google.com", "https://translate.googleapis.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://translate.googleapis.com"],
+      connectSrc: ["'self'", "https://openrouter.ai", "https://translate.googleapis.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://ajax.googleapis.com", "https://translate.google.com", "https://translate.googleapis.com", "https://translate-pa.googleapis.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://translate.googleapis.com", "https://www.gstatic.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https://www.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://www.gstatic.com", "https://fonts.gstatic.com", "https://translate.googleapis.com"],
     },
   },
   crossOriginEmbedderPolicy: false,
