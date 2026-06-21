@@ -117,9 +117,9 @@ export function CommuteROICalculator() {
           <p className="text-xs text-muted font-medium mb-1">Annual Cost Savings</p>
           <div className="flex items-baseline gap-1">
             <span className={`text-2xl font-bold ${costSavings > 0 ? 'text-emerald-400' : 'text-primary'}`}>
-              {costSavings > 0 ? '+' : ''}{currencyInfo.symbol}{Math.round(costSavings).toLocaleString(currencyInfo.locale)}
+              {costSavings > 0 ? '+' : ''}{currencyInfo.symbol}{Math.round(costSavings).toLocaleString('en-US')}
             </span>
-            <span className="text-xs text-secondary">{currencyInfo.code}</span>
+            <span className="text-xs text-secondary">{currencyInfo.currency}</span>
           </div>
         </div>
       </div>

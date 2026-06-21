@@ -32,7 +32,7 @@ export function OffsetEstimation() {
   const baseCostPerTonUSD = 15;
   const usdToLocal = currencyInfo.multiplier / 0.012;
   const costPerTon = baseCostPerTonUSD * usdToLocal;
-  const annualCost = (result.totalAnnualTons * costPerTon).toLocaleString(currencyInfo.locale, {
+  const annualCost = (result.totalAnnualTons * costPerTon).toLocaleString('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   });

@@ -46,6 +46,11 @@ export function validateInputs(partial: Partial<CalculatorInputs>): CalculatorIn
       INPUT_LIMITS.heatingTherms.min,
       INPUT_LIMITS.heatingTherms.max
     ),
+    lpgCylinders: clamp(
+      partial.lpgCylinders ?? INPUT_LIMITS.lpgCylinders.default,
+      INPUT_LIMITS.lpgCylinders.min,
+      INPUT_LIMITS.lpgCylinders.max
+    ),
     vehicleType: ['petrol', 'diesel', 'ev', 'none', 'twoWheeler'].includes(partial.vehicleType ?? '')
       ? (partial.vehicleType as CalculatorInputs['vehicleType'])
       : 'petrol',

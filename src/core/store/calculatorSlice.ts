@@ -12,6 +12,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   householdSize: 1,
   acHours: 0,
   publicTransportKm: 0,
+  publicTransitMode: 'bus',
   electricityKwh: INPUT_LIMITS.electricityKwh.default,
   electricitySource: 'grid',
   heatingTherms: INPUT_LIMITS.heatingTherms.default,
