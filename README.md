@@ -16,9 +16,18 @@
 
 > **CarbonSense** is a full-stack AI sustainability platform that calculates your personal carbon footprint, classifies your unique "Carbon DNA" persona, and delivers hyper-personalized recommendations — all powered by a secure backend AI proxy and built for offline-first resilience.
 
-[**Architecture**](#architecture) · [**Getting Started**](#getting-started) · [**Features**](#features)
+**Hackathon Vertical/Track:** Carbon Footprint Awareness Platform
+
+[**Architecture**](#architecture) · [**Approach & Logic**](#approach--logic) · [**Features**](#features)
 
 </div>
+
+## 🧠 Approach & Logic
+
+CarbonSense tackles the challenge of carbon footprint awareness by moving beyond generic advice to deliver hyper-personalized, data-driven intelligence:
+1. **Data-Driven Baseline:** We calculate a strict, scientifically grounded baseline using IPCC and DEFRA emission factors, adjusting for dynamic regional variables (like country-specific power grid intensities).
+2. **Algorithmic Classification:** Using a custom deterministic algorithm, we classify the user into one of five "Carbon DNA" personas (e.g., Urban Commuter, Energy-Intensive Resident).
+3. **AI Personalization:** We pass the user's Carbon DNA and baseline footprint as a strict system prompt into our generative AI pipeline (powered by Google Gemini / OpenRouter). This dynamically generates context-aware, hyper-personalized sustainability advice and roadmap actions that directly target the user's biggest emission drivers.
 
 
 
@@ -285,6 +294,16 @@ npx eslint .          # Lint (0 errors)
 - **Receipt Scanner accuracy** — Vision AI extraction quality depends on image clarity and lighting; handwritten receipts may produce lower accuracy.
 - **Emission factors are estimates** — individual lifestyle variation means actual emissions may differ from calculated values. The tool is best used for *relative comparison* and *identifying the highest-leverage changes*, not as a precise audit.
 - **Grid intensity defaults to "Global Average"** if no country is selected — users in India should select "India" for more accurate electricity emission calculations.
+
+---
+
+## 📌 Assumptions Made
+
+In order to simplify the complex reality of carbon accounting for individual users, the following assumptions and constraints were applied:
+- **Grid Intensity:** We assume the user's electricity grid matches the national IEA average for their country. Regional or municipal grid variations are not accounted for unless the user explicitly selects "Solar" or "Mixed" power.
+- **Dietary Impact:** We rely on flat annual emission benchmarks based on global studies for diet types (e.g., Heavy Meat vs. Vegan) rather than asking users to log every calorie.
+- **Appliance Energy Constraints:** Air Conditioning calculations assume a standard 1.5 kWh draw. The Phantom Power analyzer assumes modern average standby wattage for typical consumer appliances.
+- **Public Transport Baselines:** Bus and Metro emission calculations assume average passenger capacity utilization, attributing a shared slice of the vehicle's footprint to the user.
 
 ---
 
