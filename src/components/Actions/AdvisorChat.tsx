@@ -113,7 +113,11 @@ export function AdvisorChat() {
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        listRef.current?.scrollTo({ top: listRef.current?.scrollHeight, behavior: 'smooth' });
+      }, 0);
+    });
   }, [messages]);
 
   const handleSend = async (text: string) => {
