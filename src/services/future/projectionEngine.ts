@@ -17,7 +17,6 @@ function getReductionRate(completedPhasePercent: number): number {
   return rate;
 }
 
-/** Generates 5-year BAU and sustainable emission projections. */
 export function project(currentTons: number, completedPhasePercent: number): ProjectionResult {
   const safe = Number.isFinite(currentTons) && currentTons >= 0 ? currentTons : 0;
   const reductionRate = getReductionRate(completedPhasePercent);

@@ -15,9 +15,6 @@ export const BADGE_THRESHOLDS = [
   { points: 5000, badge: 'carbon-neutral' },
 ];
 
-/**
- * Calculates current level based on total points
- */
 export function calculateEcoLevel(points: number): string {
   let currentLevel = ECO_LEVELS[0].title;
   for (const level of ECO_LEVELS) {
@@ -28,9 +25,6 @@ export function calculateEcoLevel(points: number): string {
   return currentLevel;
 }
 
-/**
- * Pure function: evaluates points and unlocks
- */
 export function evaluateSession(state: HabitState): HabitState {
   // Check badge unlocks
   const newBadges = [...state.badges];
@@ -46,7 +40,6 @@ export function evaluateSession(state: HabitState): HabitState {
     badges: newBadges,
   };
 }
-/** Points-based system has no recovery mode */
 export function isInRecoveryMode(): boolean {
   return false;
 }

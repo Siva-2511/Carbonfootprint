@@ -1,18 +1,5 @@
-/**
- * @fileoverview LocalStorage persistence helpers for CarbonSense.
- * Provides type-safe read/write wrappers and a schema validator that guards
- * against corrupted or outdated persisted state.
- */
-
-/** The current schema version stored in persisted data; increment on breaking state shape changes. */
 export const SCHEMA_VERSION = 1;
 
-/**
- * Validates that rehydrated localStorage data has the correct shape.
- * Checks for required top-level keys and validates inputs, settings, and habits sub-objects.
- * @param data - The raw parsed object from localStorage to validate.
- * @returns `true` if the data conforms to the expected schema, `false` otherwise.
- */
 export function validateSchema(data: unknown): boolean {
   if (!data || typeof data !== 'object') return false;
   const d = data as Record<string, unknown>;
@@ -43,11 +30,6 @@ export function validateSchema(data: unknown): boolean {
   return true;
 }
 
-/**
- * Safely reads and parses a localStorage key. Returns null on failure.
- * @param key - The localStorage key to read.
- * @returns The parsed value cast to T, or null if the key is missing or parsing fails.
- */
 export function readStorage<T>(key: string): T | null {
   try {
     const raw = localStorage.getItem(key);
@@ -58,13 +40,6 @@ export function readStorage<T>(key: string): T | null {
   }
 }
 
-/**
- * Safely writes to localStorage, handling QuotaExceededError.
- * Removes the key and warns to console when storage quota is exceeded.
- * @param key - The localStorage key to write to.
- * @param value - The value to serialize as JSON and store.
- * @returns `true` if the write succeeded, `false` on any error.
- */
 export function writeStorage(key: string, value: unknown): boolean {
   try {
     localStorage.setItem(key, JSON.stringify(value));

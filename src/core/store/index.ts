@@ -1,9 +1,3 @@
-/**
- * @fileoverview Zustand store root for CarbonSense.
- * Combines all feature slices (calculator, habits, chat, settings) into a single
- * persisted store with schema validation on rehydration and automatic migration support.
- */
-
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { AppState } from '../../types';
@@ -14,11 +8,6 @@ import { createChatSlice } from './chatSlice';
 import { createSettingsSlice } from './settingsSlice';
 import { validateSchema } from '../storage';
 
-/**
- * The global Zustand store hook for the CarbonSense application.
- * Persists essential state to localStorage under the key `carbonsense-v1`.
- * Validates schema integrity on rehydration and migrates across schema versions.
- */
 export const useStore = create<AppState>()(
   persist(
     (...args) => ({

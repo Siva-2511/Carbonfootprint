@@ -1,7 +1,6 @@
 import { BENCHMARK_DATA } from '../../config';
 import type { BenchmarkResult } from '../../types';
 
-/** Compares user's annual tons to global benchmarks. */
 export function compareToBenchmarks(totalTons: number, country: string = 'India'): BenchmarkResult {
   const safe = Number.isFinite(totalTons) && totalTons >= 0 ? totalTons : 0;
   const countryAvg = BENCHMARK_DATA.perCapita[country] || BENCHMARK_DATA.globalAvg;

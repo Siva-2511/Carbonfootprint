@@ -1,10 +1,3 @@
-/**
- * @fileoverview Multi-step Carbon Footprint Calculator orchestrator for the CarbonSense Profile tab.
- * Manages step-level navigation across four input steps (Energy, Transport, Diet, Lifestyle),
- * accumulates local form state, triggers the carbon pipeline on final submission, and
- * lazy-loads the DnaResult and CarbonEvolution result panels.
- */
-
 import React, { useState, useRef } from 'react';
 import { CalculatorStep1 } from './CalculatorStep1';
 import { CalculatorStep2 } from './CalculatorStep2';
@@ -30,14 +23,6 @@ const STEPS = [
   { label: 'Lifestyle', icon: '🛍️' },
 ];
 
-/**
- * Top-level calculator component that orchestrates the four-step carbon
- * footprint input wizard.
- *
- * Renders an accessible step-indicator nav, the active step form, Back/Next
- * navigation buttons, and — once the pipeline has run — the lazy-loaded
- * `DnaResult` and `CarbonEvolution` result panels below the form.
- */
 export function Calculator() {
   const storeInputs = useStore((s) => s.inputs);
   const [currentStep, setCurrentStep] = useState(0);
@@ -50,19 +35,10 @@ export function Calculator() {
   const resultsRef = useRef<HTMLDivElement>(null);
   const formTopRef = useRef<HTMLDivElement>(null);
 
-  /**
-   * Merges a partial update into the local calculator inputs state.
-   *
-   * @param partial - Partial `CalculatorInputs` object with updated fields.
-   */
   const handleUpdate = (partial: Partial<CalculatorInputs>) => {
     setLocalInputs((prev) => ({ ...prev, ...partial }));
   };
 
-  /**
-   * Advances to the next step with smooth scroll, or on the final step
-   * submits all inputs to the carbon pipeline and scrolls to results.
-   */
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep((s) => s + 1);
@@ -85,9 +61,6 @@ export function Calculator() {
     }
   };
 
-  /**
-   * Navigates back to the previous step and scrolls to the form top.
-   */
   const handleBack = () => {
     setCurrentStep((s) => Math.max(0, s - 1));
     requestAnimationFrame(() => {

@@ -1,7 +1,6 @@
 import { APP_CONFIG } from '../../config';
 import type { BudgetInfo } from '../../types';
 
-/** Calculates monthly carbon budget and determines alert status. */
 export function calculateBudget(annualKg: number): BudgetInfo {
   const safe = Number.isFinite(annualKg) && annualKg >= 0 ? annualKg : 0;
   const monthlyBudgetKg = Math.round(safe / 12);

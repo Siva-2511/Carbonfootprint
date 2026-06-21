@@ -1,10 +1,3 @@
-/**
- * @fileoverview Settings component providing a unified interface for global
- * application preferences. Controls theme (light/dark), ELI10 accessibility
- * mode, Google Translate language, global currency display overrides,
- * AI coach persona selection, system health audits, and global data deletion.
- */
-
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { CURRENCY_MAP } from '../../config';

@@ -1,9 +1,3 @@
-/**
- * @fileoverview IdentityReport component that provides a comprehensive, printable
- * summary of the user's Carbon DNA, total footprint, category breakdown, unlocked
- * achievement badges, and top priority actions.
- */
-
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { simplify } from '../../services/core/textSimplifier';

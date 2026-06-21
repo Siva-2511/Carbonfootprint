@@ -51,7 +51,6 @@ const RECOMMENDATION_POOL: Recommendation[] = [
 
 const PRIORITY_ORDER: Record<Recommendation['priority'], number> = { P0: 0, P1: 1, P2: 2 };
 
-/** Returns ranked recommendations based on user's carbon profile. */
 export function rank(result: CarbonResult, dna: CarbonDNA): Recommendation[] {
   const { primaryDriver } = result;
   const categories: Category[] = [
@@ -83,7 +82,6 @@ export function rank(result: CarbonResult, dna: CarbonDNA): Recommendation[] {
   });
 }
 
-/** Promotes top P1 to P0 in categories where all P0 are completed. */
 export function promoteRecommendations(
   recs: Recommendation[],
   completedIds: string[]

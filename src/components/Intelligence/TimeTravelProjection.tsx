@@ -1,23 +1,10 @@
-/**
- * @fileoverview TimeTravelProjection component that uses an AI model to generate
- * a dual-scenario climate outlook for a user-specified city in the year 2050 —
- * a utopian "Net Zero" path (Scenario A) and a dystopian "Business as Usual"
- * path (Scenario B) — based on the user's current carbon footprint.
- */
-
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { rawAIFetch } from '../../services/aiLayer';
 
-/**
- * Describes the AI-generated climate projection result for a given city in 2050.
- */
 interface ProjectionResult {
-  /** Name of the queried city or region. */
   city: string;
-  /** The projection year (always 2050). */
   year: number;
-  /** Utopian scenario assuming a global net-zero trajectory. */
   scenarioA: {
     title: string;
     description: string;
@@ -25,7 +12,6 @@ interface ProjectionResult {
     seaLevelChange: string;
     localImpact: string;
   };
-  /** Dystopian scenario assuming business-as-usual emissions continue. */
   scenarioB: {
     title: string;
     description: string;
@@ -35,14 +21,6 @@ interface ProjectionResult {
   };
 }
 
-/**
- * Renders an AI-powered time-travel climate projection card that allows users to
- * enter a city name and view side-by-side 2050 climate scenarios (Utopian vs Dystopian)
- * tailored to their carbon footprint. Fetches projections via `rawAIFetch` and renders
- * temperature change, sea level rise, and a local landmark impact for each scenario.
- * Returns `null` if no footprint result is available.
- * @returns The projection card element, or `null` if `result` is not yet calculated.
- */
 export function TimeTravelProjection() {
   const resultData = useStore((s) => s.result);
   const storeInputs = useStore((s) => s.inputs);
@@ -52,10 +30,6 @@ export function TimeTravelProjection() {
   const [loading, setLoading] = useState(false);
   const [projection, setProjection] = useState<ProjectionResult | null>(null);
 
-  /**
-   * Calls the AI service to generate a 2050 climate projection for the entered city,
-   * parses the JSON response, and stores it in component state.
-   */
   const analyze = async () => {
     if (!city.trim() || !resultData) return;
     setLoading(true);

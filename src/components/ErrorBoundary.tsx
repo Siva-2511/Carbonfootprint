@@ -1,10 +1,3 @@
-/**
- * @fileoverview React class-based Error Boundary for the CarbonSense application.
- * Catches unhandled JavaScript errors anywhere in the child component tree,
- * logs them to the console, and renders a styled fallback UI with options to
- * reset the app (clearing localStorage) or retry rendering.
- */
-
 import React, { Component, type ErrorInfo, type ReactNode } from 'react';
 
 // ─────────────────────────────────────────────────────────────
@@ -20,11 +13,6 @@ interface State {
   error: Error | null;
 }
 
-/**
- * Class component that acts as an error boundary for its subtree.
- * When a descendant throws, it captures the error, displays a full-screen
- * recovery UI, and exposes buttons to hard-reset the app or attempt a retry.
- */
 class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -44,10 +32,6 @@ class ErrorBoundary extends Component<Props, State> {
     console.error('[CarbonSense ErrorBoundary] Component stack:', errorInfo.componentStack);
   }
 
-  /**
-   * Clears localStorage and reloads the page to recover from an error state.
-   * Storage errors in sandboxed environments are silently ignored.
-   */
   handleReset = (): void => {
     try {
       localStorage.clear();

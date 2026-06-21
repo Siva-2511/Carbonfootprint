@@ -6,10 +6,6 @@ import { rank } from '../services/intelligence/actionPriority';
 import type { CalculatorInputs } from '../types';
 import { APP_CONFIG } from '../config';
 
-/**
- * Orchestrates the full calculation pipeline.
- * UI components must use this hook instead of importing engines directly.
- */
 export function useCarbonPipeline() {
   const setPipelineResult = useStore((s) => s.setPipelineResult);
   const setInputs = useStore((s) => s.setInputs);
@@ -30,7 +26,6 @@ export function useCarbonPipeline() {
   return { runPipeline };
 }
 
-/** Returns true if the user has already calculated their footprint. */
 export function useIsCalculated(): boolean {
   return useStore((s) => s.result !== null);
 }

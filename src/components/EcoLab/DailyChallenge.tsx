@@ -1,17 +1,6 @@
-/**
- * @fileoverview DailyChallenge component for the EcoLab section.
- * Renders an AI-powered sustainability trivia quiz that generates a new
- * multiple-choice question on demand via the rawAIFetch service.
- * Users select an answer, receive immediate feedback, and can chain
- * to the next challenge.
- */
-
 import React, { useState } from 'react';
 import { rawAIFetch } from '../../services/aiLayer';
 
-/**
- * Represents the structure of a single AI-generated sustainability challenge.
- */
 interface ChallengeState {
   question: string;
   options: string[];
@@ -19,15 +8,6 @@ interface ChallengeState {
   explanation: string;
 }
 
-/**
- * DailyChallenge renders an interactive eco-trivia card.
- * It fetches an AI-generated multiple-choice sustainability question,
- * displays the options, highlights the correct/incorrect answer after
- * selection, and shows an explanation with an option to proceed to the
- * next challenge.
- *
- * @returns The rendered daily eco-challenge card.
- */
 export function DailyChallenge() {
   const [challenge, setChallenge] = useState<ChallengeState | null>(null);
   const [loading, setLoading] = useState(false);

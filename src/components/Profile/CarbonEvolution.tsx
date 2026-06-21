@@ -1,8 +1,3 @@
-/**
- * @fileoverview CarbonEvolution component that projects a 5-year carbon footprint
- * trend, comparing a "Business As Usual" scenario with a "Green Path" scenario.
- */
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../core/store';
 import { project } from '../../services/future/projectionEngine';

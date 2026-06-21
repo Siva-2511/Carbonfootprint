@@ -15,7 +15,6 @@ const DEFAULT_RESULT: CarbonResult = {
   timestamp: Date.now(),
 };
 
-/** Calculates annual carbon emissions from validated user inputs. */
 export function calculate(inputs: CalculatorInputs): CarbonResult {
   // 1. Clamp inputs & household math
   const hsSize = clamp(inputs.householdSize || 1, 1, INPUT_LIMITS.householdSize.max);

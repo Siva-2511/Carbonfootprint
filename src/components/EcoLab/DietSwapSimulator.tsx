@@ -1,10 +1,3 @@
-/**
- * @fileoverview DietSwapSimulator component for the EcoLab section.
- * Lets users select a current and target diet tier (e.g., heavy meat → vegan)
- * and instantly see the resulting annual carbon footprint difference in kg CO₂e,
- * along with a trees-planted equivalency for positive savings.
- */
-
 import React, { useState } from 'react';
 import { EMISSION_FACTORS } from '../../config';
 
@@ -15,14 +8,6 @@ const DIETS = [
   { id: 'vegan', name: 'Vegan', icon: '🥗' },
 ] as const;
 
-/**
- * DietSwapSimulator renders a side-by-side diet selector that computes
- * the annual CO₂e difference between a user's current and target diet tier.
- * Positive savings are expressed in kg CO₂e and equivalent trees planted
- * (approx. 21 kg CO₂ absorbed per tree per year).
- *
- * @returns The rendered diet swap simulator card.
- */
 export function DietSwapSimulator() {
   const [currentDiet, setCurrentDiet] = useState<keyof typeof EMISSION_FACTORS.diet>('heavy-meat');
   const [targetDiet, setTargetDiet] = useState<keyof typeof EMISSION_FACTORS.diet>('vegan');

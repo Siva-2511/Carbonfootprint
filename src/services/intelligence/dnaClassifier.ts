@@ -19,7 +19,6 @@ function computeRiskTrend(history: CarbonResult[]): RiskTrend {
   return 'stable';
 }
 
-/** Classifies a user's Carbon DNA persona from their CarbonResult. */
 export function classify(result: CarbonResult, history: CarbonResult[]): CarbonDNA {
   const { breakdown, totalAnnualTons } = result;
   let persona: DNAPersona;

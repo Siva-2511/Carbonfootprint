@@ -1,10 +1,3 @@
-/**
- * @fileoverview Reusable polymorphic Button component for the CarbonSense UI library.
- * Wraps a native `<button>` element with design-system variants (primary, secondary,
- * ghost, danger), three size presets, and an integrated loading spinner. Forwards
- * refs for imperative focus management.
- */
-
 import React, { forwardRef } from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,18 +6,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
 }
 
-/**
- * Accessible, ref-forwarding button with built-in variant styling and loading state.
- * Automatically disables interaction and shows a spinner when `loading` is `true`.
- *
- * @param props.variant - Visual style preset; defaults to `'primary'`.
- * @param props.size - Controls padding and font size; defaults to `'md'`.
- * @param props.loading - When `true`, disables the button and renders a spin icon.
- * @param props.disabled - Native disabled attribute; also disables when `loading`.
- * @param props.children - Button label content.
- * @param props.className - Extra Tailwind classes added to the button element.
- * @param props.style - Inline styles merged after variant/size styles.
- */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', loading, disabled, children, className = '', style, ...props }, ref) => {
     // Determine dynamic styles based on variant

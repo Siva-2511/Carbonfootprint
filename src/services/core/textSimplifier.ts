@@ -1,4 +1,3 @@
-/** Automatically simplifies technical sustainability text for ELI10 mode. */
 export function simplify(technical: string): string {
   if (typeof technical !== 'string' || !technical) return technical;
 

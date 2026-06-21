@@ -8,7 +8,6 @@ import {
 
 Chart.register(ArcElement, BarElement, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-/** Manages Chart.js lifecycle: create once, update data, destroy on unmount. */
 export function useChartRef(config: ChartConfiguration) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const chartRef = useRef<Chart | null>(null);

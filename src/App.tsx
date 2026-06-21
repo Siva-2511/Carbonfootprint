@@ -1,9 +1,3 @@
-/**
- * @fileoverview Root application component for CarbonSense.
- * Orchestrates tab-based navigation, lazy-loads all feature panels, applies
- * the active theme to the document root, and wraps everything in an ErrorBoundary.
- */
-
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Layout } from './components/Layout';
@@ -34,7 +28,6 @@ const PhantomPowerAnalyzer = lazy(() => import('./components/EcoLab/PhantomPower
 const SupplyChainAnalyzer = lazy(() => import('./components/EcoLab/SupplyChainAnalyzer').then((m) => ({ default: m.SupplyChainAnalyzer })));
 const TimeTravelProjection = lazy(() => import('./components/Intelligence/TimeTravelProjection').then((m) => ({ default: m.TimeTravelProjection })));
 
-/** Accessible full-page loading spinner shown during lazy-loaded tab suspense. */
 function Spinner() {
   return (
     <div className="flex items-center justify-center py-20" aria-label="Loading" role="status">
@@ -43,7 +36,6 @@ function Spinner() {
   );
 }
 
-/** Renders the Intelligence Center tab with scorecard, simulator, benchmarking, progress tracker, and time-travel projection. */
 function IntelligenceTab() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -61,11 +53,9 @@ function IntelligenceTab() {
     </div>
   );
 }
-/** Renders the Action Hub tab containing the sustainability roadmap and AI advisor chat. */
 function ActionsTab() {
   return <div className="space-y-6"><Roadmap /><AdvisorChat /></div>;
 }
-/** Renders the Reports & Settings tab with identity report, offset estimation, and settings panels. */
 function ReportsTab() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -77,24 +67,15 @@ function ReportsTab() {
     </div>
   );
 }
-/** Renders the Eco Lab tab with experimental sustainability tools (simulators, scanners, calculators). */
 function EcoLabTab() {
   return <div className="space-y-6"><DietSwapSimulator /><PhantomPowerAnalyzer /><SupplyChainAnalyzer /><CommuteROICalculator /><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
 }
-/** Renders the Lifestyle Planner tab with recipe, diet, fashion, and travel planning tools. */
 function LifestyleTab() {
   return <div className="space-y-6"><RecipeWizard /><SmartDietPlanner /><FastFashionAnalyzer /><TravelRouter /></div>;
 }
 
-/** Ordered display labels for each application tab, indexed to match the activeTab state. */
 const TAB_LABELS = ['My Carbon Profile', 'Intelligence Center', 'Action Hub', 'Reports & Settings', 'Eco Lab', 'Lifestyle Planner'];
 
-/**
- * Root application component.
- * Manages active tab state, synchronises the theme class on `<html>`, evaluates
- * the habit session on mount, and renders the selected tab panel inside a Suspense boundary.
- * @returns The full application UI wrapped in an ErrorBoundary and Layout.
- */
 export default function App() {
   const [activeTab, setActiveTab] = useState(0);
   const theme = useStore((s) => s.settings.theme);

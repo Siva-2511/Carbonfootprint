@@ -1,23 +1,9 @@
-/**
- * @fileoverview What-If Simulator component that lets users interactively model
- * the impact of lifestyle changes (driving less, flying less, reducing meat/dairy)
- * on their carbon footprint using slider controls and real-time recalculation.
- */
-
 import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Slider } from '../ui/Slider';
 import { useStore } from '../../core/store';
 import { calculate } from '../../services/core/carbonCalculator';
 
-/**
- * Renders an interactive "What-If Simulator" card that allows users to adjust
- * three lifestyle levers (driving, flying, and meat/dairy reduction) via sliders
- * and instantly see the projected new annual footprint and potential CO₂ savings.
- * Reads the user's current result and inputs from the global Zustand store.
- * @returns The simulator card with sliders and summary, or an empty-state prompt
- * if no footprint result is available yet.
- */
 export function Simulator() {
   const result = useStore((s) => s.result);
   const inputs = useStore((s) => s.inputs);

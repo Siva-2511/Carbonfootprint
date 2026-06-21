@@ -1,10 +1,3 @@
-/**
- * @fileoverview Step 4 of the Carbon Footprint Calculator — Consumption & Lifestyle.
- * Collects the user's monthly non-grocery shopping spend (localised by country/currency)
- * and whether they actively recycle and compost. Displays colour-coded spend tier
- * reference cards and a toggle switch for the recycling behaviour.
- */
-
 import React, { useId } from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
@@ -21,38 +14,17 @@ interface CalculatorStep4Props {
   onUpdate: (partial: Partial<CalculatorInputs>) => void;
 }
 
-/**
- * Renders the Consumption & Lifestyle form card — Step 4 (final step) of the
- * carbon footprint calculator. Provides a localised currency-aware spending
- * slider, impact tier reference cards, and an accessible recycling toggle switch.
- *
- * @param props.inputs - Current accumulated calculator inputs from the parent wizard.
- * @param props.onUpdate - Callback to merge partial input updates into the parent state.
- */
 export function CalculatorStep4({ inputs, onUpdate }: CalculatorStep4Props) {
   const recyclingId = useId();
   const settings = useStore((s) => s.settings);
   
   const currencyInfo = getCurrencyInfo(inputs.country, settings.currencyOverride);
 
-  /**
-   * Formats a numeric value as a localised currency string using the country's
-   * currency symbol and appropriate locale (`en-IN` for INR, `en-US` otherwise).
-   *
-   * @param v - Numeric value to format.
-   * @returns Formatted currency string, e.g. `"₹5,000"` or `"$200"`.
-   */
   const formatCurrency = (v: number) => {
     const locale = currencyInfo.currency === 'INR' ? 'en-IN' : 'en-US';
     return `${currencyInfo.symbol}${v.toLocaleString(locale)}`;
   };
 
-  /**
-   * Formats a numeric value with abbreviated thousands suffix for compact display.
-   *
-   * @param v - Numeric value to format.
-   * @returns Abbreviated string, e.g. `"₹5K"` or `"₹500"`.
-   */
   const formatK = (v: number) => {
     if (v >= 1000) return `${currencyInfo.symbol}${v / 1000}K`;
     return `${currencyInfo.symbol}${v}`;

@@ -1,9 +1,3 @@
-/**
- * @fileoverview ProgressTracker component that visualises the user's monthly carbon
- * budget against a sustainable target using an SVG ring gauge, and plots their
- * historical footprint trend with an animated Chart.js line chart.
- */
-
 import React, { useEffect, useRef } from 'react';
 import { useStore } from '../../core/store';
 import { calculateBudget } from '../../services/future/budgetManager';
@@ -11,16 +5,6 @@ import { Chart, LineController, LineElement, PointElement, LinearScale, Category
 
 Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Tooltip, Filler);
 
-/**
- * Renders a progress tracker card that displays:
- * - An SVG ring gauge showing the percentage of the monthly carbon budget used.
- * - A budget summary including the monthly budget in kg CO₂e and sustainable target.
- * - A status alert message colour-coded by severity (on-track / warning / critical).
- * - A line chart of the last 10 historical footprint entries (shown when ≥2 entries exist).
- *
- * Reads `result` and `history` from the global Zustand store.
- * @returns The progress tracker glass card, or an empty-state prompt if no result exists.
- */
 export function ProgressTracker() {
   const result    = useStore((s) => s.result);
   const history   = useStore((s) => s.history);

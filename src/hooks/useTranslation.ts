@@ -4,7 +4,6 @@ import { useStore } from '../core/store';
 type Translations = Record<string, string>;
 const cache: Partial<Record<string, Translations>> = {};
 
-/** i18n hook. Reads language from settings store, loads JSON, returns t() lookup. */
 export function useTranslation() {
   const language = useStore((s) => s.settings.language);
   const [translations, setTranslations] = useState<Translations>(() => {
