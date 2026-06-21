@@ -1,9 +1,11 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 import { useStore } from '../../core/store';
+import { CURRENCY_MAP } from '../../config';
 
 export function OffsetEstimation() {
   const result = useStore((s) => s.result);
+  const storeInputs = useStore((s) => s.inputs);
 
   if (!result || result.totalAnnualKg === 0) {
     return (
@@ -19,12 +21,19 @@ export function OffsetEstimation() {
     );
   }
 
+  const country = storeInputs.country || 'Global Average';
+  const currencyInfo = CURRENCY_MAP[country] || CURRENCY_MAP['Global Average'];
+
   // 1 mature tree absorbs ~22kg of CO2 per year
   const treesNeeded = Math.ceil(result.totalAnnualKg / 22);
   
   // Average cost of certified carbon offsets (Gold Standard, Verra) is ~$15 per metric ton
-  const costPerTon = 15;
-  const annualCost = (result.totalAnnualTons * costPerTon).toFixed(2);
+  const baseCostPerTonUSD = 15;
+  const costPerTon = baseCostPerTonUSD * (1 / currencyInfo.multiplier);
+  const annualCost = (result.totalAnnualTons * costPerTon).toLocaleString(currencyInfo.locale, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
 
   return (
     <Card className="p-6">
@@ -46,7 +55,7 @@ export function OffsetEstimation() {
         
         <div className="var-bg-card border border-card rounded-xl p-4 text-center">
           <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-2">Estimated Cost</p>
-          <p className="text-3xl font-bold text-primary font-display">${annualCost}</p>
+          <p className="text-3xl font-bold text-primary font-display">{currencyInfo.symbol}{annualCost}</p>
           <p className="text-xs text-secondary mt-1">annually via certified programs</p>
         </div>
       </div>

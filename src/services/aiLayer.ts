@@ -187,3 +187,48 @@ export async function getActionBreakdown(
     return null;
   }
 }
+
+/**
+ * AI Proxy to estimate the carbon footprint of a custom product.
+ */
+export async function estimateProductFootprint(productName: string): Promise<number | null> {
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [{
+          role: 'user',
+          content: `Estimate the cradle-to-gate carbon footprint of this product: "${productName}". Return ONLY a JSON object in this format: { "co2": 45.5 }. Do not include any other text or markdown formatting. The co2 value should be a number representing kg CO2e.`
+        }],
+        max_tokens: 100,
+        temperature: 0.2
+      })
+    });
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content as string | undefined || '';
+    
+    // Attempt to parse JSON from the response
+    const match = text.match(/{\s*"co2"\s*:\s*([\d.]+)\s*}/);
+    if (match && match[1]) {
+      return parseFloat(match[1]);
+    }
+    
+    // Fallback: Just try parsing the whole response as JSON
+    try {
+      const parsed = JSON.parse(text);
+      if (typeof parsed.co2 === 'number') {
+        return parsed.co2;
+      }
+    } catch {
+      // Ignore parse error
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}

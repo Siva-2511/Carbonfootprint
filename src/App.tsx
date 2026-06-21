@@ -18,6 +18,8 @@ const DigitalCalculator = lazy(() => import('./components/EcoLab/DigitalCalculat
 const ProductCompare = lazy(() => import('./components/EcoLab/ProductCompare').then((m) => ({ default: m.ProductCompare })));
 const ReceiptScanner = lazy(() => import('./components/EcoLab/ReceiptScanner').then((m) => ({ default: m.ReceiptScanner })));
 const DailyChallenge = lazy(() => import('./components/EcoLab/DailyChallenge').then((m) => ({ default: m.DailyChallenge })));
+const DietSwapSimulator = lazy(() => import('./components/EcoLab/DietSwapSimulator').then((m) => ({ default: m.DietSwapSimulator })));
+const CommuteROICalculator = lazy(() => import('./components/EcoLab/CommuteROICalculator').then((m) => ({ default: m.CommuteROICalculator })));
 const RecipeWizard = lazy(() => import('./components/Lifestyle/RecipeWizard').then((m) => ({ default: m.RecipeWizard })));
 const TravelRouter = lazy(() => import('./components/Lifestyle/TravelRouter').then((m) => ({ default: m.TravelRouter })));
 
@@ -58,7 +60,7 @@ function ReportsTab() {
   );
 }
 function EcoLabTab() {
-  return <div className="space-y-6"><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
+  return <div className="space-y-6"><DietSwapSimulator /><CommuteROICalculator /><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
 }
 function LifestyleTab() {
   return <div className="space-y-6"><RecipeWizard /><TravelRouter /></div>;

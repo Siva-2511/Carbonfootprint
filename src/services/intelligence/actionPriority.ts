@@ -41,6 +41,12 @@ const RECOMMENDATION_POOL: Recommendation[] = [
   { id: 'c-p1-2', category: 'consumption', priority: 'P1', difficulty: 'moderate', timeframe: 'short-term', impactKg: 250, action: 'Repair items instead of replacing them', reason: 'Manufacturing new products is 4-10x more emissions-intensive than repair. Repairing saves ~250 kg CO₂e annually.' },
   // ── CONSUMPTION P2 ───────────────────────────────────────
   { id: 'c-p2-1', category: 'consumption', priority: 'P2', difficulty: 'hard', timeframe: 'long-term', impactKg: 600, action: 'Adopt a minimal consumption lifestyle', reason: 'Reducing overall purchasing by 30% can cut consumption-related emissions by ~600 kg CO₂e annually.' },
+  // ── NEW PHASE 3 ACTIONS (P2, moderate) ───────────────────────
+  { id: 'e-p2-3', category: 'energy', priority: 'P2', difficulty: 'moderate', timeframe: 'long-term', impactKg: 450, action: 'Install a programmable/smart thermostat', reason: 'Smart thermostats optimize heating and cooling, saving around 450 kg CO₂e annually.' },
+  { id: 'e-p2-4', category: 'energy', priority: 'P2', difficulty: 'moderate', timeframe: 'long-term', impactKg: 350, action: 'Upgrade to energy-efficient (5-star rated) appliances', reason: 'Modern efficient appliances use significantly less electricity, saving ~350 kg CO₂e annually.' },
+  { id: 'e-p2-5', category: 'energy', priority: 'P2', difficulty: 'moderate', timeframe: 'long-term', impactKg: 600, action: 'Install double-glazed windows or improve home insulation', reason: 'Better insulation dramatically reduces heating/cooling needs, saving ~600 kg CO₂e annually.' },
+  { id: 'e-p2-6', category: 'energy', priority: 'P2', difficulty: 'moderate', timeframe: 'long-term', impactKg: 800, action: 'Switch electricity provider to a renewable-energy plan', reason: 'Green energy plans source from renewables, significantly reducing your grid electricity emissions.' },
+  { id: 't-p2-3', category: 'transport', priority: 'P2', difficulty: 'moderate', timeframe: 'long-term', impactKg: 200, action: 'Combine weekly errands into a single trip', reason: 'Fewer, longer trips are more fuel-efficient than many short trips, saving ~200 kg CO₂e annually.' },
 ];
 
 const PRIORITY_ORDER: Record<Recommendation['priority'], number> = { P0: 0, P1: 1, P2: 2 };

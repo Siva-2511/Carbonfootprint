@@ -24,21 +24,14 @@ const STEPS = [
 export function Calculator() {
   const storeInputs = useStore((s) => s.inputs);
   const [currentStep, setCurrentStep] = useState(0);
-  const [localInputs, setLocalInputs] = useState<CalculatorInputs>(() => storeInputs);
+  const [localInputs, setLocalInputs] = useState<CalculatorInputs>(() => ({
+    ...storeInputs,
+    recycling: storeInputs.recycling ?? false,
+  }));
   const { runPipeline } = useCarbonPipeline();
   const isCalculated = useIsCalculated();
   const resultsRef = useRef<HTMLDivElement>(null);
-
-  // Automatically scroll down if the user already calculated and comes back to this tab
-  useEffect(() => {
-    if (isCalculated && currentStep === 3) {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-      });
-    }
-  }, [isCalculated, currentStep]);
+  const formTopRef = useRef<HTMLDivElement>(null);
 
   const handleUpdate = (partial: Partial<CalculatorInputs>) => {
     setLocalInputs((prev) => ({ ...prev, ...partial }));
@@ -47,6 +40,9 @@ export function Calculator() {
   const handleNext = () => {
     if (currentStep < 3) {
       setCurrentStep((s) => s + 1);
+      requestAnimationFrame(() => {
+        formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     } else {
       // Final step — run pipeline
       runPipeline(localInputs);
@@ -61,12 +57,15 @@ export function Calculator() {
 
   const handleBack = () => {
     setCurrentStep((s) => Math.max(0, s - 1));
+    requestAnimationFrame(() => {
+      formTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   };
 
   const isLastStep = currentStep === 3;
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-8">
+    <div className="w-full max-w-2xl mx-auto space-y-8" ref={formTopRef}>
       {/* ── Step indicator ─────────────────────────────────── */}
       <nav aria-label="Calculator progress" className="px-2">
         <ol className="flex items-center justify-between gap-1">
