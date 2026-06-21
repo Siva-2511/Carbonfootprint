@@ -30,7 +30,8 @@ export function Roadmap() {
 
   // Auto-recovery for stale cache (e.g. if the app added new actions but localStorage is old)
   useEffect(() => {
-    if (result && dna && recommendations.length < 21) {
+    // The pool now has 30 items. If the user's cache has fewer than 30, it is stale.
+    if (result && dna && recommendations.length < 30) {
       const updatedRecs = rank(result, dna);
       setPipelineResult({ result, dna, recommendations: updatedRecs, history });
     }
