@@ -188,7 +188,9 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
         
         <div className="mt-3 mb-1 flex justify-center">
           <a
-            href="mailto:sivasubramaniyan.g2511@gmail.com?subject=CarbonSense%20Feedback%20/%20Issue"
+            href="https://github.com/Siva-2511/Carbonfootprint/issues/new"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-full text-[11px] font-semibold transition-colors"
           >
             <span>🐛</span> Report Issue / Feedback
