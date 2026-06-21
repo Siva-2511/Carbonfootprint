@@ -40,7 +40,7 @@ describe('Validation', () => {
   describe('validateInputs', () => {
     test('applies defaults to empty partial', () => {
       const result = validateInputs({});
-      expect(result.country).toBe('Global Average');
+      expect(result.country).toBe('India');
       expect(result.householdSize).toBe(1);
       expect(result.vehicleType).toBe('petrol');
     });

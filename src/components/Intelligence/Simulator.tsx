@@ -2,23 +2,40 @@ import React, { useState } from 'react';
 import { Card } from '../ui/Card';
 import { Slider } from '../ui/Slider';
 import { useStore } from '../../core/store';
+import { calculate } from '../../services/core/carbonCalculator';
 
 export function Simulator() {
   const result = useStore((s) => s.result);
+  const inputs = useStore((s) => s.inputs);
   
   const [driveReduction, setDriveReduction] = useState(0);
   const [flightReduction, setFlightReduction] = useState(0);
   const [meatReduction, setMeatReduction] = useState(0);
   
   const simulatedKg = React.useMemo(() => {
-    if (!result) return 0;
-    const baseTransport = result.breakdown.transport.kg;
-    const baseDiet = result.breakdown.diet.kg;
-    const transportSavings = baseTransport * ((driveReduction * 0.4 + flightReduction * 0.6) / 100);
-    const dietSavings = baseDiet * (meatReduction / 100);
-    const newTotal = result.totalAnnualKg - transportSavings - dietSavings;
-    return Math.max(0, Math.round(newTotal));
-  }, [driveReduction, flightReduction, meatReduction, result]);
+    if (!result || !inputs) return 0;
+    
+    const simInputs = { ...inputs };
+    
+    // Apply Drive Less
+    simInputs.weeklyKm = Math.max(0, inputs.weeklyKm * (1 - driveReduction / 100));
+    
+    // Apply Fly Less
+    simInputs.shortFlights = Math.max(0, inputs.shortFlights * (1 - flightReduction / 100));
+    simInputs.longFlights = Math.max(0, inputs.longFlights * (1 - flightReduction / 100));
+    
+    // Apply Reduce Meat/Dairy (shift diet type)
+    if (meatReduction > 75) {
+      simInputs.dietType = 'vegan';
+    } else if (meatReduction > 40) {
+      simInputs.dietType = inputs.dietType === 'vegan' ? 'vegan' : 'vegetarian';
+    } else if (meatReduction > 10) {
+      simInputs.dietType = (inputs.dietType === 'vegan' || inputs.dietType === 'vegetarian') ? inputs.dietType : 'low-meat';
+    }
+    
+    const simResult = calculate(simInputs);
+    return simResult.totalAnnualKg;
+  }, [driveReduction, flightReduction, meatReduction, result, inputs]);
 
   if (!result || result.totalAnnualKg === 0) {
     return (

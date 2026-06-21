@@ -24,7 +24,7 @@ interface ProjectionResult {
 export function TimeTravelProjection() {
   const resultData = useStore((s) => s.result);
   const storeInputs = useStore((s) => s.inputs);
-  const defaultCountry = storeInputs.country || 'Global Average';
+  const defaultCountry = storeInputs.country || 'India';
 
   const [city, setCity] = useState(defaultCountry);
   const [loading, setLoading] = useState(false);

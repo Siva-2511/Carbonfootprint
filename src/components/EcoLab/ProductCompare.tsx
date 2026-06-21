@@ -30,7 +30,7 @@ export function ProductCompare() {
     setIsComparing(true);
     let newId1 = result1;
     let newId2 = result2;
-    let newProducts = [...products];
+    const newProducts = [...products];
 
     // Estimate Product 1 if custom
     if (item1 === 'custom_placeholder' && customInput1.trim()) {

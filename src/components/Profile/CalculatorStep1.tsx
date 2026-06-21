@@ -86,7 +86,7 @@ export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
               aria-haspopup="listbox"
               aria-expanded={locationOpen}
             >
-              <span>{inputs.country || 'Global Average'}</span>
+              <span>{inputs.country || 'India'}</span>
               <span className={`transition-transform ${locationOpen ? 'rotate-180' : ''}`}>▾</span>
             </button>
 

@@ -18,7 +18,7 @@ interface PhantomResult {
 export function PhantomPowerAnalyzer() {
   const storeInputs = useStore((s) => s.inputs);
   const settings = useStore((s) => s.settings);
-  const country = storeInputs.country || 'Global Average';
+  const country = storeInputs.country || 'India';
   const currencyInfo = getCurrencyInfo(country, settings.currencyOverride);
 
   const [inputStr, setInputStr] = useState('');

@@ -3,11 +3,6 @@
 // ─────────────────────────────────────────────────────────
 
 export const EMISSION_FACTORS = Object.freeze({
-  electricity: {
-    grid: 0.42,    // kg CO₂e/kWh — India grid average
-    solar: 0.04,   // kg CO₂e/kWh — lifecycle solar
-    mixed: 0.23,   // kg CO₂e/kWh — 50/50 grid+solar
-  },
   heating: {
     naturalGas: 5.3, // kg CO₂e/therm
     lpgCylinder: 42.4, // kg CO₂e/cylinder — Source: GHG Protocol Emission Factors Tool
@@ -78,7 +73,6 @@ export const BENCHMARK_DATA = Object.freeze({
   globalAvg: 4.7,      // metric tons CO₂/year
   top10Pct: 1.3,       // metric tons CO₂/year
   parisTarget: 2.0,    // metric tons CO₂/year per capita by 2030
-  netZeroTarget: 0.5,
 
   // Per-capita CO2 emissions from fossil fuels (tons/year) - Source: OWID 2022
   perCapita: {
@@ -131,7 +125,7 @@ export function getCurrencyInfo(country: string, overrideCurrency?: string | nul
     const found = Object.values(CURRENCY_MAP).find(c => c.currency === overrideCurrency);
     if (found) return found;
   }
-  return CURRENCY_MAP[country] || CURRENCY_MAP['Global Average'];
+  return CURRENCY_MAP[country] || CURRENCY_MAP['India'];
 }
 
 export const APP_CONFIG = Object.freeze({

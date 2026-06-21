@@ -12,9 +12,10 @@ describe('API Proxy Endpoints', () => {
   });
 
   it('GET /api/health returns 200 OK without csp flag', async () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue({ ok: true, status: 200 });
     const res = await request(app).get('/api/health');
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ status: 'ok' });
+    expect(res.body).toEqual({ status: 'ok', upstream: 'connected' });
   });
 
   it('POST /api/chat returns 400 Bad Request on malformed payload', async () => {

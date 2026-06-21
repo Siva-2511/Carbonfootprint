@@ -17,6 +17,12 @@ vi.mock('../core/store', () => {
         shopping: { kg: 0 }
       }
     },
+    inputs: {
+      weeklyKm: 100,
+      shortFlights: 2,
+      longFlights: 1,
+      dietType: 'heavy-meat'
+    },
     setPipelineResult: vi.fn(),
   };
 
@@ -31,6 +37,13 @@ vi.mock('../core/store', () => {
   };
 });
 
+vi.mock('../services/core/carbonCalculator', () => ({
+  calculate: vi.fn((inputs) => {
+    if (inputs.weeklyKm < 100) return { totalAnnualKg: 9000 };
+    return { totalAnnualKg: 10000 };
+  })
+}));
+
 describe('Simulator Component', () => {
   beforeEach(() => {
     useStore.setState({
@@ -43,6 +56,12 @@ describe('Simulator Component', () => {
           home: { kg: 0 },
           shopping: { kg: 0 }
         }
+      },
+      inputs: {
+        weeklyKm: 100,
+        shortFlights: 2,
+        longFlights: 1,
+        dietType: 'heavy-meat'
       },
       setPipelineResult: vi.fn(),
     });

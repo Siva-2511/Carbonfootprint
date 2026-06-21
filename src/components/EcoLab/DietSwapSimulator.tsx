@@ -38,7 +38,7 @@ export function DietSwapSimulator() {
             {DIETS.map((diet) => (
               <button
                 key={`current-${diet.id}`}
-                onClick={() => setCurrentDiet(diet.id as any)}
+                onClick={() => setCurrentDiet(diet.id as keyof typeof EMISSION_FACTORS.diet)}
                 className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border-2 transition-all ${
                   currentDiet === diet.id 
                     ? 'border-rose-400 bg-rose-500/10 text-rose-300' 
@@ -59,7 +59,7 @@ export function DietSwapSimulator() {
             {DIETS.map((diet) => (
               <button
                 key={`target-${diet.id}`}
-                onClick={() => setTargetDiet(diet.id as any)}
+                onClick={() => setTargetDiet(diet.id as keyof typeof EMISSION_FACTORS.diet)}
                 className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border-2 transition-all ${
                   targetDiet === diet.id 
                     ? 'border-emerald-400 bg-emerald-500/10 text-emerald-300' 

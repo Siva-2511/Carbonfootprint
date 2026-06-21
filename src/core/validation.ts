@@ -17,7 +17,7 @@ export function sanitizeText(input: string): string {
 /** Validates and clamps all calculator inputs to safe ranges. */
 export function validateInputs(partial: Partial<CalculatorInputs>): CalculatorInputs {
   return {
-    country: partial.country ?? 'Global Average',
+    country: partial.country ?? 'India',
     householdSize: clamp(
       partial.householdSize ?? INPUT_LIMITS.householdSize.default,
       INPUT_LIMITS.householdSize.min,

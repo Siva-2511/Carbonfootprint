@@ -31,7 +31,7 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
   const monthlySpend = clamp(inputs.monthlySpend, 0, INPUT_LIMITS.monthlySpend.max);
 
   // 2. Calculate per-category annual kg (Households share energy & consumption)
-  const baseGridFactor = inputs.country ? (COUNTRY_GRID_FACTORS[inputs.country] || 0.47) : 0.47;
+  const baseGridFactor = inputs.country ? (COUNTRY_GRID_FACTORS[inputs.country] || 0.71) : 0.71;
   const elecFactor = inputs.electricitySource === 'solar' ? 0.04 : inputs.electricitySource === 'mixed' ? baseGridFactor * 0.5 + 0.02 : baseGridFactor;
   
   // Estimate AC electricity (1.5 kWh/hour runtime)
@@ -56,7 +56,7 @@ export function calculate(inputs: CalculatorInputs): CarbonResult {
 
   const dietKg = EMISSION_FACTORS.diet[inputs.dietType] ?? EMISSION_FACTORS.diet['low-meat'];
 
-  const currencyInfo = inputs.country && CURRENCY_MAP[inputs.country] ? CURRENCY_MAP[inputs.country] : CURRENCY_MAP['Global Average'];
+  const currencyInfo = inputs.country && CURRENCY_MAP[inputs.country] ? CURRENCY_MAP[inputs.country] : CURRENCY_MAP['India'];
   const spendingLevel = monthlySpend > currencyInfo.tier2 ? 'high' : monthlySpend > currencyInfo.tier1 ? 'medium' : 'low';
   
   // Normalize spend to INR equivalent for the emission factor calculation

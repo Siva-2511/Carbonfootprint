@@ -1,4 +1,4 @@
-import { readStorage, writeStorage, clearStorage } from '../core/storage';
+import { readStorage, writeStorage } from '../core/storage';
 
 describe('Storage Utility', () => {
   beforeEach(() => {

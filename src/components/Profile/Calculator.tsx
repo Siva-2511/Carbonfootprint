@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { CalculatorStep1 } from './CalculatorStep1';
 import { CalculatorStep2 } from './CalculatorStep2';
 import { CalculatorStep3 } from './CalculatorStep3';

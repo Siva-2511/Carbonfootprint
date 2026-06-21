@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useStore } from '../../core/store';
 import { chatWithAI } from '../../services/aiLayer';
-import { BENCHMARK_DATA } from '../../config';
+
 
 const SUGGESTIONS = [
   '🚗 Why is transport my biggest source?',

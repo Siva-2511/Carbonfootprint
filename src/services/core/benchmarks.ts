@@ -18,13 +18,9 @@ export function compareToBenchmarks(totalTons: number, country: string = 'India'
       : `You emit ${abs}% more than the ${label}.`;
   };
 
-  let narrative = '';
-  if (country === 'India') {
-    const vsUrbanIndia = Math.round(((safe - BENCHMARK_DATA.urbanIndiaAvg) / BENCHMARK_DATA.urbanIndiaAvg) * 100);
-    narrative = buildNarrative(vsUrbanIndia, 'typical urban India households');
-  } else {
-    narrative = buildNarrative(vsCountry, `the average person in ${country}`);
-  }
+  const narrative = country === 'India'
+    ? buildNarrative(Math.round(((safe - BENCHMARK_DATA.urbanIndiaAvg) / BENCHMARK_DATA.urbanIndiaAvg) * 100), 'typical urban India households')
+    : buildNarrative(vsCountry, `the average person in ${country}`);
 
   return {
     countryName: country,

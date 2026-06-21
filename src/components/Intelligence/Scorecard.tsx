@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../core/store';
-import { BENCHMARK_DATA } from '../../config';
+
 import { ArcElement, Chart, DoughnutController, Legend, Tooltip } from 'chart.js';
 import { useSpring, motion } from 'framer-motion';
 

@@ -62,8 +62,23 @@ const CACHE_TTL = 60 * 60 * 1000; // 1 hour
 const MAX_CACHE_ENTRIES = 200;
 
 // 4.2 Health Check Route (Exempt from rate limiting AI specifically if needed, but handled globally here)
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' });
+app.get('/api/health', async (req, res) => {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout for health check
+    const upstreamRes = await fetch('https://openrouter.ai/api/v1/models', {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    
+    if (upstreamRes.ok) {
+      res.json({ status: 'ok', upstream: 'connected' });
+    } else {
+      res.status(502).json({ status: 'degraded', upstream: 'error', statusCode: upstreamRes.status });
+    }
+  } catch (e) {
+    res.status(502).json({ status: 'error', upstream: 'unreachable' });
+  }
 });
 
 // 5. Secure Proxy Route for AI Integration

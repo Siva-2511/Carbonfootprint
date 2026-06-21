@@ -39,7 +39,7 @@ export function OffsetEstimation() {
     );
   }
 
-  const country = storeInputs.country || 'Global Average';
+  const country = storeInputs.country || 'India';
   const currencyInfo = getCurrencyInfo(country, settings.currencyOverride);
 
   // 1 mature tree absorbs ~22kg of CO2 per year

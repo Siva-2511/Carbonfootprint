@@ -8,7 +8,7 @@ import type {
 import { INPUT_LIMITS } from '../../config';
 
 const DEFAULT_INPUTS: CalculatorInputs = {
-  country: 'Global Average',
+  country: 'India',
   householdSize: 1,
   acHours: 0,
   publicTransportKm: 0,

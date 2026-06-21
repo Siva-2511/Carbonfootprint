@@ -13,7 +13,7 @@ interface SupplyChainResult {
 
 export function SupplyChainAnalyzer() {
   const storeInputs = useStore((s) => s.inputs);
-  const country = storeInputs.country || 'Global Average';
+  const country = storeInputs.country || 'India';
 
   const [product, setProduct] = useState('');
   const [origin, setOrigin] = useState('');

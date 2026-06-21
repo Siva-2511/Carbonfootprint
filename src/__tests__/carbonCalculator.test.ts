@@ -96,4 +96,21 @@ describe('carbonCalculator', () => {
     const result = calculate({ ...BASE_INPUTS, weeklyKm: 2000, longFlights: 10, electricityKwh: 50 });
     expect(result.primaryDriver).toBe('transport');
   });
+
+  it('calculates lpgCylinders vs naturalGas correctly', () => {
+    const lpgInputs = { ...BASE_INPUTS, heatingTherms: 0, lpgCylinders: 10 };
+    const gasInputs = { ...BASE_INPUTS, heatingTherms: 10, lpgCylinders: 0 };
+    const lpgResult = calculate(lpgInputs);
+    const gasResult = calculate(gasInputs);
+    expect(lpgResult.breakdown.energy.kg).toBeGreaterThan(0);
+    expect(gasResult.breakdown.energy.kg).toBeGreaterThan(0);
+    // 10 therms = 53 kg CO2e. 10 cylinders = 424 kg CO2e.
+    expect(lpgResult.breakdown.energy.kg).toBeGreaterThan(gasResult.breakdown.energy.kg);
+  });
+
+  it('normalizes spending based on currency/country level', () => {
+    const indiaHigh = calculate({ ...BASE_INPUTS, country: 'India', monthlySpend: 60000 });
+    const usaLow = calculate({ ...BASE_INPUTS, country: 'United States', monthlySpend: 50 });
+    expect(indiaHigh.breakdown.consumption.kg).toBeGreaterThan(usaLow.breakdown.consumption.kg);
+  });
 });
