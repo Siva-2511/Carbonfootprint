@@ -217,10 +217,27 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-display); color: var(--text-primary)
 .print-only { display: none; }
 
 @media print {
+  :root {
+    --text-primary: #111827 !important;
+    --text-secondary: #374151 !important;
+    --text-muted: #6b7280 !important;
+    --bg-base: #ffffff !important;
+    --bg-card: #ffffff !important;
+    --bg-surface: #ffffff !important;
+    --border-card: #e5e7eb !important;
+  }
   .no-print { display: none !important; }
   .print-only { display: block !important; }
   body { background: white !important; color: black !important; }
   .glass-card { background: white !important; border: 1px solid #ddd !important; backdrop-filter: none !important; }
+}
+
+/* ════════════════════════════════════════
+   GLOBAL SELECT OPTIONS (DARK MODE FIX)
+════════════════════════════════════════ */
+select option {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
 }
 
 /* ════════════════════════════════════════

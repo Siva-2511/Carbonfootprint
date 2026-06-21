@@ -44,9 +44,12 @@ Return ONLY valid JSON with exactly this structure:
         let content = contentStr;
         content = content.replace(/```json/g, '').replace(/```/g, '').trim();
         setResult(JSON.parse(content));
+      } else {
+        alert("The AI is currently experiencing high traffic. Please wait a few seconds and try again.");
       }
     } catch (e) {
       console.error('Supply chain analysis failed', e);
+      alert("The AI is currently experiencing high traffic. Please wait a few seconds and try again.");
     }
     setLoading(false);
   };
