@@ -180,7 +180,21 @@ export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
         <p className="font-semibold mb-1 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent inline-block">
           Built with ❤️ for the Hack2Skill & Google for Developers AI Challenge 2026.
         </p>
-        <p className="mt-1">Developed by <strong className="text-primary font-semibold">Sivasubramaniyan G</strong></p>
+        <p className="mt-1">
+          Developed by <a href="https://github.com/Siva-2511" target="_blank" rel="noreferrer" className="text-primary font-semibold hover:text-emerald-400 transition-colors">Sivasubramaniyan G</a>
+          {' '}•{' '}
+          <a href="mailto:sivasubramaniyan.g2511@gmail.com" className="text-secondary hover:text-emerald-400 transition-colors">sivasubramaniyan.g2511@gmail.com</a>
+        </p>
+        
+        <div className="mt-3 mb-1 flex justify-center">
+          <a
+            href="mailto:sivasubramaniyan.g2511@gmail.com?subject=CarbonSense%20Feedback%20/%20Issue"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-full text-[11px] font-semibold transition-colors"
+          >
+            <span>🐛</span> Report Issue / Feedback
+          </a>
+        </div>
+
         <div className="my-2 h-[1px] bg-muted/30 w-10 inline-block"></div>
         <p className="text-[11px] opacity-80">Secure Backend Mode Active · Built for Accessibility</p>
       </footer>
