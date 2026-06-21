@@ -173,7 +173,7 @@ app.get('*', (req, res) => {
 
 // Start Server
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`🔒 Secure Backend API listening on port ${PORT}`);
     console.log(`Security measures active: Helmet HSTS/CSP, Rate Limiting, Strict CORS.`);
   });
