@@ -140,6 +140,10 @@ Return ONLY valid JSON with exactly this structure:
             {loading ? 'Traveling to 2050...' : 'Project 2050'}
           </button>
         </div>
+        
+        <div aria-live="polite" className="sr-only">
+          {loading ? 'Analyzing data and projecting 2050 climate scenarios...' : ''}
+        </div>
 
         {projection && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">

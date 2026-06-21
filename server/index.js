@@ -18,6 +18,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
+import xss from 'xss-clean';
 
 dotenv.config();
 
@@ -44,6 +45,9 @@ app.use(helmet({
   },
   crossOriginEmbedderPolicy: false,
 }));
+
+// XSS Protection
+app.use(xss());
 
 // 2. Strict CORS Policy
 const allowedOrigins = process.env.VITE_ALLOWED_ORIGINS 

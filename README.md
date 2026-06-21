@@ -16,8 +16,16 @@
 
 > **CarbonSense** is a full-stack AI sustainability platform that calculates your personal carbon footprint, classifies your unique "Carbon DNA" persona, and delivers hyper-personalized recommendations — all powered by a secure backend AI proxy and built for offline-first resilience.
 
-**Hackathon Vertical/Track:** Carbon Footprint Awareness Platform
+## 🎯 Problem Statement Alignment
 
+**Hackathon Challenge:** Carbon Footprint Awareness Platform
+
+**Objective:** To design and develop a platform that educates users about their carbon footprint and encourages sustainable living through personalized insights.
+
+- [x] **Calculation Engine:** Built a robust calculator capturing energy, transport, and diet footprints.
+- [x] **AI Insights:** Integrates Google's LLM ecosystem via OpenRouter to provide deep, actionable environmental intelligence.
+- [x] **Gamification:** Features Carbon DNA personas, eco-points, and achievement badges to incentivize green choices.
+- [x] **Awareness Tools:** Includes Time Travel Projections (2050), Diet Swap Simulators, and Supply Chain mapping.
 [**Architecture**](#architecture) · [**Approach & Logic**](#approach--logic) · [**Features**](#features)
 
 </div>

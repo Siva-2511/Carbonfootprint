@@ -121,11 +121,12 @@ export default function App() {
 
   return (
     <ErrorBoundary>
+      <a href="#main" className="sr-only focus:not-sr-only">Skip to content</a>
       <Layout activeTab={activeTab} onTabChange={handleTabChange}>
-        <div
+        <main
           role="tabpanel"
           aria-label={TAB_LABELS[activeTab]}
-          id={`panel-${activeTab}`}
+          id="main"
           className="max-w-3xl mx-auto px-4 py-6"
         >
           <Suspense fallback={<Spinner />}>
@@ -136,7 +137,7 @@ export default function App() {
             {activeTab === 4 && <EcoLabTab />}
             {activeTab === 5 && <LifestyleTab />}
           </Suspense>
-        </div>
+        </main>
       </Layout>
     </ErrorBoundary>
   );
