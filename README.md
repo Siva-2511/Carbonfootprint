@@ -79,6 +79,8 @@ Each persona gets a **category breakdown** (energy/transport/diet/consumption pe
 
 **Progress Tracker** — shows your monthly carbon budget vs. actual emissions against a sustainable 167 kg/month target, with an actionable gap message.
 
+**Time-Travel Climate Projection** — a visceral storytelling tool that brings abstract numbers to life. Enter your city, and the AI generates two localized 2050 scenarios based on your specific Carbon DNA footprint: a "Net Zero Path" utopian outcome vs. a "Business As Usual" dystopian reality with realistic sea-level and temperature impacts.
+
 ---
 
 ### ✅ Actions — Personalised Roadmap
@@ -116,6 +118,7 @@ Pre-loaded with contextual quick-questions based on your actual footprint data. 
 - 🌙/☀️ Dark/Light theme toggle
 - 🧒 ELI10 mode toggle
 - 🌐 Google Translate widget (100+ languages)
+- 💵 Display Currency Override — globally override the default monetary display to automatically recalculate and format financial values (like Commute ROI or Offset costs) into local currencies like INR, EUR, or GBP.
 - 🤖 AI Coach Persona selection
 - 🔒 System Health audit (live backend ping, CSP check, input validation status, error boundary status)
 - 🗑️ Clear All Data
@@ -132,6 +135,10 @@ Pre-loaded with contextual quick-questions based on your actual footprint data. 
 
 **Digital Footprint Calculator** — estimate the CO₂e impact of your digital habits: video streaming hours, daily AI query volume, cloud storage usage.
 
+**Phantom Power Analyzer** — input the list of devices you leave plugged in 24/7. The AI estimates their standby "vampire energy" wattage, calculating the annual kWh drain and translating it into localized monetary cost and carbon emissions, while providing actionable mitigation tips.
+
+**Supply Chain Analyzer** — discover the "Food Miles" of your imported goods. Enter a product and its origin, and the AI dynamically calculates transport distance to your selected country, predicts the transport mode (air/sea/road), estimates the logistics carbon footprint, and recommends a greener local alternative.
+
 ---
 
 ### 🌍 Lifestyle — AI-Powered Sustainability Coaching
@@ -139,6 +146,10 @@ Pre-loaded with contextual quick-questions based on your actual footprint data. 
 **AI Recipe Wizard** — list your fridge leftovers; the AI returns a low-carbon recipe using those exact ingredients, with per-serving emission estimates.
 
 **Eco-Travel Router** — enter origin and destination; the AI suggests the lowest-carbon route and compares transport mode emissions side by side.
+
+**Fast Fashion Analyzer** — check the environmental impact of a clothing item before buying. Enter a garment, and the AI identifies its dominant material, estimates its lifecycle carbon footprint, assigns an impact severity level, and suggests sustainable alternatives alongside an eco-care tip.
+
+**Smart Diet Planner** — generate a full 7-day low-carbon meal plan tailored to your dietary preferences or restrictions. The AI focuses on local, seasonal, and low-impact ingredients, calculating the estimated CO₂e saved compared to an average diet for the week.
 
 ---
 
