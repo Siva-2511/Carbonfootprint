@@ -3,12 +3,14 @@ import { CalculatorStep1 } from './CalculatorStep1';
 import { CalculatorStep2 } from './CalculatorStep2';
 import { CalculatorStep3 } from './CalculatorStep3';
 import { CalculatorStep4 } from './CalculatorStep4';
-import { DnaResult } from './DnaResult';
-import { CarbonEvolution } from './CarbonEvolution';
 import { Button } from '../ui/Button';
 import { useStore } from '../../core/store';
 import { useCarbonPipeline, useIsCalculated } from '../../hooks/useCarbonPipeline';
 import type { CalculatorInputs } from '../../types';
+
+// Lazy-load heavy result components to improve LCP of the main calculator view
+const DnaResult = React.lazy(() => import('./DnaResult').then(m => ({ default: m.DnaResult })));
+const CarbonEvolution = React.lazy(() => import('./CarbonEvolution').then(m => ({ default: m.CarbonEvolution })));
 
 // ─────────────────────────────────────────────────────────────
 //  FILE 7: src/components/Profile/Calculator.tsx
@@ -211,8 +213,10 @@ export function Calculator() {
             aria-live="polite"
             aria-atomic="false"
           >
-            <DnaResult />
-            <CarbonEvolution />
+            <React.Suspense fallback={<div className="flex justify-center p-12"><div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>}>
+              <DnaResult />
+              <CarbonEvolution />
+            </React.Suspense>
           </div>
         )}
       </div>

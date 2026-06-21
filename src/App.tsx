@@ -94,9 +94,15 @@ export default function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { evaluateSession(); }, []);
 
+  const handleTabChange = (index: number) => {
+    React.startTransition(() => {
+      setActiveTab(index);
+    });
+  };
+
   return (
     <ErrorBoundary>
-      <Layout activeTab={activeTab} onTabChange={setActiveTab}>
+      <Layout activeTab={activeTab} onTabChange={handleTabChange}>
         <div
           role="tabpanel"
           aria-label={TAB_LABELS[activeTab]}
