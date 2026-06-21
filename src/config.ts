@@ -126,6 +126,14 @@ export const CURRENCY_MAP: Record<string, { currency: string; symbol: string; ma
   'Global Average': { currency: 'USD', symbol: '$', max: 1000, tier1: 100, tier2: 400, multiplier: 0.012 },
 };
 
+export function getCurrencyInfo(country: string, overrideCurrency?: string | null) {
+  if (overrideCurrency) {
+    const found = Object.values(CURRENCY_MAP).find(c => c.currency === overrideCurrency);
+    if (found) return found;
+  }
+  return CURRENCY_MAP[country] || CURRENCY_MAP['Global Average'];
+}
+
 export const APP_CONFIG = Object.freeze({
   maxHistoryEntries: 30,
   maxChatMessages: 50,

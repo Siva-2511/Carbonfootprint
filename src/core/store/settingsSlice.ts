@@ -27,4 +27,7 @@ export const createSettingsSlice: StateCreator<
 
   setCoachPersona: (coachPersona: CoachPersona) =>
     set((state) => ({ settings: { ...state.settings, coachPersona } })),
+
+  setCurrencyOverride: (currencyOverride: string | null) =>
+    set((state) => ({ settings: { ...state.settings, currencyOverride } })),
 });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EMISSION_FACTORS, CURRENCY_MAP } from '../../config';
+import { EMISSION_FACTORS, getCurrencyInfo } from '../../config';
 import { useStore } from '../../core/store';
 
 const MODES = [
@@ -13,7 +13,10 @@ const MODES = [
 export function CommuteROICalculator() {
   const storeInputs = useStore((s) => s.inputs);
   const country = storeInputs.country || 'Global Average';
-  const currencyInfo = CURRENCY_MAP[country] || CURRENCY_MAP['Global Average'];
+  const settings = useStore(s => s.settings);
+
+  // Derive display currency
+  const currencyInfo = getCurrencyInfo(country, settings.currencyOverride);
 
   const [distance, setDistance] = useState(15);
   const [daysPerWeek, setDaysPerWeek] = useState(5);

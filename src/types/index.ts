@@ -100,6 +100,7 @@ export interface AppSettings {
   eli10Mode: boolean;
   language: Language;
   coachPersona: CoachPersona;
+  currencyOverride?: string | null;
 }
 
 export interface AIResponse {
@@ -192,6 +193,7 @@ export interface SettingsSliceActions {
   toggleEli10: () => void;
   setLanguage: (lang: Language) => void;
   setCoachPersona: (persona: CoachPersona) => void;
+  setCurrencyOverride: (currency: string | null) => void;
 }
 
 export type AppState = CalculatorSliceState &

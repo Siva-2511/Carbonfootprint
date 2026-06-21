@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
+import { CURRENCY_MAP } from '../../config';
 import { runSecurityAudit } from '../../core/security';
 import type { SecurityAuditResult } from '../../types';
 
@@ -22,6 +23,7 @@ export function Settings() {
   const setTheme         = useStore((s) => s.setTheme);
   const toggleEli10      = useStore((s) => s.toggleEli10);
   const setCoachPersona  = useStore((s) => s.setCoachPersona);
+  const setCurrencyOverride = useStore((s) => s.setCurrencyOverride);
 
   const [showHealth, setShowHealth] = useState(false);
   const [confirmClear, setClear]    = useState(false);
@@ -84,6 +86,26 @@ export function Settings() {
         <p className="text-muted text-xs">
           Use the <strong className="text-secondary">Google Translate widget</strong> in the header to switch to any language. Supports English, Hindi, Spanish, French, Arabic, and 100+ more.
         </p>
+      </S>
+
+      {/* Currency Override */}
+      <S>
+        <p className="text-secondary text-sm font-medium mb-2">💵 Display Currency</p>
+        <p className="text-muted text-xs mb-3">
+          By default, currency matches your selected country. You can override it here.
+        </p>
+        <select
+          value={settings.currencyOverride || ''}
+          onChange={(e) => setCurrencyOverride(e.target.value || null)}
+          className="w-full max-w-xs bg-dark-eval p-3 rounded-xl border border-white/10 text-primary text-sm focus:border-emerald-500/50 outline-none"
+        >
+          <option value="">(Default) Match My Country</option>
+          {Object.entries(CURRENCY_MAP).filter(([k]) => k !== 'Global Average').map(([country, info]) => (
+            <option key={country} value={info.currency}>
+              {info.currency} ({info.symbol}) — {country}
+            </option>
+          ))}
+        </select>
       </S>
 
       {/* Coach Persona */}

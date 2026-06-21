@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../ui/Card';
 import { useStore } from '../../core/store';
-import { CURRENCY_MAP } from '../../config';
+import { getCurrencyInfo } from '../../config';
 
 export function OffsetEstimation() {
   const result = useStore((s) => s.result);
@@ -22,7 +22,8 @@ export function OffsetEstimation() {
   }
 
   const country = storeInputs.country || 'Global Average';
-  const currencyInfo = CURRENCY_MAP[country] || CURRENCY_MAP['Global Average'];
+  const settings = useStore((s) => s.settings);
+  const currencyInfo = getCurrencyInfo(country, settings.currencyOverride);
 
   // 1 mature tree absorbs ~22kg of CO2 per year
   const treesNeeded = Math.ceil(result.totalAnnualKg / 22);

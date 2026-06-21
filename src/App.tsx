@@ -22,6 +22,8 @@ const DietSwapSimulator = lazy(() => import('./components/EcoLab/DietSwapSimulat
 const CommuteROICalculator = lazy(() => import('./components/EcoLab/CommuteROICalculator').then((m) => ({ default: m.CommuteROICalculator })));
 const RecipeWizard = lazy(() => import('./components/Lifestyle/RecipeWizard').then((m) => ({ default: m.RecipeWizard })));
 const TravelRouter = lazy(() => import('./components/Lifestyle/TravelRouter').then((m) => ({ default: m.TravelRouter })));
+const FastFashionAnalyzer = lazy(() => import('./components/Lifestyle/FastFashionAnalyzer').then((m) => ({ default: m.FastFashionAnalyzer })));
+const SmartDietPlanner = lazy(() => import('./components/Lifestyle/SmartDietPlanner').then((m) => ({ default: m.SmartDietPlanner })));
 
 function Spinner() {
   return (
@@ -63,7 +65,7 @@ function EcoLabTab() {
   return <div className="space-y-6"><DietSwapSimulator /><CommuteROICalculator /><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
 }
 function LifestyleTab() {
-  return <div className="space-y-6"><RecipeWizard /><TravelRouter /></div>;
+  return <div className="space-y-6"><RecipeWizard /><SmartDietPlanner /><FastFashionAnalyzer /><TravelRouter /></div>;
 }
 
 const TAB_LABELS = ['My Carbon Profile', 'Intelligence Center', 'Action Hub', 'Reports & Settings', 'Eco Lab', 'Lifestyle Planner'];

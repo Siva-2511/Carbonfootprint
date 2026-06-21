@@ -2,7 +2,8 @@ import React, { useId } from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
 import type { CalculatorInputs } from '../../types';
-import { CURRENCY_MAP } from '../../config';
+import { getCurrencyInfo } from '../../config';
+import { useStore } from '../../core/store';
 
 // ─────────────────────────────────────────────────────────────
 //  FILE 6: src/components/Profile/CalculatorStep4.tsx
@@ -15,8 +16,9 @@ interface CalculatorStep4Props {
 
 export function CalculatorStep4({ inputs, onUpdate }: CalculatorStep4Props) {
   const recyclingId = useId();
+  const settings = useStore((s) => s.settings);
   
-  const currencyInfo = inputs.country && CURRENCY_MAP[inputs.country] ? CURRENCY_MAP[inputs.country] : CURRENCY_MAP['Global Average'];
+  const currencyInfo = getCurrencyInfo(inputs.country, settings.currencyOverride);
 
   const formatCurrency = (v: number) => {
     const locale = currencyInfo.currency === 'INR' ? 'en-IN' : 'en-US';
