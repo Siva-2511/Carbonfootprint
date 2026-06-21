@@ -73,7 +73,7 @@ Return ONLY valid JSON with exactly this structure:
             value={product}
             onChange={(e) => setProduct(e.target.value)}
             placeholder="Product (e.g., Avocados, iPhone)"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
             disabled={loading}
           />
           <input
@@ -82,7 +82,7 @@ Return ONLY valid JSON with exactly this structure:
             onChange={(e) => setOrigin(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && analyze()}
             placeholder="Origin (e.g., Mexico, China)"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
             disabled={loading}
           />
           <button

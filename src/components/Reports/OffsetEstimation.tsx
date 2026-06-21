@@ -21,7 +21,7 @@ export function OffsetEstimation() {
           <select
             value={settings.currencyOverride || ''}
             onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
-            className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+            className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
             aria-label="Select Currency"
           >
             <option value="">(Match Country)</option>
@@ -66,7 +66,7 @@ export function OffsetEstimation() {
         <select
           value={settings.currencyOverride || ''}
           onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
-          className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+          className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
           aria-label="Select Currency"
         >
           <option value="">(Match Country)</option>

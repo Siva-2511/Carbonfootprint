@@ -59,7 +59,7 @@ Return ONLY valid JSON with exactly this structure, no markdown formatting or ex
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && analyzeItem()}
             placeholder="e.g., Polyester Winter Jacket, Cotton T-Shirt"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
             disabled={loading}
           />
           <button

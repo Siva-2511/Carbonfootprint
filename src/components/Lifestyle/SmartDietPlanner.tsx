@@ -61,7 +61,7 @@ Return ONLY valid JSON with exactly this structure, no markdown formatting or ex
             onChange={(e) => setPreferences(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && generatePlan()}
             placeholder="e.g., Gluten-free, love Mexican food, no dairy"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
             disabled={loading}
           />
           <button
@@ -86,7 +86,7 @@ Return ONLY valid JSON with exactly this structure, no markdown formatting or ex
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               {plan.days.map((day, i) => (
-                <div key={i} className="p-4 bg-dark-eval border border-white/5 rounded-xl flex flex-col gap-3">
+                <div key={i} className="p-4 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl flex flex-col gap-3">
                   <h4 className="font-bold text-primary border-b border-white/10 pb-2">{day.day}</h4>
                   <div>
                     <div className="text-xs text-emerald-400 uppercase tracking-wider font-bold mb-1">Breakfast</div>

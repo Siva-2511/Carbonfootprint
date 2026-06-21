@@ -103,7 +103,7 @@ Return ONLY valid JSON with exactly this structure:
             onChange={(e) => setCity(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && analyze()}
             placeholder="Enter your City (e.g., Mumbai, New York, London)"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-indigo-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-indigo-500/50"
             disabled={loading}
           />
           <button

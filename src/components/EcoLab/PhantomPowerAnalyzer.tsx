@@ -74,7 +74,7 @@ Return ONLY valid JSON with exactly this structure:
         <select
           value={settings.currencyOverride || ''}
           onChange={(e) => useStore.getState().setCurrencyOverride(e.target.value || null)}
-          className="bg-dark-eval border border-white/10 rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
+          className="bg-[var(--bg-card)] border border-[var(--border-card)] rounded-lg p-2 text-xs text-secondary focus:outline-none focus:border-emerald-500/50"
           aria-label="Select Currency"
         >
           <option value="">(Match Country)</option>
@@ -97,7 +97,7 @@ Return ONLY valid JSON with exactly this structure:
             onChange={(e) => setInputStr(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && analyze()}
             placeholder="e.g., PS5, Microwave, Old AC, Laptop charger"
-            className="flex-1 bg-dark-eval border border-white/10 rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
+            className="flex-1 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl px-4 py-3 text-primary focus:outline-none focus:border-emerald-500/50"
             disabled={loading}
           />
           <button
@@ -112,18 +112,18 @@ Return ONLY valid JSON with exactly this structure:
         {result && (
           <div className="mt-6 animate-fade-in space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-dark-eval border border-white/5 rounded-xl">
+              <div className="p-4 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl">
                 <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">Energy Wasted</p>
                 <p className="text-2xl font-bold text-emerald-400">{Math.round(result.totalAnnualKwh)} <span className="text-sm">kWh/year</span></p>
               </div>
-              <div className="p-4 bg-dark-eval border border-white/5 rounded-xl">
+              <div className="p-4 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl">
                 <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">Money Wasted</p>
                 <p className="text-2xl font-bold text-red-400">
                   {currencyInfo.symbol}{(result.totalAnnualCostUSD * usdToLocal).toLocaleString('en-US', { maximumFractionDigits: 0 })}
                   <span className="text-sm text-secondary ml-1">{currencyInfo.currency}/year</span>
                 </p>
               </div>
-              <div className="p-4 bg-dark-eval border border-white/5 rounded-xl">
+              <div className="p-4 bg-[var(--bg-card)] border border-[var(--border-card)] rounded-xl">
                 <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">Carbon Emissions</p>
                 <p className="text-2xl font-bold text-primary">{Math.round(result.carbonEmissionsKg)} <span className="text-sm">kg CO₂e</span></p>
               </div>

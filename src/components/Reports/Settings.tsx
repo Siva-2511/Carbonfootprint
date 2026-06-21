@@ -97,7 +97,7 @@ export function Settings() {
         <select
           value={settings.currencyOverride || ''}
           onChange={(e) => setCurrencyOverride(e.target.value || null)}
-          className="w-full max-w-xs bg-dark-eval p-3 rounded-xl border border-white/10 text-primary text-sm focus:border-emerald-500/50 outline-none"
+          className="w-full max-w-xs bg-[var(--bg-card)] p-3 rounded-xl border border-[var(--border-card)] text-primary text-sm focus:border-emerald-500/50 outline-none"
         >
           <option value="">(Default) Match My Country</option>
           {Object.entries(CURRENCY_MAP).filter(([k]) => k !== 'Global Average').map(([country, info]) => (
