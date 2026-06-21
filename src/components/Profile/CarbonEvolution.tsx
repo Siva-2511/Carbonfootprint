@@ -56,6 +56,7 @@ export function CarbonEvolution() {
       },
       options: {
         responsive: true,
+        animation: false,
         plugins: {
           legend: { labels: { color: '#9ca3af', font: { family: 'Inter', size: 11 } } },
           tooltip: {

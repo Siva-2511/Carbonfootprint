@@ -58,6 +58,7 @@ export function Scorecard() {
       },
       options: {
         cutout: '68%',
+        animation: false,
         plugins: {
           legend: { labels: { color: '#9ca3af', font: { family: 'Inter', size: 11 }, padding: 12 } },
           tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${(ctx.raw as number).toLocaleString()} kg` } },

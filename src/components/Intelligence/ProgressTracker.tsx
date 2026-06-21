@@ -31,6 +31,7 @@ export function ProgressTracker() {
       },
       options: {
         responsive: true,
+        animation: false,
         plugins: { legend: { display: false } },
         scales: {
           y: { ticks: { color: '#6b7280' }, grid: { color: 'rgba(255,255,255,0.06)' } },
