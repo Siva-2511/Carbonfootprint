@@ -93,7 +93,7 @@ export function CommuteROICalculator() {
           <label className="block text-sm text-secondary mb-1">Current Mode</label>
           <select
             value={currentMode}
-            onChange={(e) => setCurrentMode(e.target.value as keyof typeof EMISSION_FACTORS.transport)}
+            onChange={(e) => setCurrentMode(e.target.value as typeof MODES[number]['id'])}
             className="w-full bg-[var(--bg-card)] border border-[var(--border-strong)] rounded-lg p-2 text-primary"
           >
             {MODES.map((m) => (
@@ -107,7 +107,7 @@ export function CommuteROICalculator() {
           <label className="block text-sm text-secondary mb-1">Target Mode</label>
           <select
             value={targetMode}
-            onChange={(e) => setTargetMode(e.target.value as keyof typeof EMISSION_FACTORS.transport)}
+            onChange={(e) => setTargetMode(e.target.value as typeof MODES[number]['id'])}
             className="w-full bg-[var(--bg-card)] border border-[var(--border-strong)] rounded-lg p-2 text-primary"
           >
             {MODES.map((m) => (
