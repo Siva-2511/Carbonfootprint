@@ -24,6 +24,9 @@ const RecipeWizard = lazy(() => import('./components/Lifestyle/RecipeWizard').th
 const TravelRouter = lazy(() => import('./components/Lifestyle/TravelRouter').then((m) => ({ default: m.TravelRouter })));
 const FastFashionAnalyzer = lazy(() => import('./components/Lifestyle/FastFashionAnalyzer').then((m) => ({ default: m.FastFashionAnalyzer })));
 const SmartDietPlanner = lazy(() => import('./components/Lifestyle/SmartDietPlanner').then((m) => ({ default: m.SmartDietPlanner })));
+const PhantomPowerAnalyzer = lazy(() => import('./components/EcoLab/PhantomPowerAnalyzer').then((m) => ({ default: m.PhantomPowerAnalyzer })));
+const SupplyChainAnalyzer = lazy(() => import('./components/EcoLab/SupplyChainAnalyzer').then((m) => ({ default: m.SupplyChainAnalyzer })));
+const TimeTravelProjection = lazy(() => import('./components/Intelligence/TimeTravelProjection').then((m) => ({ default: m.TimeTravelProjection })));
 
 function Spinner() {
   return (
@@ -44,6 +47,9 @@ function IntelligenceTab() {
       <div className="lg:col-span-2">
         <ProgressTracker />
       </div>
+      <div className="lg:col-span-2">
+        <TimeTravelProjection />
+      </div>
     </div>
   );
 }
@@ -62,7 +68,7 @@ function ReportsTab() {
   );
 }
 function EcoLabTab() {
-  return <div className="space-y-6"><DietSwapSimulator /><CommuteROICalculator /><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
+  return <div className="space-y-6"><DietSwapSimulator /><PhantomPowerAnalyzer /><SupplyChainAnalyzer /><CommuteROICalculator /><DailyChallenge /><ReceiptScanner /><ProductCompare /><DigitalCalculator /></div>;
 }
 function LifestyleTab() {
   return <div className="space-y-6"><RecipeWizard /><SmartDietPlanner /><FastFashionAnalyzer /><TravelRouter /></div>;
