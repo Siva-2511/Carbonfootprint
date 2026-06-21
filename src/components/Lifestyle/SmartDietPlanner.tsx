@@ -1,6 +1,17 @@
+/**
+ * @fileoverview SmartDietPlanner component for the Lifestyle section.
+ * Generates a personalised 7-day low-carbon meal plan via the AI service
+ * based on the user's dietary preferences and restrictions.
+ * Each day includes breakfast, lunch, and dinner with a focus on local,
+ * seasonal, and low-impact ingredients.
+ */
+
 import React, { useState } from 'react';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated 7-day low-carbon meal plan.
+ */
 interface MealPlan {
   theme: string;
   totalSavedCarbon: string;
@@ -12,6 +23,15 @@ interface MealPlan {
   }[];
 }
 
+/**
+ * SmartDietPlanner renders a preference input field and a generate button.
+ * On submit, it calls the AI service with the user's dietary preferences to
+ * produce a 7-day meal plan. The result displays a themed header with an
+ * estimated CO₂e saving badge, followed by a responsive grid of day-cards
+ * each showing breakfast, lunch, and dinner.
+ *
+ * @returns The rendered smart diet meal planner card.
+ */
 export function SmartDietPlanner() {
   const [preferences, setPreferences] = useState('');
   const [loading, setLoading] = useState(false);

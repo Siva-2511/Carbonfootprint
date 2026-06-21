@@ -1,3 +1,10 @@
+/**
+ * @fileoverview CommuteROICalculator component for the EcoLab section.
+ * Allows users to compare the annual carbon emissions and monetary cost
+ * of different commuting transport modes (e.g., petrol car vs. electric vehicle),
+ * factoring in distance, days per week, and the user's local currency.
+ */
+
 import React, { useState } from 'react';
 import { EMISSION_FACTORS, getCurrencyInfo, CURRENCY_MAP } from '../../config';
 import { useStore } from '../../core/store';
@@ -10,6 +17,16 @@ const MODES = [
   { id: 'twoWheeler', name: 'Two-Wheeler', icon: '🛵', costPerKm: 0.07 },
 ] as const;
 
+/**
+ * CommuteROICalculator renders an interactive calculator that computes the
+ * annual CO₂ savings and cost savings when switching from a current commute
+ * mode to a target commute mode.
+ *
+ * Reads the user's country from the global store to apply the correct currency.
+ * Supports an inline currency override dropdown.
+ *
+ * @returns The rendered commute ROI calculator card.
+ */
 export function CommuteROICalculator() {
   const storeInputs = useStore((s) => s.inputs);
   const country = storeInputs.country || 'India';

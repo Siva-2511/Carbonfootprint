@@ -1,3 +1,8 @@
+/**
+ * @fileoverview DnaResult component that displays the user's calculated Carbon DNA
+ * persona, total annual footprint, and a percentage breakdown of emission categories.
+ */
+
 import React from 'react';
 import { useStore } from '../../core/store';
 import { Badge } from '../ui/Badge';

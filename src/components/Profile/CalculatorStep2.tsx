@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Step 2 of the Carbon Footprint Calculator — Transportation.
+ * Collects the user's primary vehicle type, weekly driving distance, public
+ * transit mode, weekly public transport distance, and annual short/long-haul
+ * flight counts. Each vehicle and transit option displays its per-km CO₂ factor.
+ */
+
 import React from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
@@ -81,6 +88,16 @@ const PUBLIC_TRANSIT_OPTIONS: { value: 'bus' | 'metro', icon: string, label: str
   },
 ];
 
+/**
+ * Renders the Transportation form card — Step 2 of the carbon footprint calculator.
+ * Includes vehicle type selection with CO₂ emission factors, a weekly driving
+ * distance slider (disabled when vehicle type is "none"), a public transit mode
+ * selector, a weekly public transport distance slider, and short/long-haul flight
+ * count sliders.
+ *
+ * @param props.inputs - Current accumulated calculator inputs from the parent wizard.
+ * @param props.onUpdate - Callback to merge partial input updates into the parent state.
+ */
 export function CalculatorStep2({ inputs, onUpdate }: CalculatorStep2Props) {
   return (
     <Card className="p-6 space-y-8">

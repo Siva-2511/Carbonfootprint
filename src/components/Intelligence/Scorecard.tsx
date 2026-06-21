@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Scorecard component that displays a user's sustainability score,
+ * per-category emission breakdowns as animated progress bars, a doughnut chart,
+ * and badge highlights for top strength and biggest opportunity.
+ */
+
 import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../core/store';
 
@@ -6,6 +12,13 @@ import { useSpring, motion } from 'framer-motion';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
+/**
+ * Renders a numeric value that smoothly animates from its previous value to the new one.
+ * @param props - Component props.
+ * @param props.value - The target numeric value to animate toward.
+ * @param props.decimals - Number of decimal places to display (default: 0).
+ * @returns A `<motion.span>` element containing the animated number string.
+ */
 function AnimatedNumber({ value, decimals = 0 }: { value: number; decimals?: number }) {
   const spring = useSpring(0, { stiffness: 60, damping: 20 });
   const [display, setDisplay] = useState('0');
@@ -16,6 +29,7 @@ function AnimatedNumber({ value, decimals = 0 }: { value: number; decimals?: num
   return <motion.span>{display}</motion.span>;
 }
 
+/** Metadata map from score level key to display label, accent color, and background color. */
 const SCORE_META: Record<string, { label: string; color: string; bg: string }> = {
   excellent:   { label: 'Excellent',    color: '#34d399', bg: 'rgba(52,211,153,0.15)' },
   good:        { label: 'Good',         color: '#60a5fa', bg: 'rgba(96,165,250,0.15)' },
@@ -23,6 +37,11 @@ const SCORE_META: Record<string, { label: string; color: string; bg: string }> =
   needsWork:   { label: 'Needs Work',   color: '#f87171', bg: 'rgba(248,113,113,0.15)' },
 };
 
+/**
+ * Returns the score metadata (label, color, background) corresponding to a numeric score.
+ * @param s - The numeric score (0–100).
+ * @returns The matching entry from `SCORE_META`.
+ */
 function getScoreLevel(s: number) {
   if (s >= 80) return SCORE_META.excellent;
   if (s >= 60) return SCORE_META.good;
@@ -30,9 +49,17 @@ function getScoreLevel(s: number) {
   return SCORE_META.needsWork;
 }
 
+/** Color mapping for each emission category. */
 const CAT_COLORS = { energy: '#f59e0b', transport: '#3b82f6', diet: '#22c55e', consumption: '#a855f7' };
+/** Ordered list of emission category keys. */
 const CATS = ['energy', 'transport', 'diet', 'consumption'] as const;
 
+/**
+ * Displays the user's sustainability scorecard, including an animated score ring,
+ * per-category emission progress bars, strength/opportunity badges, and a doughnut chart.
+ * Reads result data from the global Zustand store.
+ * @returns The scorecard card element, or an empty-state prompt if no result exists.
+ */
 export function Scorecard() {
   const result    = useStore((s) => s.result);
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -1,8 +1,19 @@
+/**
+ * @fileoverview PhantomPowerAnalyzer component for the EcoLab section.
+ * Uses AI to estimate the standby ("vampire") power draw of user-specified
+ * household appliances kept plugged in 24/7, displaying per-appliance
+ * energy drain (kWh/year), total annual cost in the user's currency,
+ * and total CO₂e emissions along with actionable reduction tips.
+ */
+
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { getCurrencyInfo } from '../../config';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated analysis result for a set of always-on appliances.
+ */
 interface PhantomResult {
   appliances: {
     name: string;
@@ -15,6 +26,15 @@ interface PhantomResult {
   tips: string[];
 }
 
+/**
+ * PhantomPowerAnalyzer renders a text input where users list their always-on
+ * appliances. On submit, it calls the AI service to estimate each appliance's
+ * standby wattage, annual kWh drain, total monetary cost (converted to the
+ * user's local currency), and carbon emissions, then displays the results in
+ * a summary card and a detailed appliance breakdown table.
+ *
+ * @returns The rendered phantom power analyzer card.
+ */
 export function PhantomPowerAnalyzer() {
   const storeInputs = useStore((s) => s.inputs);
   const settings = useStore((s) => s.settings);

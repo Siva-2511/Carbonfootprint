@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Zustand slice for the carbon footprint calculator feature.
+ * Manages calculator inputs, computed results, Carbon DNA persona, recommendations, and history.
+ */
+
 import type { StateCreator } from 'zustand';
 import type {
   AppState,
@@ -7,6 +12,7 @@ import type {
 } from '../../types';
 import { INPUT_LIMITS } from '../../config';
 
+/** Default calculator input values used on first load and after a reset. */
 const DEFAULT_INPUTS: CalculatorInputs = {
   country: 'India',
   householdSize: 1,
@@ -26,6 +32,11 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   recycling: false,
 };
 
+/**
+ * Zustand StateCreator for the calculator slice.
+ * Provides state for inputs, result, DNA persona, recommendations, and history,
+ * plus actions to update inputs, store pipeline results, and reset the calculator.
+ */
 export const createCalculatorSlice: StateCreator<
   AppState,
   [],

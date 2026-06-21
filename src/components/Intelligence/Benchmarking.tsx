@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Benchmarking component that compares a user's annual carbon footprint
+ * against country-level averages, global averages, top-10% performers, and the
+ * Paris Agreement 2030 target using animated horizontal bar charts and stat cards.
+ */
+
 import React from 'react';
 import { useStore } from '../../core/store';
 import { compareToBenchmarks } from '../../services/core/benchmarks';
@@ -5,6 +11,13 @@ import { Badge } from '../ui/Badge';
 import { BENCHMARK_DATA } from '../../config';
 import { motion } from 'framer-motion';
 
+/**
+ * Renders a benchmarking panel that places the user's footprint in context of
+ * national and global emissions data. Displays comparison stat cards, animated
+ * horizontal bar charts grouped by "Your Profile", "Your Country", and "Global
+ * Benchmarks", and a narrative summary generated from benchmark comparison logic.
+ * @returns The benchmarking glass card, or an empty-state prompt if no result exists.
+ */
 export function Benchmarking() {
   const result = useStore((s) => s.result);
   const inputs = useStore((s) => s.inputs);
@@ -38,6 +51,12 @@ export function Benchmarking() {
     { label: 'Paris 2030', tons: BENCHMARK_DATA.parisTarget, color: 'bg-teal-500' },
   ];
 
+  /**
+   * Renders a single animated horizontal bar row for a benchmark entry.
+   * @param bar - The bar data containing label, tonnage value, and Tailwind color class.
+   * @param idx - The bar's index used to stagger the animation delay.
+   * @returns A flex row with a label, animated bar, and numeric value.
+   */
   const renderBar = ({ label, tons, color }: { label: string, tons: number, color: string }, idx: number) => (
     <div key={label} className="flex items-center gap-3 mb-2.5">
       <span className="text-xs text-secondary w-[85px] leading-tight shrink-0">{label}</span>

@@ -1,5 +1,17 @@
+/**
+ * @fileoverview Runtime security audit utilities for CarbonSense.
+ * Checks for XSS patterns in localStorage, verifies error boundary presence,
+ * and confirms Content-Security-Policy meta tag existence.
+ */
+
 import type { SecurityAuditResult } from '../types';
 
+/**
+ * Performs a runtime security self-audit of the application.
+ * Checks input validation availability, localStorage XSS patterns,
+ * error boundary mounting status, and CSP meta tag presence.
+ * @returns A SecurityAuditResult with individual check flags and an overall status.
+ */
 export async function runSecurityAudit(): Promise<SecurityAuditResult> {
   // 1. Input validation always active (validation.ts is always imported)
   const inputValidationActive = typeof window !== 'undefined';

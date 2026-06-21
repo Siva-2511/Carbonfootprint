@@ -1,7 +1,18 @@
+/**
+ * @fileoverview SupplyChainAnalyzer component for the EcoLab section.
+ * Uses AI to calculate the transport distance (food miles) and estimated
+ * CO₂e emissions for an imported product given its origin country and the
+ * user's current country. Also suggests a greener local alternative and
+ * explains why the supply chain impact matters.
+ */
+
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated supply chain analysis result for an imported product.
+ */
 interface SupplyChainResult {
   productName: string;
   foodMiles: number;
@@ -11,6 +22,15 @@ interface SupplyChainResult {
   explanation: string;
 }
 
+/**
+ * SupplyChainAnalyzer renders a two-field input form (product name and origin
+ * country). On submit, it queries the AI service to estimate food miles,
+ * transport mode, CO₂e emissions, a local alternative, and an explanation.
+ * Results are shown in a structured result card with metric tiles and text
+ * sections for the local alternative and supply chain explanation.
+ *
+ * @returns The rendered supply chain analyzer card.
+ */
 export function SupplyChainAnalyzer() {
   const storeInputs = useStore((s) => s.inputs);
   const country = storeInputs.country || 'India';

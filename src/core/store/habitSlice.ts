@@ -1,7 +1,14 @@
+/**
+ * @fileoverview Zustand slice for the habit tracking and gamification feature.
+ * Manages task completion, eco points, streaks, badges, and level evaluation
+ * by delegating session scoring to the habitTracker intelligence service.
+ */
+
 import type { StateCreator } from 'zustand';
 import type { AppState, HabitSliceActions, HabitSliceState, HabitState } from '../../types';
 import { evaluateSession as evaluateHabitSession } from '../../services/intelligence/habitTracker';
 
+/** Initial (empty) state for a user with no habit history. */
 const DEFAULT_HABIT_STATE: HabitState = {
   completedTaskIds: [],
   totalSuggested: 0,
@@ -12,6 +19,11 @@ const DEFAULT_HABIT_STATE: HabitState = {
   badges: [],
 };
 
+/**
+ * Zustand StateCreator for the habit slice.
+ * Provides actions to complete/uncomplete tasks (adjusting eco points),
+ * add badges, set the total suggested count, trigger session evaluation, and reset all habits.
+ */
 export const createHabitSlice: StateCreator<
   AppState,
   [],

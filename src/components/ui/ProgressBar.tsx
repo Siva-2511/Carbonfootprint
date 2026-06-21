@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Accessible ProgressBar component for the CarbonSense UI library.
+ * Renders an animated, colour-coded ARIA progressbar that automatically switches
+ * to amber at ≥80% and rose at 100% to signal high/critical usage levels.
+ */
+
 import React, { useId } from 'react';
 
 interface ProgressBarProps {
@@ -19,6 +25,18 @@ const colorMap = {
 
 const sizeMap = { sm: 'h-1.5', md: 'h-2.5', lg: 'h-4' };
 
+/**
+ * Animated horizontal progress bar with ARIA roles and optional percentage label.
+ * Colour escalates automatically: amber at ≥80%, rose at 100%, overriding `color`.
+ *
+ * @param props.value - Current progress value (raw, not a percentage).
+ * @param props.max - Maximum value used to compute the fill percentage; defaults to `100`.
+ * @param props.label - Accessible label text shown above the bar (also used as `aria-labelledby`).
+ * @param props.color - Fill colour when below threshold; defaults to `'emerald'`.
+ * @param props.showLabel - When `true`, renders the computed percentage to the right of the label.
+ * @param props.size - Bar height preset (`'sm'` | `'md'` | `'lg'`); defaults to `'md'`.
+ * @param props.className - Additional Tailwind classes merged onto the wrapper element.
+ */
 export function ProgressBar({ value, max = 100, label, color = 'emerald', showLabel = false, size = 'md', className = '' }: ProgressBarProps) {
   const id = useId();
   const pct = Math.min(Math.max((value / max) * 100, 0), 100);
@@ -49,4 +67,3 @@ export function ProgressBar({ value, max = 100, label, color = 'emerald', showLa
     </div>
   );
 }
-

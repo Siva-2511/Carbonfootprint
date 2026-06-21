@@ -1,20 +1,46 @@
+/**
+ * @fileoverview Input validation and sanitization utilities for CarbonSense.
+ * Clamps numeric inputs to configured safe ranges, strips unsafe HTML,
+ * and produces a fully-validated CalculatorInputs object from partial user data.
+ */
+
 import DOMPurify from 'dompurify';
 import type { CalculatorInputs } from '../types';
 import { INPUT_LIMITS } from '../config';
 
-/** Clamps a number to a [min, max] range. */
+/**
+ * Clamps a number to a [min, max] range.
+ * Returns `min` for any non-finite input (NaN, ±Infinity).
+ * @param value - The number to clamp.
+ * @param min - The minimum allowed value.
+ * @param max - The maximum allowed value.
+ * @returns The clamped value within [min, max].
+ * @example
+ * clamp(150, 0, 100); // returns 100
+ * clamp(-5, 0, 100);  // returns 0
+ */
 export function clamp(value: number, min: number, max: number): number {
   if (!Number.isFinite(value)) return min;
   return Math.min(Math.max(value, min), max);
 }
 
-/** Sanitizes potentially unsafe HTML using DOMPurify. */
+/**
+ * Sanitizes potentially unsafe HTML using DOMPurify.
+ * Strips all tags and attributes, returning only plain text content.
+ * @param input - The raw string to sanitize.
+ * @returns A safe, plain-text string with all HTML removed.
+ */
 export function sanitizeText(input: string): string {
   if (typeof input !== 'string') return '';
   return DOMPurify.sanitize(input, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
 }
 
-/** Validates and clamps all calculator inputs to safe ranges. */
+/**
+ * Validates and clamps all calculator inputs to safe ranges.
+ * Enum-type fields fall back to sensible defaults when the supplied value is invalid.
+ * @param partial - A partial CalculatorInputs object with any subset of fields.
+ * @returns A complete CalculatorInputs object with all fields validated and clamped.
+ */
 export function validateInputs(partial: Partial<CalculatorInputs>): CalculatorInputs {
   return {
     country: partial.country ?? 'India',

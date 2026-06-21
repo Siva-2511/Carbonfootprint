@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Step 1 of the Carbon Footprint Calculator — Energy Usage.
+ * Collects household location (country), household size, monthly electricity
+ * consumption, AC hours per day, electricity source (grid/solar/mixed), and
+ * either gas heating therms or LPG cylinder count depending on the country.
+ */
+
 import React from 'react';
 import { Slider } from '../ui/Slider';
 import { Card } from '../ui/Card';
@@ -41,6 +48,15 @@ const SOURCE_OPTIONS: SourceOption[] = [
   },
 ];
 
+/**
+ * Renders the Energy Usage form card — Step 1 of the carbon footprint calculator.
+ * Includes a custom country dropdown, a household size stepper, sliders for
+ * electricity and AC usage, an electricity source radio group, and a conditional
+ * heating slider (gas therms for applicable countries, LPG cylinders otherwise).
+ *
+ * @param props.inputs - Current accumulated calculator inputs from the parent wizard.
+ * @param props.onUpdate - Callback to merge partial input updates into the parent state.
+ */
 export function CalculatorStep1({ inputs, onUpdate }: CalculatorStep1Props) {
   const [locationOpen, setLocationOpen] = React.useState(false);
   const locationRef = React.useRef<HTMLDivElement>(null);

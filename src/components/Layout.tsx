@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Application shell layout component for CarbonSense.
+ * Renders the sticky animated header (branding, ELI10 toggle, Google Translate,
+ * theme switcher), accessible tab navigation, animated main content area, and
+ * the footer with attribution and feedback links.
+ */
+
 import React, { useEffect, useId } from 'react';
 import { useStore } from '../core/store';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,7 +24,11 @@ const TABS = [
   { label: 'Lifestyle',         icon: '🌍' },
 ];
 
-/* Inject Google Translate widget */
+/**
+ * Lazily injects the Google Translate widget script into the document body.
+ * Guards against double-injection by checking for an existing script element
+ * with the id `google-translate-script`.
+ */
 function initGoogleTranslate() {
   if (document.getElementById('google-translate-script')) return; // Already injected
   
@@ -40,6 +51,15 @@ function initGoogleTranslate() {
   document.body.appendChild(s);
 }
 
+/**
+ * Top-level layout wrapper that provides the application chrome.
+ * Renders a sticky animated header with branding, controls, and a roving-focus
+ * tab bar, wraps `children` in an animated `<main>`, and displays a footer.
+ *
+ * @param props.children - Page content to render inside the main area.
+ * @param props.activeTab - Zero-based index of the currently selected tab.
+ * @param props.onTabChange - Callback invoked with the new tab index when the user navigates.
+ */
 export function Layout({ children, activeTab, onTabChange }: LayoutProps) {
   const settings   = useStore((s) => s.settings);
   const toggleEli10 = useStore((s) => s.toggleEli10);

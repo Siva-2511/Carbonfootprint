@@ -1,7 +1,17 @@
+/**
+ * @fileoverview Application configuration constants for CarbonSense.
+ * Defines IPCC-sourced emission factors, per-country electricity grid intensities,
+ * benchmark CO₂ data, currency mappings, and global app settings.
+ */
+
 // ─────────────────────────────────────────────────────────
 //  config.ts — Frozen IPCC emission factors & app constants
 // ─────────────────────────────────────────────────────────
 
+/**
+ * Frozen IPCC-sourced emission factors for each lifestyle category.
+ * Values are in kg CO₂e per unit (km, kWh, therm, cylinder, ₹, or year).
+ */
 export const EMISSION_FACTORS = Object.freeze({
   heating: {
     naturalGas: 5.3, // kg CO₂e/therm
@@ -34,6 +44,10 @@ export const EMISSION_FACTORS = Object.freeze({
   recyclingDiscount: 0.15, // 15% reduction in consumption emissions
 });
 
+/**
+ * Minimum, maximum, and default values for all numeric calculator input fields.
+ * Used by validation logic to clamp user-supplied values to safe ranges.
+ */
 export const INPUT_LIMITS = Object.freeze({
   householdSize: { min: 1, max: 20, default: 1 },
   electricityKwh: { min: 0, max: 10000, default: 300 },
@@ -47,6 +61,10 @@ export const INPUT_LIMITS = Object.freeze({
   monthlySpend: { min: 0, max: 100000, default: 5000 },
 });
 
+/**
+ * Electricity grid carbon intensity factors (kg CO₂e per kWh) keyed by country name.
+ * Used to calculate the emissions contribution of grid electricity consumption.
+ */
 export const COUNTRY_GRID_FACTORS: Record<string, number> = {
   'Global Average': 0.47,
   'India': 0.71,
@@ -67,6 +85,10 @@ export const COUNTRY_GRID_FACTORS: Record<string, number> = {
   'Brazil': 0.09,
 };
 
+/**
+ * Per-capita CO₂ benchmark data used for comparing a user's footprint.
+ * Includes averages for India, urban India, global, top 10%, and the Paris Agreement target.
+ */
 export const BENCHMARK_DATA = Object.freeze({
   indiaAvg: 2.0,       // metric tons CO₂/year
   urbanIndiaAvg: 3.0,  // metric tons CO₂/year (realistic baseline for web app users)
@@ -96,10 +118,18 @@ export const BENCHMARK_DATA = Object.freeze({
   } as Record<string, number>,
 });
 
+/**
+ * List of countries where natural gas (therms-based) heating is the primary heating source.
+ * Used to conditionally show or hide gas heating inputs in the calculator.
+ */
 export const GAS_HEATING_COUNTRIES = [
   'United States', 'United Kingdom', 'Germany', 'France', 'Canada', 'Norway', 'Russia', 'Spain',
 ];
 
+/**
+ * Currency configuration for each supported country, including symbol, ISO code,
+ * display limits, spending tiers, and an INR-equivalent multiplier.
+ */
 export const CURRENCY_MAP: Record<string, { currency: string; symbol: string; max: number; tier1: number; tier2: number; multiplier: number }> = {
   'India': { currency: 'INR', symbol: '₹', max: 50000, tier1: 5000, tier2: 20000, multiplier: 1 },
   'United States': { currency: 'USD', symbol: '$', max: 1000, tier1: 100, tier2: 400, multiplier: 0.012 },
@@ -120,6 +150,12 @@ export const CURRENCY_MAP: Record<string, { currency: string; symbol: string; ma
   'Global Average': { currency: 'USD', symbol: '$', max: 1000, tier1: 100, tier2: 400, multiplier: 0.012 },
 };
 
+/**
+ * Returns currency configuration for a given country, with optional override.
+ * @param country - The country name to look up in CURRENCY_MAP.
+ * @param overrideCurrency - Optional ISO currency code (e.g. 'USD') to use instead of the country default.
+ * @returns The matching currency config object, falling back to India's config if not found.
+ */
 export function getCurrencyInfo(country: string, overrideCurrency?: string | null) {
   if (overrideCurrency) {
     const found = Object.values(CURRENCY_MAP).find(c => c.currency === overrideCurrency);
@@ -128,6 +164,10 @@ export function getCurrencyInfo(country: string, overrideCurrency?: string | nul
   return CURRENCY_MAP[country] || CURRENCY_MAP['India'];
 }
 
+/**
+ * Global application configuration constants controlling history limits,
+ * AI timeouts, debounce intervals, schema versioning, and sustainability targets.
+ */
 export const APP_CONFIG = Object.freeze({
   maxHistoryEntries: 30,
   maxChatMessages: 50,

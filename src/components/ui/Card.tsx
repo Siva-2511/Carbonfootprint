@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Reusable Card surface component for the CarbonSense UI library.
+ * Provides a glassmorphism-styled container with configurable shadow elevation
+ * and a polymorphic `as` prop to render as any HTML element.
+ */
+
 import React, { forwardRef } from 'react';
 
 interface CardProps {
@@ -13,6 +19,16 @@ const elevations = {
   lg: 'shadow-xl shadow-black/30',
 };
 
+/**
+ * Glassmorphism surface container that wraps content in a styled card panel.
+ * Supports ref forwarding, variable shadow depth, and polymorphic rendering
+ * via the `as` prop.
+ *
+ * @param props.children - Content to render inside the card.
+ * @param props.className - Additional Tailwind classes merged onto the root element.
+ * @param props.elevation - Shadow depth preset; defaults to `'md'`.
+ * @param props.as - The HTML element or component to render as; defaults to `'div'`.
+ */
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ children, className = '', elevation = 'md', as: Tag = 'div', ...props }, ref) => (
     <Tag
@@ -25,4 +41,3 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
   )
 );
 Card.displayName = 'Card';
-

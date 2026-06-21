@@ -1,6 +1,12 @@
+/**
+ * @fileoverview Zustand slice for user application settings.
+ * Manages theme, language, ELI-10 mode, AI coach persona, and currency override preferences.
+ */
+
 import type { StateCreator } from 'zustand';
 import type { AppState, AppSettings, CoachPersona, Language, SettingsSliceActions, SettingsSliceState, Theme } from '../../types';
 
+/** Default application settings applied on first launch. */
 const DEFAULT_SETTINGS: AppSettings = {
   theme: 'dark',
   eli10Mode: false,
@@ -8,6 +14,11 @@ const DEFAULT_SETTINGS: AppSettings = {
   coachPersona: 'friendly',
 };
 
+/**
+ * Zustand StateCreator for the settings slice.
+ * Provides actions to update theme, toggle ELI-10 mode, change language,
+ * switch AI coach persona, and override the display currency.
+ */
 export const createSettingsSlice: StateCreator<
   AppState,
   [],

@@ -1,3 +1,9 @@
+/**
+ * @fileoverview AI service layer that proxies all AI/LLM requests through the backend API.
+ * Provides functions for text enhancement, image analysis, conversational chat,
+ * action breakdowns, and product carbon footprint estimation.
+ */
+
 import type { AIResponse } from '../types';
 import { APP_CONFIG } from '../config';
 
@@ -5,6 +11,10 @@ const BACKEND_URL = import.meta.env.VITE_API_URL ?? '/api/chat';
 
 /**
  * Raw proxy call for generic AI tasks.
+ * Sends an arbitrary message array to the backend and returns the model's text response.
+ * @param messages - Array of chat messages with role and content fields.
+ * @param temperature - Sampling temperature for the model (default: 0.7).
+ * @returns The AI-generated text string, or null on failure.
  */
 export async function rawAIFetch(messages: { role: string; content: string }[], temperature = 0.7): Promise<string | null> {
   try {
@@ -30,6 +40,10 @@ export async function rawAIFetch(messages: { role: string; content: string }[], 
 
 /**
  * Enhanced Local Proxy for Text Enhancement.
+ * Rewrites sustainability advice text in a friendly, encouraging tone while preserving facts.
+ * Falls back to the original local text if the AI request fails.
+ * @param localText - The original sustainability advice text to enhance.
+ * @returns An AIResponse with the enhanced (or original) text and its source.
  */
 export async function enhanceText(
   localText: string
@@ -69,6 +83,10 @@ export async function enhanceText(
 
 /**
  * OpenRouter Vision AI Proxy: Analyzes receipts or meal images.
+ * Sends a base64-encoded image along with a prompt to a vision-capable model.
+ * @param base64Image - The base64-encoded image data URL to analyze.
+ * @param prompt - The text instruction describing what to extract from the image.
+ * @returns The AI-generated analysis string, or null on failure.
  */
 export async function analyzeImageWithAI(
   base64Image: string,
@@ -113,6 +131,11 @@ export async function analyzeImageWithAI(
 
 /**
  * Proxy for Conversational Chat.
+ * Sends a user message with system context to the AI and returns the response.
+ * Falls back to an empty local response on error.
+ * @param userMessage - The user's chat message text.
+ * @param systemContext - System-level context string to prepend to the conversation.
+ * @returns An AIResponse with the assistant's reply text and its source.
  */
 export async function chatWithAI(
   userMessage: string,
@@ -157,6 +180,10 @@ export async function chatWithAI(
 
 /**
  * Proxy for Action Breakdown tutorial generation.
+ * Generates a 3-step, persona-aware tutorial for a sustainability action.
+ * @param actionName - The name of the sustainability action to create a tutorial for.
+ * @param userPersona - A description of the user's persona for personalized guidance.
+ * @returns A markdown-formatted 3-step tutorial string, or null on failure.
  */
 export async function getActionBreakdown(
   actionName: string,
@@ -190,6 +217,12 @@ export async function getActionBreakdown(
 
 /**
  * AI Proxy to estimate the carbon footprint of a custom product.
+ * Queries the AI model for cradle-to-gate CO₂e in kg and parses the JSON response.
+ * @param productName - The name of the product to estimate the carbon footprint for.
+ * @returns The estimated carbon footprint in kg CO₂e as a number, or null on failure.
+ * @example
+ * const kg = await estimateProductFootprint('cotton t-shirt');
+ * // Returns e.g. 8.1 (kg CO₂e)
  */
 export async function estimateProductFootprint(productName: string): Promise<number | null> {
   try {

@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Roadmap component that presents the user's personalised carbon
+ * reduction action plan organised into four progressive phases (Quick Wins →
+ * Habit Formation → Optimisation → Carbon Neutral). Each action card supports
+ * completion toggling, AI-generated step-by-step guides, and ELI10 text simplification.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../../core/store';
 import { promoteRecommendations, rank } from '../../services/intelligence/actionPriority';
@@ -6,6 +13,7 @@ import { simplify } from '../../services/core/textSimplifier';
 import { Badge } from '../ui/Badge';
 import { ProgressBar } from '../ui/ProgressBar';
 
+/** Phase tab definitions mapping UI label and description to their priority key filter. */
 const PHASES = [
   { label: 'Phase 1: Quick Wins', key: 'P0', desc: 'Easy actions with immediate impact' },
   { label: 'Phase 2: Habit Formation', key: 'P1', desc: 'Build sustainable daily habits' },
@@ -13,6 +21,18 @@ const PHASES = [
   { label: 'Phase 4: Carbon Neutral', key: 'P2-hard', desc: 'Long-term systemic changes' },
 ];
 
+/**
+ * Renders the user's personalised action roadmap as a phased checklist.
+ * Features include:
+ * - Four phase tabs (P0–P2) with a progress bar per phase.
+ * - Action cards that can be checked/unchecked to earn Eco Points.
+ * - An "AI Guide" button per action that fetches a contextual breakdown via AI.
+ * - ELI10 mode support to simplify action text for accessibility.
+ * - Auto-recovery to refresh stale recommendation caches when the action pool grows.
+ *
+ * Reads state from the global Zustand store (recommendations, habits, dna, result, history).
+ * @returns The roadmap glass card, or an empty-state prompt if no recommendations exist.
+ */
 export function Roadmap() {
   const recommendations = useStore((s) => s.recommendations);
   const habits = useStore((s) => s.habits);
@@ -37,6 +57,12 @@ export function Roadmap() {
     }
   }, [result, dna, recommendations.length, history, setPipelineResult]);
 
+  /**
+   * Fetches an AI-generated step-by-step guide for a specific action and caches it.
+   * Skips the fetch if a breakdown for this action already exists in state.
+   * @param actionId - The unique identifier of the recommendation action.
+   * @param actionName - The human-readable name of the action passed to the AI.
+   */
   const handleGetBreakdown = async (actionId: string, actionName: string) => {
     if (breakdowns[actionId]) return;
     setLoadingBreakdown(actionId);

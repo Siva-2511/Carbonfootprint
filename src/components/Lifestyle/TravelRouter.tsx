@@ -1,6 +1,17 @@
+/**
+ * @fileoverview TravelRouter component for the Lifestyle section.
+ * Accepts an origin and destination city and uses the AI service to generate
+ * a low-carbon travel itinerary that prioritises trains, buses, and carpooling
+ * over flights. Displays total distance, recommended transport mode, estimated
+ * CO₂e emissions, a step-by-step itinerary, and an eco travel tip.
+ */
+
 import React, { useState } from 'react';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated low-carbon travel plan between two cities.
+ */
 interface TravelPlan {
   destination: string;
   totalDistance: string;
@@ -14,6 +25,15 @@ interface TravelPlan {
   ecoTip: string;
 }
 
+/**
+ * TravelRouter renders origin and destination city inputs and a route-finding
+ * button. On submit it queries the AI service for the greenest route and
+ * displays the result as a route summary (distance, recommended mode,
+ * estimated emissions), an eco tip banner, and a visual step-by-step
+ * itinerary timeline.
+ *
+ * @returns The rendered eco-travel router card.
+ */
 export function TravelRouter() {
   const [startCity, setStartCity] = useState('');
   const [endCity, setEndCity] = useState('');

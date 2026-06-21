@@ -1,6 +1,22 @@
+/**
+ * @fileoverview ReceiptScanner component for the EcoLab section.
+ * Provides an image upload interface that passes a shopping receipt or
+ * meal photo to the Vision AI service, which extracts line items and
+ * estimates the carbon footprint (kg CO₂e) for each item and as a total.
+ */
+
 import React, { useState, useRef } from 'react';
 import { analyzeImageWithAI } from '../../services/aiLayer';
 
+/**
+ * ReceiptScanner renders a drag-and-click image upload zone.
+ * When a user uploads a receipt or meal photo, it reads the file as a
+ * base64 data URL, previews it, then sends it to the Vision AI service
+ * with a carbon-analysis prompt. The AI response is displayed as
+ * formatted text below the preview.
+ *
+ * @returns The rendered AI receipt and meal scanner card.
+ */
 export function ReceiptScanner() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string | null>(null);

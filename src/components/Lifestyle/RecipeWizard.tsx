@@ -1,6 +1,17 @@
+/**
+ * @fileoverview RecipeWizard component for the Lifestyle section.
+ * Takes a user's available fridge ingredients and uses the AI service to
+ * generate a creative, ultra-low-carbon recipe complete with title,
+ * ingredient list, step-by-step instructions, estimated CO₂e footprint,
+ * and a planet-friendly sustainability fact.
+ */
+
 import React, { useState } from 'react';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated low-carbon recipe returned by the AI service.
+ */
 interface RecipeResult {
   title: string;
   ingredients: string[];
@@ -9,6 +20,14 @@ interface RecipeResult {
   sustainabilityFact: string;
 }
 
+/**
+ * RecipeWizard renders a textarea for ingredient input and a generate button.
+ * On submit, it sends the ingredients to the AI service and displays the
+ * resulting low-carbon recipe with a title, carbon impact badge, planet fact,
+ * ingredient list, and numbered cooking instructions.
+ *
+ * @returns The rendered AI recipe wizard card.
+ */
 export function RecipeWizard() {
   const [ingredients, setIngredients] = useState('');
   const [loading, setLoading] = useState(false);

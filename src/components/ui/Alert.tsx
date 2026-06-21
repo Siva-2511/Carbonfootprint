@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Reusable accessible Alert component for the CarbonSense UI library.
+ * Renders a colour-coded notification banner supporting success, warning, danger,
+ * and info severity levels with an optional dismiss button.
+ */
+
 import React from 'react';
 
 interface AlertProps {
@@ -16,6 +22,18 @@ const styles = {
   info: { bg: 'bg-blue-500/10 border-blue-500/25', text: 'text-blue-300', icon: 'ℹ️' },
 };
 
+/**
+ * Displays a contextual alert banner with an icon, optional title, and message.
+ * Uses `role="alert"` with `aria-live="assertive"` for danger alerts and
+ * `role="status"` with `aria-live="polite"` for all other types.
+ *
+ * @param props.type - Severity level controlling colour scheme and icon.
+ * @param props.title - Optional bold heading rendered above the message.
+ * @param props.message - Primary alert text to display.
+ * @param props.dismissible - When `true`, renders an ✕ dismiss button (requires `onDismiss`).
+ * @param props.onDismiss - Callback fired when the dismiss button is clicked.
+ * @param props.className - Additional Tailwind classes to merge onto the root element.
+ */
 export function Alert({ type, title, message, dismissible, onDismiss, className = '' }: AlertProps) {
   const { bg, text, icon } = styles[type];
   return (
@@ -41,4 +59,3 @@ export function Alert({ type, title, message, dismissible, onDismiss, className 
     </div>
   );
 }
-

@@ -1,8 +1,20 @@
+/**
+ * @fileoverview OffsetEstimation component that calculates the number of trees
+ * and the estimated financial cost required to offset the user's annual carbon
+ * footprint. Includes an interactive currency override dropdown.
+ */
+
 import React from 'react';
 import { Card } from '../ui/Card';
 import { useStore } from '../../core/store';
 import { getCurrencyInfo, CURRENCY_MAP } from '../../config';
 
+/**
+ * Renders the Carbon Offsetting calculator card.
+ * Converts the user's total footprint into a tree-planting equivalent
+ * and estimates the offset cost via certified programs in the user's local currency.
+ * @returns The rendered offset estimation card.
+ */
 export function OffsetEstimation() {
   const result = useStore((s) => s.result);
   const storeInputs = useStore((s) => s.inputs);

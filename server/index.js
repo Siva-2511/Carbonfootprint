@@ -1,3 +1,15 @@
+/**
+ * @fileoverview CarbonSense Secure Backend API
+ *
+ * Express.js proxy server that securely relays AI requests to OpenRouter,
+ * protecting the API key from client exposure. Implements strict security
+ * headers (Helmet), CORS allowlisting, rate limiting (DDoS protection),
+ * TTL response caching, and SHA-256 hashed cache keys.
+ *
+ * @module server
+ * @version 1.0.0
+ */
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -13,6 +25,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+
+/** @constant {number} PORT - Server listening port, defaults to 3001 */
 const PORT = process.env.PORT || 3001;
 
 // 1. Strict Security Headers via Helmet

@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Step 3 of the Carbon Footprint Calculator — Diet & Food.
+ * Presents a 2×2 grid of diet-type cards (heavy-meat, low-meat, vegetarian, vegan)
+ * each annotated with an estimated annual CO₂ equivalent footprint, allowing the
+ * user to select the option that best matches their eating habits.
+ */
+
 import React from 'react';
 import { Card } from '../ui/Card';
 import type { CalculatorInputs, DietType } from '../../types';
@@ -70,6 +77,15 @@ const DIET_OPTIONS: DietOption[] = [
   },
 ];
 
+/**
+ * Renders the Diet & Food form card — Step 3 of the carbon footprint calculator.
+ * Displays four diet-type radio cards in a 2×2 grid, each showing an icon, label,
+ * description, and annual CO₂ equivalent impact badge. Selection updates the
+ * parent state via `onUpdate`.
+ *
+ * @param props.inputs - Current accumulated calculator inputs from the parent wizard.
+ * @param props.onUpdate - Callback to merge partial input updates into the parent state.
+ */
 export function CalculatorStep3({ inputs, onUpdate }: CalculatorStep3Props) {
   return (
     <Card className="p-6 space-y-8">

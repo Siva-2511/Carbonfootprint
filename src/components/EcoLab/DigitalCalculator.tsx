@@ -1,5 +1,24 @@
+/**
+ * @fileoverview DigitalCalculator component for the EcoLab section.
+ * Estimates the annual carbon footprint of a user's digital habits —
+ * video streaming, AI query usage, and cloud storage — using
+ * established per-unit CO₂e emission factors and interactive range sliders.
+ */
+
 import React, { useState } from 'react';
 
+/**
+ * DigitalCalculator renders three range sliders for streaming hours per day,
+ * daily AI queries, and cloud storage in GB. It computes and displays
+ * the user's estimated total annual digital carbon footprint in kg CO₂e.
+ *
+ * Emission estimates used:
+ * - Streaming: ~55 g CO₂e / hour (HD)
+ * - AI query: ~4.3 g CO₂e / query
+ * - Cloud storage: ~0.72 g CO₂e / GB / year
+ *
+ * @returns The rendered digital footprint calculator card.
+ */
 export function DigitalCalculator() {
   const [streamingHours, setStreamingHours] = useState(2);
   const [aiQueries, setAiQueries] = useState(10);

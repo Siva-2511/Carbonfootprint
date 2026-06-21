@@ -1,3 +1,11 @@
+/**
+ * @fileoverview ProductCompare component for the EcoLab section.
+ * Allows users to compare the cradle-to-gate carbon footprint of two products
+ * chosen from a preset list or entered as free-text custom items.
+ * Custom product footprints are estimated in real-time via the AI service.
+ * Results are visualised as a proportional bar and a ratio summary.
+ */
+
 import React, { useState } from 'react';
 import { estimateProductFootprint } from '../../services/aiLayer';
 
@@ -12,6 +20,15 @@ const DEFAULT_PRODUCTS = [
   { id: 'custom_placeholder', name: 'Other (custom)...', co2: 0, category: 'Custom' }
 ];
 
+/**
+ * ProductCompare renders a two-product carbon footprint comparison tool.
+ * Users select products from a preset list or type a custom item name;
+ * custom items are sent to the AI service for footprint estimation.
+ * The comparison renders a proportional bar chart and a textual summary
+ * showing which product has the higher impact and by what factor.
+ *
+ * @returns The rendered product impact comparison card.
+ */
 export function ProductCompare() {
   const [products, setProducts] = useState(DEFAULT_PRODUCTS);
   const [item1, setItem1] = useState(DEFAULT_PRODUCTS[0].id);

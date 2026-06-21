@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Accessible Slider (range input) component for the CarbonSense UI library.
+ * Pairs a native `<input type="range">` with a labelled display of the current value,
+ * min/max hints, and an optional helper text line. Supports custom value formatting
+ * and colour accent theming.
+ */
+
 import React, { useId } from 'react';
 
 interface SliderProps {
@@ -21,6 +28,22 @@ const trackColors = {
   blue: 'accent-blue-500',
 };
 
+/**
+ * Labelled range slider with live value display, min/max hints, and ARIA attributes.
+ * The displayed value updates reactively and is announced via `aria-live="polite"`.
+ *
+ * @param props.value - Current numeric value of the slider.
+ * @param props.onChange - Callback invoked with the new numeric value on every change.
+ * @param props.min - Minimum allowed value.
+ * @param props.max - Maximum allowed value.
+ * @param props.step - Increment step size; defaults to `1`.
+ * @param props.label - Visible label text and accessible name for the input.
+ * @param props.unit - Optional unit string appended to the displayed value (e.g. `'kWh'`).
+ * @param props.helperText - Optional explanatory text rendered below the slider track.
+ * @param props.color - CSS accent colour for the track thumb; defaults to `'emerald'`.
+ * @param props.disabled - When `true`, disables interaction and dims the control.
+ * @param props.formatValue - Optional formatter applied to `value` for the live display.
+ */
 export function Slider({
   value, onChange, min, max, step = 1, label, unit = '',
   helperText, color = 'emerald', disabled = false, formatValue,
@@ -62,4 +85,3 @@ export function Slider({
     </div>
   );
 }
-

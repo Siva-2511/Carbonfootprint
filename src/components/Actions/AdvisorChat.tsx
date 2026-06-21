@@ -1,8 +1,15 @@
+/**
+ * @fileoverview AdvisorChat component that provides an in-app AI sustainability
+ * chat interface. User messages are first answered by a local keyword-routing engine
+ * and, when an AI service is available, by the Gemini/OpenRouter API. Supports
+ * suggestion chips, persona-toned responses, and smooth chat-scroll behaviour.
+ */
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useStore } from '../../core/store';
 import { chatWithAI } from '../../services/aiLayer';
 
-
+/** Pre-defined suggestion chips shown above the chat input for common queries. */
 const SUGGESTIONS = [
   '🚗 Why is transport my biggest source?',
   '⚡ How can I reduce energy use?',
@@ -11,6 +18,16 @@ const SUGGESTIONS = [
   '📊 Explain my carbon score',
 ];
 
+/**
+ * Generates a personalised local fallback response for a user query using keyword
+ * routing against the user's footprint data and recommendations.
+ * @param query - The raw text entered by the user.
+ * @param dna - The user's Carbon DNA profile containing persona and reduction potential.
+ * @param recs - Array of recommendation objects with category, priority, action, and impact.
+ * @param result - The calculated footprint result with total tons and category breakdown.
+ * @param persona - The active AI coach persona key ('friendly' | 'strict' | 'scientist').
+ * @returns A formatted response string with an appropriate persona prefix emoji.
+ */
 function buildResponse(
   query: string,
   dna: { persona: string; primarySource: string; reductionPotential: number } | null,
@@ -98,6 +115,18 @@ function buildResponse(
   return `💚 ${answer} Every action counts!`;
 }
 
+/**
+ * Renders the AI Sustainability Advisor chat panel, including:
+ * - Quick-suggestion chips for common sustainability topics.
+ * - A scrollable message log displaying user and assistant bubbles.
+ * - A text input with Enter-to-send support and a rate-limit guard (1.5 s).
+ * - Source badges ("OpenRouter AI" vs "Local Engine") on assistant messages.
+ * - A typing indicator animation while a response is loading.
+ *
+ * Reads and writes messages, loading state, dna, recommendations, result, and
+ * settings from the global Zustand store.
+ * @returns The advisor chat card element.
+ */
 export function AdvisorChat() {
   const messages    = useStore((s) => s.messages);
   const isLoading   = useStore((s) => s.isLoading);
@@ -120,6 +149,11 @@ export function AdvisorChat() {
     });
   }, [messages]);
 
+  /**
+   * Sends the user's message, appends it to the store, and fetches an AI or local response.
+   * Applies a 1.5-second rate limit between consecutive sends to prevent spam.
+   * @param text - The message text to send (trimmed before processing).
+   */
   const handleSend = async (text: string) => {
     const trimmed = text.trim();
     const now = new Date().getTime();

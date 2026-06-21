@@ -1,6 +1,17 @@
+/**
+ * @fileoverview FastFashionAnalyzer component for the Lifestyle section.
+ * Accepts a clothing item description and uses the AI service to identify
+ * the dominant material, estimate the lifecycle carbon footprint, rate
+ * the impact level (High / Medium / Low), and suggest sustainable
+ * alternatives along with an eco-care tip.
+ */
+
 import React, { useState } from 'react';
 import { rawAIFetch } from '../../services/aiLayer';
 
+/**
+ * AI-generated sustainability analysis for a single clothing item.
+ */
 interface FashionResult {
   itemName: string;
   material: string;
@@ -10,6 +21,14 @@ interface FashionResult {
   tips: string;
 }
 
+/**
+ * FastFashionAnalyzer renders a text input for a clothing item description.
+ * On submit, it queries the AI to produce a full sustainability profile:
+ * dominant material, estimated lifecycle CO₂e, impact level badge,
+ * two sustainable alternative suggestions, and one eco-care tip.
+ *
+ * @returns The rendered fast fashion analyzer card.
+ */
 export function FastFashionAnalyzer() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
