@@ -1,7 +1,7 @@
 import type { AIResponse } from '../types';
 import { APP_CONFIG } from '../config';
 
-const BACKEND_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3001/api/chat';
+const BACKEND_URL = import.meta.env.VITE_API_URL ?? '/api/chat';
 
 /**
  * Raw proxy call for generic AI tasks.
