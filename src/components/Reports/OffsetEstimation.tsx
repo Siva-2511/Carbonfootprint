@@ -29,7 +29,8 @@ export function OffsetEstimation() {
   
   // Average cost of certified carbon offsets (Gold Standard, Verra) is ~$15 per metric ton
   const baseCostPerTonUSD = 15;
-  const costPerTon = baseCostPerTonUSD * (1 / currencyInfo.multiplier);
+  const usdToLocal = currencyInfo.multiplier / 0.012;
+  const costPerTon = baseCostPerTonUSD * usdToLocal;
   const annualCost = (result.totalAnnualTons * costPerTon).toLocaleString(currencyInfo.locale, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0

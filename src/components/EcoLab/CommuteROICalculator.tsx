@@ -29,8 +29,9 @@ export function CommuteROICalculator() {
   const targetCarbon = EMISSION_FACTORS.transport[target.id] * annualKm;
   const carbonSavings = currentCarbon - targetCarbon;
 
-  const currentCost = current.costPerKm * annualKm * (1 / currencyInfo.multiplier);
-  const targetCost = target.costPerKm * annualKm * (1 / currencyInfo.multiplier);
+  const usdToLocal = currencyInfo.multiplier / 0.012; // Base config multiplier uses INR as 1, USD as 0.012
+  const currentCost = current.costPerKm * annualKm * usdToLocal;
+  const targetCost = target.costPerKm * annualKm * usdToLocal;
   const costSavings = currentCost - targetCost;
 
   return (
