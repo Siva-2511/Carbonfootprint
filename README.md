@@ -22,6 +22,17 @@
 
 </div>
 
+## 📸 Screenshots
+
+<div align="center">
+  <img src="public/screenshots/screenshot_1.png" width="800" alt="Carbon Identity Report & Breakdown" style="margin-bottom: 20px;" />
+  <img src="public/screenshots/screenshot_2.png" width="800" alt="Action Roadmap & AI Advisor" style="margin-bottom: 20px;" />
+  <img src="public/screenshots/screenshot_3.png" width="800" alt="Eco Lab Tools" style="margin-bottom: 20px;" />
+  <img src="public/screenshots/screenshot_4.png" width="800" alt="Energy Usage Profile & Evolution" style="margin-bottom: 20px;" />
+  <img src="public/screenshots/screenshot_5.png" width="800" alt="Intelligence Scorecard & What-If Simulator" style="margin-bottom: 20px;" />
+</div>
+
+---
 ## 🧠 Approach & Logic
 
 CarbonSense tackles the challenge of carbon footprint awareness by moving beyond generic advice to deliver hyper-personalized, data-driven intelligence:
