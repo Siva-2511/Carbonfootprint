@@ -32,9 +32,11 @@ export function Calculator() {
   // Automatically scroll down if the user already calculated and comes back to this tab
   useEffect(() => {
     if (isCalculated && currentStep === 3) {
-      setTimeout(() => {
-        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 300);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
     }
   }, [isCalculated, currentStep]);
 
@@ -48,10 +50,12 @@ export function Calculator() {
     } else {
       // Final step — run pipeline
       runPipeline(localInputs);
-      // Let React render the results, then scroll
-      setTimeout(() => {
-        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      // Let React render the results, wait for paint, then scroll
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useStore } from '../../core/store';
 import { simplify } from '../../services/core/textSimplifier';
+import { BENCHMARK_DATA } from '../../config';
 
 const BADGE_DEFS = [
   { id: 'first_step',   icon: '🌱', label: 'First Step',        desc: 'Calculated your first footprint',   points: 0 },
@@ -144,6 +145,7 @@ export function IdentityReport() {
   const recs    = useStore((s) => s.recommendations);
   const habits  = useStore((s) => s.habits);
   const eli10   = useStore((s) => s.settings.eli10Mode);
+  const inputs  = useStore((s) => s.inputs);
   const [printing, setPrinting] = useState(false);
 
   const handleExportPDF = () => {
@@ -167,6 +169,9 @@ export function IdentityReport() {
   const topRecs   = recs.filter((r) => r.priority === 'P0').slice(0, 5);
   const dateStr   = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
   const savings   = Math.round(result.totalAnnualKg * (dna.reductionPotential / 100));
+
+  const country = inputs?.country || 'India';
+  const countryAvg = BENCHMARK_DATA.perCapita[country] || BENCHMARK_DATA.globalAvg;
 
   return (
     <div>
@@ -239,7 +244,7 @@ export function IdentityReport() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '1.25rem' }}>
           {[
             { label: 'Annual Footprint', value: `${result.totalAnnualTons.toFixed(2)}`, unit: 'tons CO₂e', color: '#f87171' },
-            { label: 'India Average',    value: '1.90', unit: 'tons CO₂e', color: '#fbbf24' },
+            { label: `${country} Average`,    value: `${countryAvg.toFixed(2)}`, unit: 'tons CO₂e', color: '#fbbf24' },
             { label: 'Potential Saving', value: `${savings.toLocaleString()}`, unit: 'kg CO₂e/year', color: '#34d399' },
             { label: 'Actions Done',     value: `${habits.completedTaskIds.length}`, unit: `of ${recs.length}`, color: '#60a5fa' },
           ].map((m) => (
